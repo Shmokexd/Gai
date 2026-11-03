@@ -1017,6 +1017,63 @@ html.port #prep #p-pick{flex:none}
 html.port #prep .mrow.go{order:9;position:sticky;bottom:0;padding-top:6px;background:linear-gradient(#0b111900,var(--bg) 30%)}
 html.port #hub .mrow,html.port #hub #h-go{order:9}
 html.port .screen.land h1 br{display:inline}
+
+/* ===== v27: вертикаль — лаконичные «нижние листы» в духе первой версии ===== */
+.phead,.pdocs{display:none}
+html.port .phead{display:block}
+html.port .phead .h{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:10px}
+html.port .pdocs{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:16px;background:linear-gradient(135deg,#1c2d47,#152238);border:1px solid #3a5a8a66}
+html.port .pdocs .av{width:52px;height:52px;border-radius:50%;flex:none}
+html.port .pdocs .pd-t{flex:1;min-width:0} html.port .pdocs .pd-t b{font:15px var(--display);color:#e9eef5}
+html.port .pdocs .pd-c{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+html.port .pdocs .pd-c span{font:600 12.5px var(--body);padding:3px 8px;border-radius:8px;background:#ffffff12;color:#cfd9e6}
+html.port .pdocs .pd-c span.ok{background:#3fcf8e22;color:#7be0b0} html.port .pdocs .pd-c span.bad{background:#ff5e5e26;color:#ff9b9b}
+html.port .pdocs .pd-go{flex:none;border:0;border-radius:12px;padding:11px 14px;background:var(--blue);color:#06101c;font:700 14px var(--body)}
+html.port #ins-body .irail{display:none!important}
+html.port #inspect{align-items:flex-end!important}
+html.port #inspect .sheet{display:block!important;height:auto!important;max-height:94%!important;overflow-y:auto!important;border-radius:22px 22px 0 0!important;padding:16px 14px 14px!important;box-sizing:border-box}
+html.port #ins-body .ipane{position:static;height:auto;overflow:visible}
+html.port #ins-body .icol.r{position:static!important;overflow:visible;padding:0!important;gap:10px}
+html.port #ins-body .icol.r>.meta .chip{font-size:13px;padding:5px 11px}
+html.port #ins-body .icol.r .tiles{gap:8px}
+html.port #ins-body .icol.r .tile{flex-direction:column;gap:5px;padding:10px 4px 8px;font-size:13px;border-radius:14px}
+html.port #ins-body .icol.r .tile .ti{width:34px;height:34px} html.port #ins-body .icol.r .tile .ti svg{width:19px;height:19px}
+html.port #ins-body .ibody{display:block}
+html.port #ins-body .ilog{display:block;padding:8px 9px;border-radius:14px}
+html.port #ins-body .ihd{font-size:11.5px}
+html.port #ins-body .icol.r .finds{max-height:34vh;overflow-y:auto;flex:none!important}
+html.port #ins-body .icol.r .finds li{font-size:14.5px;padding:8px 11px;line-height:1.35}
+html.port #ins-body .icol.r .acts{display:grid!important;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}
+html.port #ins-body .icol.r .acts>*{flex:none}
+html.port #ins-body .icol.r .acts>[style*="grid-column"],html.port #ins-body .icol.r .acts .ext-box{grid-column:1/-1!important}
+html.port #ins-body .icol.r .act{padding:14px 8px;font-size:17px;border-radius:15px}
+html.port #ins-body .icol.r .act.proto small{display:block;margin:2px 0 0;font-size:12px}
+/* внешний вид, алкотестер, протокол — тоже нижние листы по содержимому */
+html.port #extwin,html.port #brwin,html.port #protowin{align-items:flex-end!important}
+html.port #ext-body,html.port #br-body,html.port #proto-body{height:auto!important;max-height:94%!important;overflow-y:auto!important;border-radius:22px 22px 0 0!important;padding:16px 14px!important;box-sizing:border-box;align-content:start}
+html.port #ext-body .ex-stage canvas{max-width:none;width:100%}
+html.port #ext-body .ex-info,html.port #br-body .ex-info{font-size:15px}
+html.port #ext-body .ex-info .hintx,html.port #ext-body .ex-info .tx{font-size:15px;line-height:1.4}
+html.port #ext-body .ex-go,html.port #br-body .ex-go{padding:13px 26px;font-size:17px}
+html.port #proto-body{display:flex!important}
+html.port #proto-body .pt-body{display:flex;flex-direction:column;gap:10px}
+html.port #proto-body .pt-log .finds{max-height:20vh}
+html.port #proto-body .pt-arts{grid-template-columns:1fr;max-height:44vh}
+html.port #proto-body .pt-a{font-size:14.5px;padding:8px 2px}
+html.port #proto-body .pt-a .cb{width:22px;height:22px}
+html.port #proto-body .pt-foot .act{padding:13px 10px;font-size:16px}
+/* документы на планшете — на весь экран телефона */
+html.port{--hw:min(100vw,520px)}
+html.port #hands{position:fixed!important;left:max(0px,calc(50% - 260px))!important;right:max(0px,calc(50% - 260px))!important;top:0!important;bottom:5.4em!important;font-size:1em;width:auto}
+html.port .hrail{position:fixed!important;left:max(0px,calc(50% - 260px))!important;right:max(0px,calc(50% - 260px))!important;height:5.4em;z-index:12}
+html.port .hrail .rhead{flex:0 0 5.6em!important}
+html.port .hrail .rb .rl{font-size:10px}
+html.port #hands .hside{top:calc(var(--hw) * 520 / 1280 + .4em)}
+html.port #hands .clip{top:calc(var(--hw) * 520 / 1280 + 10.6em);bottom:auto;max-height:calc(100% - 100vw * 520 / 1280 - 11.2em)}
+html.port #hands .cards{position:relative;inset:auto;padding:2.1em .8em .9em;display:grid;grid-template-columns:1fr 1fr;gap:.8em;overflow-y:auto;max-height:inherit;box-sizing:border-box}
+html.port #hands .cards .paper{min-width:0;font-size:1.12em}
+html.port #hands .cards .paper.ins,html.port #hands .cards .paper.way{grid-column:1/-1}
+html.port #hands .bubble{font-size:1.05em}
 </style>
 
 <div id="app">
@@ -2571,6 +2628,7 @@ function renderInspect(){
       <button class="chkdoc" data-x="desk">Проверить документы в руках →<small>${!IN.desk?"водитель отдаст их, сверишь поля":IN.desk.claims.length?"отмечено: "+[...new Set(IN.desk.claims.map(k=>VIOL_TXT[k.v][0]))].join(", "):"несоответствий не отмечено"}</small></button></div>
     
 </div><div class="icol r">
+    <div class="phead"><div class="h" style="grid-template-columns:auto minmax(0,1fr) auto auto"><span class="av face">${faceSVG(d.person)}</span><div class="hn"><b>${c.name}</b><span class="muted">${c.model}</span></div><button class="exbtn" data-x="open" aria-label="Внешний вид авто"><svg viewBox="0 0 26 16" aria-hidden="true"><path d="M2 11.5V9l3-.8 3.6-4.2h7.2l3.6 4.2 3.6 1v2.3"/><path d="M9 8.2l2-3.4M13 8.2V4.8M17 8.2l-1.4-3.4"/><circle cx="7.5" cy="11.8" r="2.3"/><circle cx="19" cy="11.8" r="2.3"/></svg><span>Внешний вид</span><i>${extN()}/${EX_TOTAL}</i></button><span class="plt">${c.plate}</span></div></div><div class="pdocs"><span class="av face">${faceSVG(d.person)}</span><div class="pd-t"><b>Документы водителя</b><div class="pd-c">${(c.cargo?[0,1,2,3]:[0,1,2]).map(i=>{const q=cardSeen(i);return `<span class="${q.bad?"bad":q.done?"ok":""}">${DNAME[i]}${q.bad?" !":q.done?" ✓":""}</span>`;}).join("")}</div></div><button class="pd-go" data-r="x:desk">Планшет →</button></div>
     <div class="meta">${g.cam?'<span class="chip rec">● Камера пишет</span>':'<span class="chip norec">Камеры нет, записи не будет</span>'}<span class="chip">${S.night?"Ночь":"День"}</span><span class="chip">Сегодня ${TODAY()}</span>${c.bass&&!IN.quiet?`<button class="chip mus" data-a="quiet">♫ Музыка орёт · попросить выключить</button>`:""}</div>
     <div class="tiles" style="grid-template-columns:repeat(4,1fr)">
       ${tile("breath",g.breath?"breath":"eye",g.breath?"Алкотестер":"На глаз",eyeDone,IN.bad.breath)}
@@ -3922,13 +3980,14 @@ function hRequest(){const D=IN.desk;if(D.db||D.dbWait)return;D.dbWait=true;hMid(
     hCards();hMid();hLinks();const p=document.querySelector('#h-cards .paper.db');if(p){p.classList.add("in");p.scrollIntoView({inline:"nearest",block:"nearest"});}},1200);}
 function hDrawCar(){
   const cvs=$("#hcv"),g=cvs.getContext("2d"),c=IN.c,d=docData(c),sp=CAR_SPEC[c.model]||CAR_SPEC["Седан «Вега»"],Dd=SIDE[sp.k]||SIDE.sedan,sc=PORT?Math.min(980/Dd.Lb,280/(Dd.Hm||95)):Math.min(600/Dd.Lb,215/(Dd.Hm||95));
-  const CW=cvs.width,CH=cvs.height,night=S.night;g.clearRect(0,0,CW,CH);
-  const cx=PORT?640:790,ox=cx-Dd.Lb*sc/2,oy=PORT?318:296,w=c.mod?(c.modWhat||""):"";IN.hcar={ox,oy,sc,D:Dd};
-  {const sk=g.createLinearGradient(0,0,0,170);sk.addColorStop(0,night?"#0a1222":"#9fbad2");sk.addColorStop(1,night?"#1b2740":"#d4dde2");g.fillStyle=sk;g.fillRect(0,0,CW,170);
+  if(PORT&&cvs.height!==520)cvs.height=520;
+  const CW=cvs.width,CH=cvs.height,night=S.night,OY=PORT?190:0;g.clearRect(0,0,CW,CH);
+  const cx=PORT?640:790,ox=cx-Dd.Lb*sc/2,oy=(PORT?318:296)+OY,w=c.mod?(c.modWhat||""):"";IN.hcar={ox,oy,sc,D:Dd};
+  {const sk=g.createLinearGradient(0,0,0,170+OY);sk.addColorStop(0,night?"#0a1222":"#9fbad2");sk.addColorStop(1,night?"#1b2740":"#d4dde2");g.fillStyle=sk;g.fillRect(0,0,CW,170+OY);g.save();g.translate(0,OY);
    g.fillStyle=night?"#13241a":"#3c6440";for(let i=0;i<9;i++){const x=i*160+((i*53)%70),r=70+(i*37)%40;g.beginPath();g.ellipse(x,170,r,52+(i*19)%26,0,Math.PI,0);g.fill();}
    g.fillStyle=night?"#1f3020":"#7f9a64";g.fillRect(0,168,CW,52);
-   g.fillStyle=night?"#1b1f24":"#4b5056";g.fillRect(0,218,CW,CH-218);g.fillStyle=night?"#2a2f35":"#5d636a";g.fillRect(0,218,CW,5);
-   g.fillStyle=night?"#9aa3ad":"#e8edf2";for(let x=-20;x<CW;x+=120)g.fillRect(x,262,64,5); /* разметка — под машиной */}
+   g.fillStyle=night?"#1b1f24":"#4b5056";g.fillRect(0,218,CW,CH-218-OY);g.fillStyle=night?"#2a2f35":"#5d636a";g.fillRect(0,218,CW,5);
+   g.fillStyle=night?"#9aa3ad":"#e8edf2";for(let x=-20;x<CW;x+=120)g.fillRect(x,262,64,5); /* разметка — под машиной */g.restore();}
   g.fillStyle="#0005";g.beginPath();g.ellipse(cx,oy+4,Dd.Lb*sc/2+18,13,0,0,7);g.fill();
   g.save();g.translate(ox,oy);g.scale(sc,sc);paintSide(g,c.color,c.model,{tint:/тонир/.test(w),sport:c.racer,trailer:c.trailer,helmet:c.helmet,nohelmet:c.nohelmet,rims:c.bass,low:c.bass});g.restore();
   if(Dd.bike)return;
@@ -3963,11 +4022,11 @@ function hMid(){
 }
 function hMsg(t,cls){const D=IN.desk;D.msg={t,cls};hMid();clearTimeout(D.msgT);D.msgT=setTimeout(()=>{if(IN&&IN.desk===D){D.msg=null;hMid();}},2300);}
 function hEls(f){return [...document.querySelectorAll(`#hands [data-fld="${f}"]`)];}
-function hCenter(f){const el=hEls(f).find(x=>x.offsetParent);if(!el)return null;const A=$("#stage").getBoundingClientRect(),R=el.getBoundingClientRect();return [R.left-A.left+R.width/2,R.top-A.top+R.height/2];}
+function hCenter(f){const el=hEls(f).find(x=>x.offsetParent);if(!el)return null;const A=$("#hands").getBoundingClientRect(),R=el.getBoundingClientRect();return [R.left-A.left+R.width/2,R.top-A.top+R.height/2];}
 function hLinks(){const D=IN&&IN.desk,svg=$("#h-lk");if(!D||!svg)return;let h="";const L=(a,b,col,dash)=>{const p=hCenter(a),q=hCenter(b);if(!p||!q)return;h+=`<line x1="${p[0]}" y1="${p[1]}" x2="${q[0]}" y2="${q[1]}" stroke="${col}" ${dash?'stroke-dasharray="7 6"':""}/>`;};
   D.claims.forEach(k=>{if(hCenter(k.a)&&hCenter(k.b))L(k.a,k.b,"#ff3b3b88");});
   if(D.sel.length===2)L(D.sel[0],D.sel[1],"#ffd23f",1);if(D.okFlash&&performance.now()-D.okFlash.t<1400)L(D.okFlash.a,D.okFlash.b,"#3fcf8e");svg.innerHTML=h;}
-function hStamp(a,b,txt,col){const p=hCenter(a),q=hCenter(b);if(!p||!q)return;const s=document.createElement("div");s.className="hstamp";s.textContent=txt;s.style.color=col;s.style.borderColor=col;s.style.left=(p[0]+q[0])/2+"px";s.style.top=(p[1]+q[1])/2+"px";$("#stage").appendChild(s);setTimeout(()=>s.remove(),1600);}
+function hStamp(a,b,txt,col){const p=hCenter(a),q=hCenter(b);if(!p||!q)return;const s=document.createElement("div");s.className="hstamp";s.textContent=txt;s.style.color=col;s.style.borderColor=col;s.style.left=(p[0]+q[0])/2+"px";s.style.top=(p[1]+q[1])/2+"px";$("#hands").appendChild(s);setTimeout(()=>s.remove(),1600);}
 function hSelect(f){
   const D=IN.desk;if(D.lock)return;D.msg=null;
   if(D.sel.includes(f))D.sel=D.sel.filter(x=>x!==f);else D.sel.push(f);
