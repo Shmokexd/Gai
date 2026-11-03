@@ -1222,6 +1222,8 @@ html.port #ds-doc #hands:has(.clip.low) .hot::after{opacity:1}
 @keyframes dshot{to{outline-color:#ffd23f55}}
 html.port #ds-doc #hands .hplate{z-index:2}
 html.port #ds-doc #hands .mid .acts{display:none!important}
+
+#dos .ds-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 </style>
 
 <div id="app">
@@ -2822,7 +2824,7 @@ const ART_IC={speed:"speed",fled:"warn",nolic:"docs",noins:"docs",drunk:"alco",m
 const DOS={tab:"doc",z:10};
 if(PORT){const h=$("#hands"),dd=$("#ds-doc");if(h&&dd)dd.appendChild(h);}
 function dosShow(t){
-  if(!PORT||!IN)return;
+  if(!PORT||!IN)return;if(t==="dec")t="chk"; /* этап «Решение» пока убран: кнопки решения внизу проверок */
   if(t==="doc"&&(!IN.desk||!IN.desk.seen)){DOS.tab="doc";openHands();return;}
   if(t!=="doc"&&DOS.tab==="doc"&&IN.desk){IN.desk.sel=[];deskExamined();}
   DOS.tab=t;$("#hands").hidden=t!=="doc";renderInspect();
@@ -2834,14 +2836,15 @@ function dsRow(k,img,label,st,cls,lock){
   return `<button class="ds-tile ${cls}" data-c="${k}" ${lock?"aria-disabled=\"true\"":""}><i class="ds-ti">${IC[img]||""}</i><b>${label}</b><span>${st}</span></button>`;
 }
 function renderDos(){
-  if(!PORT||!IN)return;const c=IN.c,g=S.gear,d=docData(c),r=IN.rev,t=DOS.tab;
+  if(!PORT||!IN)return;const c=IN.c,g=S.gear,d=docData(c),r=IN.rev;if(DOS.tab==="dec")DOS.tab="chk";const t=DOS.tab;
+  {const pr=proven(c);IN.proto={};ARTS.forEach(a=>{if(artProven(c,a.k,pr))IN.proto[a.k]=true;});} /* без протокола: в штраф/арест идёт всё доказанное */
   $("#dos").hidden=false;
   const sp=speeding(c),over=Math.round(c.speed-S.limit);
   $("#ds-h").innerHTML=`<div class="ds-n"><b>${c.name}</b><span>${c.model} · ${c.plate}</span></div>
     <div class="ds-tags">${sp?`<span class="bad">+${over} км/ч</span>`:`<span>${Math.round(c.speed)} км/ч</span>`}${g.cam?'<span class="rec">● REC</span>':""}${c.bass&&!IN.quiet?'<button class="mus" data-a="quiet">♫ тише</button>':""}</div>`;
   const docDone=IN.desk&&IN.desk.seen,chkDone=r.look||r.breath||r.search||r.base||!!IN.eye||(IN.ext&&extN()>0);
   const tab=(k,n,lab,done)=>`<button class="ds-tab ${t===k?"on":done?"done":""}" data-t="${k}"><i>${t!==k&&done?"✓":n}</i>${lab}</button>`;
-  $("#ds-tabs").innerHTML=tab("doc",1,"Документы",docDone)+tab("chk",2,"Проверки",chkDone)+`<button class="ds-tab ${t==="dec"?"on":""}" data-t="dec"><img src="${DS_IC.protocol}" alt="">Решение</button>`;
+  $("#ds-tabs").innerHTML=tab("doc",1,"Документы",docDone)+tab("chk",2,"Проверки",chkDone);
   ["doc","chk","dec"].forEach(k=>$("#ds-"+k).hidden=k!==t);
   /* --- проверки --- */
   if(t==="chk"){
@@ -2866,7 +2869,6 @@ function renderDos(){
   /* --- низ --- */
   let f="";
   if(t==="doc")f=`<span class="ds-cnt">${IN.desk&&IN.desk.claims.length?`несоответствий: <b>${IN.desk.claims.length}</b>`:"несоответствий нет"}${IN.desk&&IN.desk.checks?` · сверок: ${IN.desk.checks}`:""}</span><button class="ds-next" data-t="chk">Дальше: проверки →</button>`;
-  else if(t==="chk")f=`<button class="ds-next wide" data-t="dec">Дальше: решение →</button>`;
   else{const fa=fineAmt(c);
     f=`<div class="ds-acts"><button class="ds-a fine" data-a="fine" ${fa?"":"disabled"}>Штраф${fa?`<small>${money(fa)}</small>`:""}</button><button class="ds-a arr" data-a="arrest"><img src="${DS_IC.cuffs}" alt="">Арест</button><button class="ds-a rel" data-a="release">Отпустить</button></div>
     ${IN.bribeOpen?`<div class="ds-br"><button data-a="bribe">${c.carrier?"Сделка века · ":"Взять "}${money(c.bribe)}</button><button data-a="more">Торговаться</button></div>`
