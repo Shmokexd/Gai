@@ -1,0 +1,51 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'ru.patrol.smena2'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'ru.patrol.smena2'   // не менять: иначе телефон увидит это как другое приложение
+        minSdk 21
+        targetSdk 35
+        versionCode 27                     // увеличивать на 1 при каждой новой сборке
+        versionName '2.27'
+    }
+
+    /* ключ и пароли лежат в keystore/keystore.properties (в git не кладутся) */
+    def ksProps = new Properties()
+    def ksFile = rootProject.file('../keystore/keystore.properties')
+    if (ksFile.exists()) ksFile.withInputStream { ksProps.load(it) }
+    signingConfigs {
+        release {
+            if (ksFile.exists()) {
+                storeFile rootProject.file('../keystore/' + ksProps['storeFile'])
+                storePassword ksProps['storePassword']
+                keyAlias ksProps['keyAlias']
+                keyPassword ksProps['keyPassword']
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.release   // и отладочная сборка тем же ключом — ставится поверх старой
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+/* перед сборкой берём свежую игру из game/patrol2.html */
+tasks.register('prepareGameHtml', Exec) {
+    workingDir rootDir.parentFile
+    commandLine 'python3', 'tools/prepare_html.py', 'index.html', 'android-studio/app/src/main/assets'
+}
+preBuild.dependsOn prepareGameHtml

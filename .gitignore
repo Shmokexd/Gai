@@ -1,0 +1,15 @@
+# ключ подписи и пароли — только локально, не в git
+keystore/
+*.keystore
+*.jks
+# собранные файлы
+apk/
+*.apk
+*.idsig
+android-sdk-build/out/
+android-sdk-build/app/assets/index.html
+android-studio/.gradle/
+android-studio/build/
+android-studio/app/build/
+android-studio/local.properties
+android-studio/.idea/
