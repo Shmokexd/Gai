@@ -1077,7 +1077,8 @@ html.port #hands .bubble{font-size:1.05em}
 
 /* ===== v28: вертикальный досмотр — шаги, планшет, папка ===== */
 #dos{display:none}
-html.port #inspect,html.port .hrail,html.port #protowin{display:none!important}
+html.port .hrail,html.port #protowin{display:none!important}
+html.port #dos .ds-tabs{display:none}
 html.port #dos:not([hidden]){display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:max(0px,calc(50% - 260px));right:max(0px,calc(50% - 260px));z-index:19;background:#0d1520;color:#e9eef5;font-family:var(--body)}
 #dos .ds-h{flex:none;display:flex;align-items:center;gap:12px;padding:12px 14px 10px}
 #dos .ds-face{width:50px;height:50px;border-radius:14px;overflow:hidden;background:#c9d6e3;flex:none}#dos .ds-face svg{width:100%;height:100%;display:block}
@@ -1235,6 +1236,29 @@ html.port #ds-doc #hands .hot::after{display:none!important}
 #dos .ds-road span em{margin-left:auto;font:800 12px var(--body);font-style:normal;padding:2px 8px;border-radius:999px;background:#ffb12b;color:#1b1200;white-space:nowrap}
 #dos .ds-road .bad{background:#2a1717;color:#ffb3b3;box-shadow:inset 0 0 0 1px #ff5e5e55}#dos .ds-road .bad b{color:#fff}
 #dos .ds-road .ok{background:#13261d;color:#7be0b0;padding:7px 10px}
+
+/* v34: вертикальный лист досмотра как раньше */
+html.port #ins-body .ds-road.in{display:flex;flex-direction:column;gap:5px;margin:0}
+html.port #ins-body .ds-road.in small{font:800 10.5px var(--body);letter-spacing:.08em;color:#9fb0c6}
+html.port #ins-body .ds-road.in span{display:flex;align-items:center;gap:8px;padding:5px 10px 5px 6px;border-radius:12px;font:600 14px/1.25 var(--body)}
+html.port #ins-body .ds-road.in span img{width:30px;height:28px;object-fit:contain;flex:none}
+html.port #ins-body .ds-road.in span em{margin-left:auto;font:800 12px var(--body);font-style:normal;padding:2px 8px;border-radius:999px;background:#ffb12b;color:#1b1200;white-space:nowrap}
+html.port #ins-body .ds-road.in .bad{background:#2a1717;color:#ffb3b3;box-shadow:inset 0 0 0 1px #ff5e5e55}html.port #ins-body .ds-road.in .bad b{color:#fff}
+html.port #ins-body .ds-road.in .ok{background:#13261d;color:#7be0b0;padding:7px 10px}
+html.port #ins-body .finds li.rad{display:none}
+html.port .pdocs .pd-s{margin-top:4px;font:600 13.5px/1.3 var(--body);color:#b9c6d6}
+html.port #ins-body .icol.r .acts{grid-template-columns:1fr 1fr!important}
+html.port #ins-body .icol.r .acts .act[data-a=release]{grid-column:1/-1}
+html.port #inspect .sheet{max-height:100%!important;height:100%!important;border-radius:0!important}
+html.port #ins-body .icol.r{min-height:100%;display:flex!important;flex-direction:column}
+html.port #ins-body .ibody{flex:1;display:flex!important;flex-direction:column}
+html.port #ins-body .ilog{flex:1;display:flex!important;flex-direction:column}
+html.port #ins-body .icol.r .finds{max-height:none!important;flex:1 1 0!important;min-height:80px}
+
+html.port body{padding-left:0!important;padding-right:0!important}
+html.port #game .stage{border-radius:0}
+html.port #ins-body .icol.r>.meta .chip{font-size:12px!important;padding:4px 9px!important}
+html.port #ins-body .ihd b{white-space:nowrap}html.port #ins-body .ihd .vleg{font-size:11px;gap:4px}html.port #ins-body .ihd .vleg em{display:none}
 </style>
 
 <div id="app">
@@ -2775,6 +2799,7 @@ function tile(k,ico,label,done,bad,lock){
 }
 function renderInspect(){
   const c=IN.c,sp=speeding(c),g=S.gear;
+  if(PORT){const pr=proven(c);IN.proto={};ARTS.forEach(a=>{if(artProven(c,a.k,pr))IN.proto[a.k]=true;});} /* вертикаль: в штраф/арест идёт всё доказанное */
   { let [pm,px]=priceRange(c);const bR=bonusRange(c,proven(c));if(bR){pm=Math.max(pm,Math.ceil(bR[1]/100)*100);px=Math.max(px,Math.round(pm*1.6/100)*100);} /* вымогать дешевле премии за арест нельзя */
     IN.pMin=pm;IN.pMax=px;IN.extAmt=Math.round((pm+IN.extT*(px-pm))/100)*100; }
   const eyeDone=g.breath?IN.rev.breath:!!IN.eye;
@@ -2790,7 +2815,7 @@ function renderInspect(){
       <button class="chkdoc" data-x="desk">Проверить документы в руках →<small>${!IN.desk?"водитель отдаст их, сверишь поля":IN.desk.claims.length?"отмечено: "+[...new Set(IN.desk.claims.map(k=>VIOL_TXT[k.v][0]))].join(", "):"несоответствий не отмечено"}</small></button></div>
     
 </div><div class="icol r">
-    <div class="phead"><div class="h" style="grid-template-columns:auto minmax(0,1fr) auto auto"><span class="av face">${faceSVG(d.person)}</span><div class="hn"><b>${c.name}</b><span class="muted">${c.model}</span></div><button class="exbtn" data-x="open" aria-label="Внешний вид авто"><svg viewBox="0 0 26 16" aria-hidden="true"><path d="M2 11.5V9l3-.8 3.6-4.2h7.2l3.6 4.2 3.6 1v2.3"/><path d="M9 8.2l2-3.4M13 8.2V4.8M17 8.2l-1.4-3.4"/><circle cx="7.5" cy="11.8" r="2.3"/><circle cx="19" cy="11.8" r="2.3"/></svg><span>Внешний вид</span><i>${extN()}/${EX_TOTAL}</i></button><span class="plt">${c.plate}</span></div></div><div class="pdocs"><span class="av face">${faceSVG(d.person)}</span><div class="pd-t"><b>Документы водителя</b><div class="pd-c">${(c.cargo?[0,1,2,3]:[0,1,2]).map(i=>{const q=cardSeen(i);return `<span class="${q.bad?"bad":q.done?"ok":""}">${DNAME[i]}${q.bad?" !":q.done?" ✓":""}</span>`;}).join("")}</div></div><button class="pd-go" data-r="x:desk">Планшет →</button></div>
+    <div class="phead"><div class="h" style="grid-template-columns:auto minmax(0,1fr) auto auto"><span class="av face">${faceSVG(d.person)}</span><div class="hn"><b>${c.name}</b><span class="muted">${c.model}</span></div><button class="exbtn" data-x="open" aria-label="Внешний вид авто"><svg viewBox="0 0 26 16" aria-hidden="true"><path d="M2 11.5V9l3-.8 3.6-4.2h7.2l3.6 4.2 3.6 1v2.3"/><path d="M9 8.2l2-3.4M13 8.2V4.8M17 8.2l-1.4-3.4"/><circle cx="7.5" cy="11.8" r="2.3"/><circle cx="19" cy="11.8" r="2.3"/></svg><span>Внешний вид</span><i>${extN()}/${EX_TOTAL}</i></button><span class="plt">${c.plate}</span></div></div>${PORT?`<div class="ds-road in">${roadHtml(c)}</div>`:""}<div class="pdocs"><span class="av face">${faceSVG(d.person)}</span><div class="pd-t"><b>Документы водителя</b><div class="pd-s">${!IN.desk||!IN.desk.seen?"ещё не смотрели — сверьте поля на планшете":IN.desk.claims.length?"Отмечено: "+[...new Set(IN.desk.claims.map(k=>VIOL_TXT[k.v][0]))].join(", "):"несоответствий не нашли"}</div></div><button class="pd-go" data-r="x:desk">${IN.desk&&IN.desk.seen?"Планшет":"Разложить на планшете"} →</button></div>
     <div class="meta">${g.cam?'<span class="chip rec">● Камера пишет</span>':'<span class="chip norec">Камеры нет, записи не будет</span>'}<span class="chip">${S.night?"Ночь":"День"}</span><span class="chip">Сегодня ${TODAY()}</span>${c.bass&&!IN.quiet?`<button class="chip mus" data-a="quiet">♫ Музыка орёт · попросить выключить</button>`:""}</div>
     <div class="tiles" style="grid-template-columns:repeat(4,1fr)">
       ${tile("breath",g.breath?"breath":"eye",g.breath?"Алкотестер":"На глаз",eyeDone,IN.bad.breath)}
@@ -2801,7 +2826,7 @@ function renderInspect(){
     <div class="ibody"><div class="ilog"><div class="ihd"><b>Журнал проверки</b><span class="vleg" data-x="legend" role="button" tabindex="0"><span>${vi("fine")} штраф</span><span>${vi("arrest")} арест</span><span>${vi("court")} суд</span><em>справочник ›</em></span></div>
     <ul class="finds"><li class="rad note ${sp||c.fled?"alert":""}">${sp?vi("fine")+" ":""}Радар: <b class="${sp?"bad":"good"}">${Math.round(c.speed)} км/ч</b> при лимите ${S.limit}${sp?` <b class="bad">(+${Math.round(c.speed-S.limit)})</b>${prc(speedFine(c.speed-S.limit))}`:""}${c.fled?`<br>${vi("fine")} <b class="bad">${c.again&&c.againRec&&!S.chase?"Камера записала: сегодня уже скрывался от погони":"Скрывался от погони"}${c.fled2?" (не подчинился рупору, этап 2)":""}</b>`:""}</li>${IN.bribeOpen?`<li class="offer">Водитель: «Давайте договоримся на месте, ${money(c.bribe)}».</li>`:""}${IN.finds.length?"":`<li class="fempty">Проверьте водителя: результаты появятся здесь</li>`}${IN.finds.map(f=>`<li class="${f.cls}">${f.ico?vi(f.ico)+" ":""}${f.txt}</li>`).join("")}</ul></div>
     <div class="acts"><div class="ihd"><b>Решение</b></div>
-      <button class="act proto" data-x="proto">Протокол<small>${(()=>{const n=Object.values(IN.proto||{}).filter(Boolean).length;return n?"отмечено "+n+(fa?" · "+money(fa):""):"отметить нарушения";})()}</small></button>
+      ${PORT?`<button class="act fine" data-a="fine">Штраф${fa?`<small>${money(fa)}</small>`:""}</button><button class="act arrest" data-a="arrest">Арестовать${(()=>{const b=bonusRange(c,proven(c));return b?`<small>премия ${money(b[0])}</small>`:"";})()}</button>`:`<button class="act proto" data-x="proto">Протокол<small>${(()=>{const n=Object.values(IN.proto||{}).filter(Boolean).length;return n?"отмечено "+n+(fa?" · "+money(fa):""):"отметить нарушения";})()}</small></button>`}
       <button class="act" data-a="release">Отпустить</button>
       ${IN.bribeOpen?`<button class="act bribe" data-a="bribe">${c.carrier?"Сделка века · "+money(c.bribe):"Взять "+money(c.bribe)}</button>`:`<span></span>`}
       ${IN.bribeOpen?`<button class="act bribe" data-a="more" style="grid-column:1/3">Вымогать больше</button>`:""}
@@ -2809,7 +2834,7 @@ function renderInspect(){
       ${IN.bribeOpen?"":(g.cam?`<button class="act ext" disabled style="grid-column:1/3">Вымогать (камера пишет)</button>`:`<div class="ext-box" style="grid-column:1/3"><div class="row"><span class="muted">Сколько взять</span><b id="ext-val">${money(IN.extAmt)}</b></div><input type="range" id="ext-range" min="${IN.pMin}" max="${IN.pMax}" step="100" value="${IN.extAmt}"><div class="row muted" style="font-size:.85em"><span>${money(IN.pMin)}</span><span>${money(IN.pMax)}</span></div><button class="act ext" data-a="extort" id="ext-btn" style="width:100%">Вымогать ${money(IN.extAmt)}</button></div>`)}
     </div></div></div></div>${rl.r}`;
   $("#ins-body").classList.toggle("side-chk",side==="chk");
-  const fl=$("#ins-body .finds");if(fl)fl.scrollTop=fl.scrollHeight;if(PORT)renderDos(); /* список находок листается, новое — внизу, кнопки не перекрываются */
+  const fl=$("#ins-body .finds");if(fl)fl.scrollTop=fl.scrollHeight;if(PORT&&!$("#dos").hidden)renderDos(); /* список находок листается, новое — внизу, кнопки не перекрываются */
 }
 $("#h-rail").addEventListener("click",e=>{const rb=e.target.closest("[data-r]");if(rb&&IN)railDo(rb);});
 $("#h-say").addEventListener("click",e=>{if(!IN||!e.target.closest("[data-a=quiet]"))return;e.stopPropagation();IN.quiet=true;find(Math.random()<.6?"Водитель выключил музыку":"Водитель убавил музыку почти до нуля","");
@@ -2835,7 +2860,10 @@ const ART_IC={speed:"speed",fled:"warn",nolic:"docs",noins:"docs",drunk:"alco",m
 const DOS={tab:"doc",z:10};
 if(PORT){const h=$("#hands"),dd=$("#ds-doc");if(h&&dd)dd.appendChild(h);}
 function dosShow(t){
-  if(!PORT||!IN)return;if(t==="dec")t="chk"; /* этап «Решение» пока убран: кнопки решения внизу проверок */
+  if(!PORT||!IN)return;
+  if(t!=="doc"){ /* назад к листу досмотра */
+    if(IN.desk){IN.desk.sel=[];deskExamined();}
+    DOS.tab="doc";$("#dos").hidden=true;$("#hands").hidden=true;$("#inspect").hidden=false;renderInspect();return;}
   if(t==="doc"&&(!IN.desk||!IN.desk.seen)){DOS.tab="doc";openHands();return;}
   if(t!=="doc"&&DOS.tab==="doc"&&IN.desk){IN.desk.sel=[];deskExamined();}
   DOS.tab=t;$("#hands").hidden=t!=="doc";renderInspect();
@@ -2848,8 +2876,7 @@ function dsRow(k,img,label,st,cls,lock){
 }
 function renderDos(){
   if(!PORT||!IN)return;const c=IN.c,g=S.gear,d=docData(c),r=IN.rev;if(DOS.tab==="dec")DOS.tab="chk";const t=DOS.tab;
-  {const pr=proven(c);IN.proto={};ARTS.forEach(a=>{if(artProven(c,a.k,pr))IN.proto[a.k]=true;});} /* без протокола: в штраф/арест идёт всё доказанное */
-  $("#dos").hidden=false;
+
   const sp=speeding(c),over=Math.round(c.speed-S.limit);
   $("#ds-h").innerHTML=`<div class="ds-n"><b>${c.name}</b><span>${c.model} · ${c.plate}</span></div>
     <div class="ds-tags">${g.cam?'<span class="rec">● REC</span>':""}${c.bass&&!IN.quiet?'<button class="mus" data-a="quiet">♫ тише</button>':""}</div>`;
@@ -2857,10 +2884,15 @@ function renderDos(){
   const tab=(k,n,lab,done)=>`<button class="ds-tab ${t===k?"on":done?"done":""}" data-t="${k}"><i>${t!==k&&done?"✓":n}</i>${lab}</button>`;
   $("#ds-tabs").innerHTML=tab("doc",1,"Документы",docDone)+tab("chk",2,"Проверки",chkDone);
   ["doc","chk","dec"].forEach(k=>$("#ds-"+k).hidden=k!==t);
-  /* нарушения, которые водитель сделал на дороге — видны сразу после осмотра */
+  $("#ds-road").innerHTML=roadHtml(c);
+  $("#ds-foot").innerHTML=`<span class="ds-cnt">${IN.desk&&IN.desk.claims.length?`несоответствий: <b>${IN.desk.claims.length}</b>`:"несоответствий нет"}${IN.desk&&IN.desk.checks?` · сверок: ${IN.desk.checks}`:""}</span><button class="ds-next" data-t="chk">Готово ✓</button>`;
+}
+function roadHtml(c){const sp=speeding(c),over=Math.round(c.speed-S.limit);
   {const R=[];if(sp)R.push(`<span class="bad"><img src="${DS_IC.speed}" alt="">Превышение <b>+${over}</b> км/ч · ${Math.round(c.speed)} при ${S.limit}<em>${money(speedFine(c.speed-S.limit))}</em></span>`);
    if(c.fled)R.push(`<span class="bad"><img src="${DS_IC.warn}" alt="">${c.again&&c.againRec&&!S.chase?"Камера: сегодня уже скрывался":"Скрывался от погони"}${c.fled2?(c.forced?" · этап 2, остановлен силой":" · этап 2"):""}<em>${c.fled2&&c.forced?"арест":"суд"}</em></span>`);
-   $("#ds-road").innerHTML=`<small>НА ДОРОГЕ</small>`+(R.length?R.join(""):`<span class="ok">Ехал без нарушений · ${Math.round(c.speed)} км/ч при ${S.limit}</span>`);}
+   return `<small>НА ДОРОГЕ</small>`+(R.length?R.join(""):`<span class="ok">Ехал без нарушений · ${Math.round(c.speed)} км/ч при ${S.limit}</span>`);}
+}
+function _roadTail(){
   /* --- проверки --- */
   if(t==="chk"){
     const lock=!r.search&&!canSearch();
@@ -2883,7 +2915,7 @@ function renderDos(){
   }
   /* --- низ --- */
   let f="";
-  if(t==="doc")f=`<span class="ds-cnt">${IN.desk&&IN.desk.claims.length?`несоответствий: <b>${IN.desk.claims.length}</b>`:"несоответствий нет"}${IN.desk&&IN.desk.checks?` · сверок: ${IN.desk.checks}`:""}</span><button class="ds-next" data-t="chk">Дальше: проверки →</button>`;
+  if(t==="doc")f=`<span class="ds-cnt">${IN.desk&&IN.desk.claims.length?`несоответствий: <b>${IN.desk.claims.length}</b>`:"несоответствий нет"}${IN.desk&&IN.desk.checks?` · сверок: ${IN.desk.checks}`:""}</span><button class="ds-next" data-t="chk">Готово ✓</button>`;
   else{const fa=fineAmt(c);
     f=`<div class="ds-acts"><button class="ds-a fine" data-a="fine" ${fa?"":"disabled"}>Штраф${fa?`<small>${money(fa)}</small>`:""}</button><button class="ds-a arr" data-a="arrest"><img src="${DS_IC.cuffs}" alt="">Арест</button><button class="ds-a rel" data-a="release">Отпустить</button></div>
     ${IN.bribeOpen?`<div class="ds-br"><button data-a="bribe">${c.carrier?"Сделка века · ":"Взять "}${money(c.bribe)}</button><button data-a="more">Торговаться</button></div>`
@@ -3738,24 +3770,24 @@ function house(x,y,w,h,roof,s){
 let WLAMPS=[];
 function drawWorld(){
   const sc=S.scroll,T=40;WLAMPS=[];
-  ctx.fillStyle="#3b5633";ctx.fillRect(0,0,W,H);
+  ctx.fillStyle="#3b5633";ctx.fillRect(0,-EXT,W,H+2*EXT);
   const i0=Math.floor((sc-H-160)/T),i1=Math.ceil((sc+160)/T);
   /* фактура травы */
   for(let i=i0;i<=i1;i++){const y=sc-i*T;
     for(const [x0,x1,s] of [[0,36,1],[316,W,2]])for(let k=0;k<2;k++)if(hsh(i,s+k*13)<.7){ctx.fillStyle=hsh(i,s+9+k)<.5?"#45633b":"#33502e";ctx.beginPath();ctx.ellipse(x0+hsh(i,s+3+k)*(x1-x0),y+hsh(i,s+4+k)*T,5+hsh(i,s+5+k)*9,3+hsh(i,s+6+k)*6,0,0,7);ctx.fill();}}
   /* кювет слева и обочина-грунтовка справа */
-  ctx.fillStyle="#2f472b";ctx.fillRect(30,0,10,H);
-  ctx.fillStyle="#6f6855";ctx.fillRect(ROAD_R,0,58,H);
-  ctx.fillStyle="#5d5747";ctx.fillRect(ROAD_R+16,0,6,H);ctx.fillRect(ROAD_R+38,0,6,H);
-  ctx.fillStyle="#2f472b";ctx.fillRect(ROAD_R+58,0,6,H);
+  ctx.fillStyle="#2f472b";ctx.fillRect(30,-EXT,10,H+2*EXT);
+  ctx.fillStyle="#6f6855";ctx.fillRect(ROAD_R,-EXT,58,H+2*EXT);
+  ctx.fillStyle="#5d5747";ctx.fillRect(ROAD_R+16,-EXT,6,H+2*EXT);ctx.fillRect(ROAD_R+38,-EXT,6,H+2*EXT);
+  ctx.fillStyle="#2f472b";ctx.fillRect(ROAD_R+58,-EXT,6,H+2*EXT);
   for(let i=i0;i<=i1;i++){const y=sc-i*T;if(hsh(i,21)<.8){ctx.fillStyle=hsh(i,22)<.5?"#8a826c":"#544e40";ctx.fillRect(ROAD_R+2+hsh(i,23)*52,y+hsh(i,24)*T,2,2);ctx.fillRect(ROAD_R+2+hsh(i,25)*52,y+hsh(i,26)*T,1.6,1.6);}}
   /* асфальт: старый, с заплатками */
-  ctx.fillStyle="#464b51";ctx.fillRect(ROAD_L,0,ROAD_R-ROAD_L,H);
+  ctx.fillStyle="#464b51";ctx.fillRect(ROAD_L,-EXT,ROAD_R-ROAD_L,H+2*EXT);
   for(let i=i0;i<=i1;i++){const y=sc-i*T;
     if(hsh(i,31)<.28){ctx.fillStyle=hsh(i,32)<.5?"#3b4045":"#51565c";const px=ROAD_L+6+hsh(i,33)*(ROAD_R-ROAD_L-50);ctx.fillRect(px,y,18+hsh(i,34)*26,12+hsh(i,35)*22);}
     if(hsh(i,36)<.22){ctx.strokeStyle="#2f3338";ctx.lineWidth=1;const cx=ROAD_L+10+hsh(i,37)*(ROAD_R-ROAD_L-20);ctx.beginPath();ctx.moveTo(cx,y);ctx.lineTo(cx+6,y+10);ctx.lineTo(cx+2,y+20);ctx.lineTo(cx+9,y+30);ctx.stroke();}}
-  ctx.fillStyle="#3f444a";ctx.fillRect(ROAD_L+26,0,10,H);ctx.fillRect(ROAD_L+98,0,10,H);ctx.fillRect(ROAD_L+170,0,10,H); /* колея */
-  ctx.fillStyle="#d9dee3c0";ctx.fillRect(ROAD_L-2,0,2.5,H);ctx.fillRect(ROAD_R-1,0,2.5,H);
+  ctx.fillStyle="#3f444a";ctx.fillRect(ROAD_L+26,-EXT,10,H+2*EXT);ctx.fillRect(ROAD_L+98,-EXT,10,H+2*EXT);ctx.fillRect(ROAD_L+170,-EXT,10,H+2*EXT); /* колея */
+  ctx.fillStyle="#d9dee3c0";ctx.fillRect(ROAD_L-2,-EXT,2.5,H+2*EXT);ctx.fillRect(ROAD_R-1,-EXT,2.5,H+2*EXT);
   ctx.fillStyle="#cfd6deb0";
   const dof=sc%64;for(let y=-64;y<H+64;y+=64){ctx.fillRect(111,y+dof,3,30);ctx.fillRect(183,y+dof,3,30);}
   /* сужение до двух полос: левая полоса уходит под траву */
@@ -3998,10 +4030,10 @@ function brackets(x,y,col){
   ctx.strokeStyle=col;ctx.lineWidth=2;const w=24,h=38,l=8;
   [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([sx,sy])=>{ctx.beginPath();ctx.moveTo(x+sx*w,y+sy*(h-l));ctx.lineTo(x+sx*w,y+sy*h);ctx.lineTo(x+sx*(w-l),y+sy*h);ctx.stroke();});
 }
-const VX=PORT?0:140,VY=PORT?0:180; /* мир игры 360×640, на экране 16:9 видно окно 640×360: сдвиг вправо и вверх */
+let VX=PORT?0:140,VY=PORT?0:180,EXT=0; /* мир игры 360×640, на экране 16:9 видно окно 640×360: сдвиг вправо и вверх */
 function draw(){
   const p=S.p;
-  ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle="#3b5633";ctx.fillRect(0,0,640,360);
+  ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle="#3b5633";ctx.fillRect(0,0,cv.width,cv.height);
   ctx.setTransform(1,0,0,1,VX,-VY);
   drawWorld();
   // cars
@@ -4070,14 +4102,14 @@ function draw(){
   if(!S.night)morning();
   // night
   if(S.night){
-    octx.globalCompositeOperation="source-over";octx.clearRect(0,0,W,H);octx.fillStyle="rgba(3,7,18,.82)";octx.fillRect(0,0,W,H);
+    octx.setTransform(1,0,0,1,0,EXT);octx.globalCompositeOperation="source-over";octx.clearRect(0,-EXT,W,H+2*EXT);octx.fillStyle="rgba(3,7,18,.82)";octx.fillRect(0,-EXT,W,H+2*EXT);
     octx.globalCompositeOperation="destination-out";
     octx.save();octx.translate(p.x,p.y-90);octx.scale(1,1.9);
     const g=octx.createRadialGradient(0,0,10,0,0,150);g.addColorStop(0,"rgba(0,0,0,1)");g.addColorStop(1,"rgba(0,0,0,0)");
     octx.fillStyle=g;octx.beginPath();octx.arc(0,0,150,0,7);octx.fill();octx.restore();
     for(const [lx,ly] of WLAMPS){const g3=octx.createRadialGradient(lx,ly,2,lx,ly,46);g3.addColorStop(0,"rgba(0,0,0,.95)");g3.addColorStop(1,"rgba(0,0,0,0)");octx.fillStyle=g3;octx.beginPath();octx.arc(lx,ly,46,0,7);octx.fill();}
     if(S.mode==="pullover"&&S.pull){const c=S.pull.c;const g2=octx.createRadialGradient(c.x,c.y,5,c.x,c.y,70);g2.addColorStop(0,"rgba(0,0,0,1)");g2.addColorStop(1,"rgba(0,0,0,0)");octx.fillStyle=g2;octx.beginPath();octx.arc(c.x,c.y,70,0,7);octx.fill();}
-    ctx.drawImage(off,0,0);
+    octx.setTransform(1,0,0,1,0,0);ctx.drawImage(off,0,-EXT);
   }
   ctx.setTransform(1,0,0,1,0,0);
   if(S.night&&!PORT){ctx.fillStyle="rgba(3,7,18,.82)";ctx.fillRect(0,0,VX,360);ctx.fillRect(VX+W,0,640-VX-W,360);}
@@ -4241,7 +4273,7 @@ function openHands(req){
   if(!IN.desk)IN.desk={sel:[],claims:[],db:false,dbWait:false,checks:0,done:{},hand:{l:null,r:null}};
   if(!IN.desk.hand)IN.desk.hand={l:null,r:null};
   const D=IN.desk;IN.window=true;D.seen=true;
-  if(PORT){DOS.tab="doc";$("#dos").hidden=false;$("#ds-doc").hidden=false;["chk","dec"].forEach(k=>$("#ds-"+k).hidden=true);$("#hands").hidden=false;}else{$("#inspect").hidden=true;$("#hands").hidden=false;$("#h-rail").hidden=false;hRail();}
+  if(PORT){DOS.tab="doc";$("#inspect").hidden=true;$("#dos").hidden=false;$("#ds-doc").hidden=false;["chk","dec"].forEach(k=>$("#ds-"+k).hidden=true);$("#hands").hidden=false;}else{$("#inspect").hidden=true;$("#hands").hidden=false;$("#h-rail").hidden=false;hRail();}
   if(c.nolic&&c.docs==="нет с собой"&&!IN.rev.doc){proveViol("nolic");find("Права не предъявлены"+prc(FINE.nolic),"bad","fine");}
   if(c.noins&&c.insWhat==="нет с собой"&&!IN.rev.ins){proveViol("noins");find("Полис не предъявлен"+prc(FINE.noins),"bad","fine");}
   hCards();
@@ -4521,7 +4553,9 @@ function frame(now){
 }
 function resize(){
   const a=$("#app"),st=$("#stage");const aw=a.clientWidth,ah=a.clientHeight;
-  if(PORT){const h=Math.min(ah,aw*16/9),w=h*9/16;st.style.width=w+"px";st.style.height=h+"px";st.style.fontSize=(w/36)+"px";return;}
+  if(PORT){ /* весь экран телефона: ширина = экран, по высоте показываем больше дороги */
+    const w=Math.min(aw,ah*.62),h=ah;st.style.width=w+"px";st.style.height=h+"px";st.style.fontSize=(w/36)+"px";
+    const ch=Math.max(640,Math.round(360*h/w));if(cv.height!==ch){cv.height=ch;off.height=ch;}EXT=(ch-640)/2;VY=-EXT;return;}
   const w=Math.min(aw,ah*16/9),h=w*9/16;st.style.width=w+"px";st.style.height=h+"px";st.style.fontSize=(w/64)+"px";
 }
 addEventListener("resize",()=>{resize();if(IN&&!$("#hands").hidden){hDrawCar();hLayout();if(PORT)dsRelayout();}});
