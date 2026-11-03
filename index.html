@@ -1651,7 +1651,7 @@ const money=n=>(n<0?"−":"")+Math.abs(Math.round(n)).toLocaleString("ru-RU")+" 
 /* премии за законный арест: оружие, перевозчик веществ, угон (левый VIN или машина в угоне), розыск; суммируются */
 /* кортежи и служебные удостоверения */
 const CONVOY_CHANCE=.005, AIDE_CHANCE=.01, VIP_FAKE=.15;
-const VIP_TITLES={head:["Глава государства"],minister:["Министр финансов","Министр транспорта","Министр обороны","Министр здравоохранения","Министр юстиции"],aide:["Помощник президента","Помощник министра финансов","Помощник министра транспорта","Советник главы государства"]};
+const VIP_TITLES={head:["Глава государства"],minister:["Министр финансов","Министр транспорта","Министр обороны","Министр здравоохранения","Министр юстиции"],aide:["Помощник главы государства","Помощник министра финансов","Помощник министра транспорта","Советник главы государства"]};
 const ARREST_BONUS={vip:[10000,20000],weapon:[25000,50000],carrier:[240000,240000],steal:[1000,2000],wanted:[2000,3000],cargo:[5000,8000]};
 function bonusKinds(c,pr){const k=[];if(pr.weapon)k.push("weapon");if(pr.drugs&&c.carrier)k.push("carrier");if(pr.stolen||pr.stolenReg)k.push("steal");if(pr.wanted)k.push("wanted");if(pr.cargoBad)k.push("cargo");if(pr.vipfake)k.push("vip");return k;}
 function bonusRange(c,pr){const k=bonusKinds(c,pr);return k.length?[k.reduce((s,x)=>s+ARREST_BONUS[x][0],0),k.reduce((s,x)=>s+ARREST_BONUS[x][1],0)]:null;}
@@ -1736,7 +1736,7 @@ function sevParts(c,known){
   if(c.vipfake&&known("vipx"))k+=100;
   if(c.drunk&&known("breath"))k+=70;
   if(c.fled2)k+=c.forced?ARREST_PTS:FLEE2_PTS; else if(c.fled)k+=50; /* этап 2 и остановлен огнём/тараном/гарпуном — только арест */
-  if(c.drugs&&known("search"))return DRUG_PTS; /* исключение: при веществах тяжесть ровно 228, остальное не плюсуется */
+  if(c.drugs&&known("search"))return DRUG_PTS; /* исключение: при веществах тяжесть ровно DRUG_PTS, остальное не плюсуется */
   if(c.weapon&&known("search"))k+=WEAPON_PTS;
   if(c.contra&&known("search"))k+=CONTRA_PTS;
   return k;
@@ -1757,7 +1757,7 @@ const RACER_CHANCE=.05, RACER_MAX=282, RACER_ACC=70; /* 5% машин: гонщ�
 const DRUG_CHANCE=0; /* обычные вещества убраны: остался только перевозчик (1%) */
 const NOINS_CHANCE=.08, NOINS_PTS=20; /* нет действующей страховки: штраф, 20 очков */
 const FINE={nolic:2000,drunk:3000,mod:500,noins:1500,permit:5000,helmet:1000,unpaid:2000,pasexp:800}, speedFine=ex=>500+Math.round(ex)*30; /* цены штрафов (показываются в описании проверки) */
-const DRUG_PTS=228; /* очки тяжести за вещества (только они) */
+const DRUG_PTS=200; /* очки тяжести за вещества (только они) */
 const WEAPON_CHANCE=.03, CONTRA_CHANCE=.04, WEAPON_PTS=100, CONTRA_PTS=100, WEAPON_PRICE=[10000,15000], CONTRA_PRICE=[5000,8000]; /* оружие и драгметаллы — в группе «Обыск» вместе с веществами */
 const CARRIER_CHANCE=.01, CARRIER_DEAL=[500000,900000], CARRIER_MAX=1000000, CARRIER_PRICE=[500000,900000], CARRIER_STASH=10; /* 1% машин: перевозчик с огромной партией; взять у него — без потери кармы */
 const BASE=[3000,4000,5500,7500,10000,14000]; /* оклад за смену по званию */
@@ -1857,8 +1857,8 @@ cv.addEventListener("pointerdown",e=>{if(!S||!S.post||S.mode!=="patrol")return;c
   if(!best)return;if(best.escort){toast("Машина сопровождения кортежа: останавливать нельзя");return;}
   if(S.stopT>0||S.stopCar){toast("Жезл уже поднят — ждём водителя");return;}S.postPick=best.id;S.locked=best.id;doStop();});
 /* обновления для веб-версии: сверяемся с version.json рядом с index.html */
-const APP_VER="2.39";
-const PATCH={"2.39": ["Пост: просто тапните по машине — инспектор поднимет жезл. Кнопки «Жезл» и «Пробить» на посту убраны", "Остановленная машина плавно перестраивается, пропускает попутных и съезжает на обочину", "Вернулись старые карточки паспорта машины и страховки", "Лицо водителя в окне теперь по размеру человека, а не окна", "Спидометр внизу по центру, кнопка сирены в виде маячка", "Карма на экране езды убрана — она в штабе и в итоге смены", "Окно «Есть обновление» с патчноутом", "DEV в главном меню: сразу выйти на смену «Пост» или «Патруль»"]};
+const APP_VER="2.40";
+const PATCH={"2.40": ["Машины перестраиваются плавно, как патрульная: боковой ход набирается и гасится, кузов слегка поворачивается", "Съезд на обочину на посту и выезд с неё тоже плавные", "Из игры убраны реальные аббревиатуры и символика: надписи на машинах патруля, флаги на лимузине, отсылки к статьям"], "2.39": ["Пост: просто тапните по машине — инспектор поднимет жезл. Кнопки «Жезл» и «Пробить» на посту убраны", "Остановленная машина плавно перестраивается, пропускает попутных и съезжает на обочину", "Вернулись старые карточки паспорта машины и страховки", "Лицо водителя в окне теперь по размеру человека, а не окна", "Спидометр внизу по центру, кнопка сирены в виде маячка", "Карма на экране езды убрана — она в штабе и в итоге смены", "Окно «Есть обновление» с патчноутом", "DEV в главном меню: сразу выйти на смену «Пост» или «Патруль»"]};
 function cmpVer(a,b){const x=String(a).split(".").map(Number),y=String(b).split(".").map(Number);for(let i=0;i<Math.max(x.length,y.length);i++){const d=(x[i]||0)-(y[i]||0);if(d)return d;}return 0;}
 function verModal(title,notes,btn,fn){const m=document.createElement("div");m.className="vmod";m.innerHTML=`<div class="vbox"><b class="vt">${title}</b><ul>${notes.map(n=>`<li>${n}</li>`).join("")}</ul><button class="big">${btn}</button></div>`;document.body.appendChild(m);m.querySelector("button").onclick=()=>fn(m);}
 if(/^https?:/.test(location.protocol)){
@@ -2050,16 +2050,20 @@ function steer(d){if(S&&(S.mode==="patrol"||S.mode==="chase"))S.p.x=clamp(S.p.x+
 function postPullTick(c,dt){
   const q=S.pull,p=S.p;if(!q)return;
   if(q.ty==null){q.ty=c.y>p.y+150?p.y+130:p.y-140;}
+  const onShoulder=Math.abs(c.x-SHOULDER)<3;
+  if(!onShoulder&&c.y-q.ty<50){const lim=q.ty>p.y?p.y+85:60;q.ty=Math.max(lim,Math.min(q.ty,c.y-50));} /* не встаёт посреди дороги: точка остановки отъезжает, пока машина не на обочине */
   const dist=c.y-q.ty; /* сколько ещё проехать вверх */
-  let v=c.speed*PX;const want=Math.sqrt(2*150*Math.max(0,dist));v=Math.max(Math.min(v,want),dist>2?14:0);v=Math.max(0,v-(dist<1?400*dt:0));
+  let v=c.speed*PX;const want=Math.sqrt(2*150*Math.max(0,dist));v=Math.min(v,want);
+  if(!onShoulder)v=dist>2?Math.max(Math.min(v,c.speed*PX-130*dt),38):0; /* тормозит до шага, пока перестраивается */
+  else v=Math.max(v,dist>2?14:0);v=Math.max(0,v-(dist<1?400*dt:0));
   c.speed=v/PX;c.base=c.speed;c.y-=v*dt;if(dist<=0){c.y=Math.min(c.y+0,c.y);}
   /* перестроение: в правый ряд, только если там свободно (иначе пропускаем трафик), потом на обочину */
-  const freeR=l=>!S.cars.some(o=>o!==c&&isDriving(o)&&Math.abs(o.x-LANES[l])<30&&o.y>c.y-90&&o.y<c.y+150);
+  const freeR=l=>!S.cars.some(o=>o!==c&&isDriving(o)&&Math.abs(o.x-LANES[l])<30&&o.y>c.y-70&&o.y<c.y+100);
   if(c.lane<2&&Math.abs(c.x-LANES[c.lane])<6){q.wait=!freeR(c.lane+1);if(!q.wait){c.lane++;}} /* по одной полосе, пропуская попутных */
-  let tx=LANES[c.lane];if(c.lane===2&&dist<170&&Math.abs(c.y-p.y)>70)tx=SHOULDER;if(c.lane===2&&q.onSh)tx=SHOULDER;
+  let tx=LANES[c.lane];if(c.lane===2&&dist<230&&Math.abs(c.y-p.y)>70)tx=SHOULDER;if(c.lane===2&&q.onSh)tx=SHOULDER;
   if(tx===SHOULDER)q.onSh=true;
-  c.x+=(tx-c.x)*Math.min(1,(tx===SHOULDER?2.2:3)*dt);
-  if(dist<1.5&&Math.abs(c.x-SHOULDER)<2){c.x=SHOULDER;c.speed=0;c.base=0;c.state="pulled";S.pull=null;openInspect(c);}
+  {const lat=40+c.speed*.3,want=clamp((tx-c.x)*1.9,-lat,lat);c.vx=(c.vx||0)+(want-(c.vx||0))*Math.min(1,3.2*dt);c.x+=c.vx*dt;}
+  if(dist<1.5&&Math.abs(c.x-SHOULDER)<2){c.x=SHOULDER;c.vx=0;c.speed=0;c.base=0;c.state="pulled";S.pull=null;openInspect(c);}
 }
 function startPullover(c){S.mode="pullover";S.pull={c,t:0,sx:S.post?SHOULDER:c.lane===0?SHOULDER_L:SHOULDER,chased:!!c.fled,post:!!(S.post&&!c.fled)};if(S.pull.post){c.state="pulling";S.locked=null;S.siren=0;return;}/* левая полоса: съезд на ближний грунт слева, иначе на правую обочину */c.state="pulled";S.locked=null;S.siren=999;
   if(c.convoy){S.cars.forEach(e=>{if(e.convoy!==c.convoy||e===c)return;e.state="pulled";e.ex=S.pull.sx;e.ey=e.cpos<0?330+e.cpos*72:PY+60+(e.cpos-1)*72;});toast("Кортеж прижимается к обочине");}}
@@ -2979,7 +2983,7 @@ const SIDE={
     deco(g){g.strokeStyle="#d6dde5";g.lineWidth=1.4;g.beginPath();g.moveTo(66,-59);g.lineTo(194,-59);g.stroke(); /* хромированная линия окон */
       g.beginPath();g.moveTo(20,-30);g.lineTo(236,-30);g.stroke();
       g.fillStyle="#cfd6de";rrg(g,246,-52,6,26,1.5);g.fill();g.fillStyle="#6d7680";for(let y=-50;y<-27;y+=3)g.fillRect(246.5,y,5,1.2); /* решётка */
-      g.fillStyle="#cfd6de";g.fillRect(222,-70,1.2,14);g.fillStyle="#f4f6f8";g.fillRect(223,-70,9,2.2);g.fillStyle="#2f6fb5";g.fillRect(223,-67.8,9,2.2);g.fillStyle="#c8202b";g.fillRect(223,-65.6,9,2.2);}}, /* флажок на крыле */
+      g.fillStyle="#cfd6de";g.fillRect(222,-70,1.2,14);g.fillStyle="#d9b44a";g.beginPath();g.moveTo(223,-70);g.lineTo(233,-67);g.lineTo(223,-64);g.closePath();g.fill();}}, /* вымпел на крыле (вымышленный) */
   coupe:{Lb:190,R:18,wx:[40,146],s:-12,bl:-52,
     body:"M6,-12 L2,-20 Q0,-32 4,-43 L40,-47 Q70,-52 94,-64 Q102,-70 114,-70 L128,-69 Q140,-67 150,-57 L166,-48 Q182,-46 188,-38 L189,-22 L184,-12 Z",
     glass:["M76,-52 L96,-64 Q100,-66 108,-66 L126,-66 Q132,-65 137,-60 L146,-52 Z"],
@@ -3016,7 +3020,7 @@ function paintSide(g,color,model,o){
   g.strokeStyle="#00000070";g.lineWidth=.9;g.stroke(body);
   if(D.deco)D.deco(g,color,o);
   if(sp.police){g.save();g.clip(body);g.fillStyle="#1d4f91";g.fillRect(0,D.bl+14,Lb,9);g.fillStyle="#2f7fd6";g.fillRect(0,D.bl+23,Lb,3);g.restore();
-    g.fillStyle="#fff";g.font="bold 9px sans-serif";g.textAlign="center";g.fillText("ДПС",D.handles[0][0]+20,D.bl+21);
+    g.fillStyle="#fff";g.font="bold 9px sans-serif";g.textAlign="center";g.fillText("ПАТРУЛЬ",D.handles[0][0]+26,D.bl+21);
     const bx=D.gm[0];g.fillStyle="#c8202b";rrg(g,bx-14,-80,13,5,1.5);g.fill();g.fillStyle="#2f6fb5";rrg(g,bx+1,-80,13,5,1.5);g.fill();}
   /* стёкла */
   D.glass.forEach(p=>{
@@ -3728,7 +3732,8 @@ function update(dt){
     const wob=(c.drunk&&c.state!=="leaving"&&c.state!=="fleeing"?Math.sin(c.t*2.2)*16:0);
     if(c.bass&&(c.state==="drive"||c.state==="leaving")){ /* профи: плавно разгоняет боковой ход и так же плавно гасит, без рывков */
       const dx=LANES[c.lane]-c.x,want=clamp(dx*3.4,-175,175);c.vx=(c.vx||0)+clamp(want-(c.vx||0),-520*dt,520*dt);c.x+=c.vx*dt;}
-    else{c.vx=0;c.x+=(LANES[c.lane]+wob-c.x)*Math.min(1,6*dt);}
+    else{const tx=LANES[c.lane]+wob,lat=45+Math.max(0,c.speed)*.3,want=clamp((tx-c.x)*1.9,-lat,lat); /* перестроение как у игрока: боковой ход набирается и гасится плавно */
+      c.vx=(c.vx||0)+(want-(c.vx||0))*Math.min(1,3.2*dt);c.x+=c.vx*dt;}
   }
   /* спецтранспорт с мигалками: впереди идущие уступают полосу */
   for(const e of S.cars){if(!e.onCall||!isDriving(e))continue;
@@ -4255,7 +4260,7 @@ function paintCar(g,color,model,big,tint,sport){
   if(sp.k==="limo"){ /* «Сенатор»: длинный, хром решётки, флажки на крыльях */
     g.fillStyle="#cfd6de";rrg(g,-hw+7,-hl-.6,W-14,3.2,1);g.fill();g.fillStyle="#5d6670";for(let x=-hw+9;x<hw-8;x+=2.4)g.fillRect(x,-hl,1,2.4);
     g.strokeStyle="#c9d1da";g.lineWidth=.8;g.beginPath();g.moveTo(-hw+2.5,sp.ws[1]);g.lineTo(-hw+2.5,sp.rw[0]);g.moveTo(hw-2.5,sp.ws[1]);g.lineTo(hw-2.5,sp.rw[0]);g.stroke();
-    [-1,1].forEach(k=>{g.fillStyle="#f4f6f8";g.fillRect(k*(hw-4)-1,-hl+5,2,2);g.fillStyle="#2f6fb5";g.fillRect(k*(hw-4)-1,-hl+7,2,2);g.fillStyle="#c8202b";g.fillRect(k*(hw-4)-1,-hl+9,2,2);});
+    [-1,1].forEach(k=>{g.fillStyle="#d9b44a";g.fillRect(k*(hw-4)-1,-hl+5,2,6);});
     g.fillStyle="#00000040";g.fillRect(-.5,sp.ws[1]+2,1,sp.rw[0]-sp.ws[1]-4);}
   if(sp.police){g.fillStyle="#1d4f91";g.fillRect(-hw,-hl+L*.36,W,L*.12);g.fillStyle="#2f7fd6";g.fillRect(-hw,-hl+L*.48,W,L*.04);
     g.fillStyle="#7a2020";rrg(g,-9,(sp.ws[1]+sp.rw[0])/2-2,8.5,4,1);g.fill();g.fillStyle="#1f2f6a";rrg(g,.5,(sp.ws[1]+sp.rw[0])/2-2,8.5,4,1);g.fill();}
@@ -4435,7 +4440,7 @@ function draw(){
     const hot=c.state==="fleeing"||c.state==="signaled"||(S.chase&&S.chase.c===c)||S.stopCar===c;
     if(c.state==="dead"){drawCar(c.x,c.y,"#222a33",{model:c.model});}
     else{if(c.bass&&AU.level>.05){const lv=AU.level;ctx.strokeStyle="rgba(255,120,60,"+(lv*.5)+")";ctx.lineWidth=2;for(const k of [1,1.6]){ctx.beginPath();ctx.ellipse(c.x,c.y,(26+lv*14)*k,(38+lv*14)*k,0,0,7);ctx.stroke();}}
-    drawCar(c.x,c.y,c.color,{rot:c.bass&&isDriving(c)?clamp((c.vx||0)/520,-.24,.24):0,hot,model:c.model,tint:c.mod&&/тонир/.test(c.modWhat||""),sport:c.racer,lights:c.onCall&&isDriving(c),trailer:c.trailer,helmet:c.helmet,nohelmet:c.nohelmet});}
+    drawCar(c.x,c.y,c.color,{rot:(isDriving(c)||c.state==="fleeing"||c.state==="pulling")?clamp((c.vx||0)/(c.bass?520:360),-.22,.22):0,hot,model:c.model,tint:c.mod&&/тонир/.test(c.modWhat||""),sport:c.racer,lights:c.onCall&&isDriving(c),trailer:c.trailer,helmet:c.helmet,nohelmet:c.nohelmet});}
     if(c.escort&&c.state!=="dead"){const fl=Math.floor(S.time*8+c.cpos)%2;ctx.save();ctx.shadowBlur=14;ctx.shadowColor=fl?"#ff3b3b":"#3b82ff";ctx.fillStyle=fl?"#ff3b3b":"#5a1a1a";ctx.fillRect(c.x-11,c.y-4,10,5);ctx.shadowColor=fl?"#3b82ff":"#ff3b3b";ctx.fillStyle=fl?"#1a245a":"#3b82ff";ctx.fillRect(c.x+1,c.y-4,10,5);ctx.restore();}
     if(c.plateChecked&&isDriving(c)&&(c.stolenReg||c.wanted||c.unpaid)){const t=c.stolenReg?"УГОН":c.wanted?"РОЗЫСК":"ДОЛГ "+c.unpaid;ctx.save();ctx.font="bold 11px sans-serif";ctx.textAlign="center";const tw=ctx.measureText(t).width+12;ctx.fillStyle="#b81d25";rr(c.x-tw/2,c.y+hl(c)+4,tw,16,5);ctx.fill();ctx.fillStyle="#fff";ctx.fillText(t,c.x,c.y+hl(c)+16);ctx.restore();}
     if(c.takenT>0){ctx.strokeStyle=Math.floor(S.time*6)%2?"#ff3b3b":"#3b82ff";ctx.lineWidth=3;rr(c.x-18,c.y-32,36,64,8);ctx.stroke();}
