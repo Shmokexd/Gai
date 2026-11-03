@@ -1195,6 +1195,25 @@ html.port #ds-doc #hands .clip{transition:transform .45s cubic-bezier(.22,1,.3,1
 #ds-pull.hint{animation:dpull .5s ease-in-out 4 alternate}
 @keyframes dpull{to{transform:translateX(-50%) translateY(-.4em);background:#ffd23f}}
 html.port #ds-doc #hands .clip{top:2em!important}
+
+/* v30: плитки проверок — иконка в цветном круге, название, статус */
+#dos .ds-tiles{gap:10px;padding-top:2px}
+#dos .ds-tile{position:relative;width:calc((100% - 20px)/3);min-height:128px;padding:14px 6px 10px;gap:7px;border-radius:18px;justify-content:flex-start;
+  background:linear-gradient(160deg,#1f2e44,#141d2b);box-shadow:inset 0 1px 0 #ffffff1a,0 6px 14px #0006;overflow:hidden;transition:transform .12s}
+#dos .ds-tile:active{transform:scale(.96)}
+#dos .ds-tile::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:#4da3ff}
+#dos .ds-ti{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;font-style:normal;background:radial-gradient(circle at 35% 30%,#4da3ff55,#4da3ff1a 70%);color:#a9d4ff;box-shadow:0 0 0 2px #4da3ff55,0 0 16px #4da3ff33}
+#dos .ds-ti svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#dos .ds-tile b{font:800 13px/1.15 var(--body);text-align:center;min-height:2.3em;display:flex;align-items:center}
+#dos .ds-tile.todo{box-shadow:inset 0 1px 0 #ffffff1a,0 6px 14px #0006}
+#dos .ds-tile.ok{background:linear-gradient(160deg,#173a2a,#10231a)}#dos .ds-tile.ok::before{background:#3fcf8e}
+#dos .ds-tile.ok .ds-ti{background:radial-gradient(circle at 35% 30%,#3fcf8e55,#3fcf8e1a 70%);color:#8ff0c0;box-shadow:0 0 0 2px #3fcf8e66,0 0 16px #3fcf8e33}
+#dos .ds-tile.bad{background:linear-gradient(160deg,#4a1c1f,#2a1214)}#dos .ds-tile.bad::before{background:#ff5e5e}
+#dos .ds-tile.bad .ds-ti{background:radial-gradient(circle at 35% 30%,#ff5e5e66,#ff5e5e1a 70%);color:#ffb3b3;box-shadow:0 0 0 2px #ff5e5e77,0 0 18px #ff5e5e44}
+#dos .ds-tile.warn::before{background:#ffd23f}#dos .ds-tile.warn .ds-ti{color:#ffe08a;box-shadow:0 0 0 2px #ffd23f66}
+#dos .ds-tile.lock{opacity:.45}#dos .ds-tile.lock::before{background:#5a6676}#dos .ds-tile.lock .ds-ti{background:#ffffff10;color:#8a97a8;box-shadow:none}
+#dos .ds-tile.todo .ds-ti{animation:dsglow 1.6s ease-in-out infinite alternate}
+@keyframes dsglow{to{box-shadow:0 0 0 2px #4da3ffaa,0 0 22px #4da3ff66}}
 </style>
 
 <div id="app">
@@ -2802,7 +2821,7 @@ function dosShow(t){
   if(t==="doc")setTimeout(()=>{hLinks&&hLinks();},30);
 }
 function dsRow(k,img,label,st,cls,lock){
-  return `<button class="ds-tile ${cls}" data-c="${k}" ${lock?"aria-disabled=\"true\"":""}><img src="${DS_IC[img]}" alt=""><b>${label}</b><span>${st}</span></button>`;
+  return `<button class="ds-tile ${cls}" data-c="${k}" ${lock?"aria-disabled=\"true\"":""}><i class="ds-ti">${IC[img]||""}</i><b>${label}</b><span>${st}</span></button>`;
 }
 function renderDos(){
   if(!PORT||!IN)return;const c=IN.c,g=S.gear,d=docData(c),r=IN.rev,t=DOS.tab;
@@ -2822,7 +2841,7 @@ function renderDos(){
     const brS=g.breath?(r.breath?(c.drunk?[c.bac.toFixed(2)+" ‰ пьян","bad"]:["трезв","ok"]):["Проверить","todo"]):(IN.eye?(IN.bad.breath?["похоже пьян","warn"]:["трезв на вид","ok"]):["Проверить","todo"]);
     const st=(done,bad)=>bad?["нарушение","bad"]:done?["чисто","ok"]:["Проверить","todo"];
     const lkS=st(r.look,IN.bad.look),seS=lock?["нужен повод","lock"]:st(r.search,IN.bad.search),dbS=r.base&&r.reg?(IN.bad.base||IN.bad.reg?["в базе!","bad"]:["чисто","ok"]):["Проверить","todo"];
-    $("#ds-chk").innerHTML=`<div class="ds-tiles">${dsRow("ext","tuning","Внешний вид",exS[0],exS[1])}${dsRow("breath","alco",g.breath?"Алкотестер":"На глаз",brS[0],brS[1])}${dsRow("look","warn","Салон",lkS[0],lkS[1])}${dsRow("search","contra","Обыск",seS[0],seS[1],lock)}${dsRow("db","wanted","База",dbS[0],dbS[1])}</div>
+    $("#ds-chk").innerHTML=`<div class="ds-tiles">${dsRow("ext","look","Внешний вид",exS[0],exS[1])}${dsRow("breath",g.breath?"breath":"eye",g.breath?"Алкотестер":"Запах, речь",brS[0],brS[1])}${dsRow("look","look","Осмотр салона",lkS[0],lkS[1])}${dsRow("search","search","Обыск",seS[0],seS[1],lock)}${dsRow("db","reg","База: розыск и угон",dbS[0],dbS[1])}</div>
       ${IN.bribeOpen?`<div class="ds-say"><small>ВОДИТЕЛЬ ГОВОРИТ</small>«Давайте договоримся на месте, ${money(c.bribe)}»</div>`:""}
       <div class="ds-log"><small>ЧТО ВЫЯСНИЛИ</small><ul>${IN.finds.length?IN.finds.map(f=>`<li class="${f.cls}">${f.ico?vi(f.ico)+" ":""}${f.txt}</li>`).join(""):`<li class="emp">пока ничего</li>`}</ul></div>`;
     const ul=$("#ds-chk .ds-log ul");if(ul)ul.scrollTop=ul.scrollHeight;
