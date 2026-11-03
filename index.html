@@ -1214,6 +1214,14 @@ html.port #ds-doc #hands .clip{top:2em!important}
 #dos .ds-tile.lock{opacity:.45}#dos .ds-tile.lock::before{background:#5a6676}#dos .ds-tile.lock .ds-ti{background:#ffffff10;color:#8a97a8;box-shadow:none}
 #dos .ds-tile.todo .ds-ti{animation:dsglow 1.6s ease-in-out infinite alternate}
 @keyframes dsglow{to{box-shadow:0 0 0 2px #4da3ffaa,0 0 22px #4da3ff66}}
+
+/* v31: машина и водитель — активные зоны видны, когда планшет опущен */
+html.port #ds-doc #hands:has(.clip.low) .hot,html.port #ds-doc #hands:has(.clip.low) .hplate .fld{outline:2px dashed #ffd23f;outline-offset:2px;animation:dshot 1.2s ease-in-out infinite alternate;cursor:pointer}
+html.port #ds-doc #hands .hot::after{content:attr(data-lbl);position:absolute;left:50%;top:-1.5em;transform:translateX(-50%);white-space:nowrap;padding:.1em .5em;border-radius:.5em;background:#0b1119d9;color:#ffd23f;font:800 .78em var(--body);opacity:0;transition:opacity .2s;pointer-events:none}
+html.port #ds-doc #hands:has(.clip.low) .hot::after{opacity:1}
+@keyframes dshot{to{outline-color:#ffd23f55}}
+html.port #ds-doc #hands .hplate{z-index:2}
+html.port #ds-doc #hands .mid .acts{display:none!important}
 </style>
 
 <div id="app">
@@ -1347,7 +1355,7 @@ html.port #ds-doc #hands .clip{top:2em!important}
     <div class="hrail" id="h-rail" hidden></div>
     <div id="hands" hidden aria-label="Проверка документов">
       <canvas id="hcv" width="1280" height="330"></canvas>
-      <div class="hot" id="h-car" data-fld="car.look"></div><div class="hot" id="h-face" data-fld="face"></div>
+      <div class="hot" id="h-car" data-fld="car.look" data-lbl="цвет и модель"></div><div class="hot" id="h-face" data-fld="face" data-lbl="лицо"></div>
       <div class="hplate" id="h-plate"></div><div class="hv" id="h-vin"></div><div class="hv" id="h-eng"></div>
       <div class="bubble" id="h-say"></div>
       <div class="hside"><div class="watch" id="h-watch" data-fld="today"></div><div class="mid" id="h-mid"></div></div>
@@ -2818,8 +2826,10 @@ function dosShow(t){
   if(t==="doc"&&(!IN.desk||!IN.desk.seen)){DOS.tab="doc";openHands();return;}
   if(t!=="doc"&&DOS.tab==="doc"&&IN.desk){IN.desk.sel=[];deskExamined();}
   DOS.tab=t;$("#hands").hidden=t!=="doc";renderInspect();
-  if(t==="doc")setTimeout(()=>{hLinks&&hLinks();},30);
+  if(t==="doc")dsRelayout();
 }
+/* пересчитать сцену и карточки, когда шаг «Документы» снова на экране (размеры могли быть нулевыми) */
+function dsRelayout(){requestAnimationFrame(()=>{if(!IN||$("#hands").hidden)return;hDrawCar();hLayout();const D=IN.desk;if(D&&D.pos&&$("#hands .clip").clientWidth>0&&D.posW!==$("#hands .clip").clientWidth){D.pos={};}if(D)D.posW=$("#hands .clip").clientWidth;dsLayout();hLinks&&hLinks();});}
 function dsRow(k,img,label,st,cls,lock){
   return `<button class="ds-tile ${cls}" data-c="${k}" ${lock?"aria-disabled=\"true\"":""}><i class="ds-ti">${IC[img]||""}</i><b>${label}</b><span>${st}</span></button>`;
 }
@@ -4214,14 +4224,14 @@ function openHands(req){
   if(!IN.desk)IN.desk={sel:[],claims:[],db:false,dbWait:false,checks:0,done:{},hand:{l:null,r:null}};
   if(!IN.desk.hand)IN.desk.hand={l:null,r:null};
   const D=IN.desk;IN.window=true;D.seen=true;
-  if(PORT){DOS.tab="doc";$("#dos").hidden=false;$("#hands").hidden=false;}else{$("#inspect").hidden=true;$("#hands").hidden=false;$("#h-rail").hidden=false;hRail();}
+  if(PORT){DOS.tab="doc";$("#dos").hidden=false;$("#ds-doc").hidden=false;["chk","dec"].forEach(k=>$("#ds-"+k).hidden=true);$("#hands").hidden=false;}else{$("#inspect").hidden=true;$("#hands").hidden=false;$("#h-rail").hidden=false;hRail();}
   if(c.nolic&&c.docs==="нет с собой"&&!IN.rev.doc){proveViol("nolic");find("Права не предъявлены"+prc(FINE.nolic),"bad","fine");}
   if(c.noins&&c.insWhat==="нет с собой"&&!IN.rev.ins){proveViol("noins");find("Полис не предъявлен"+prc(FINE.noins),"bad","fine");}
   hCards();
   const noLic=c.nolic&&c.docs==="нет с собой";
   $("#h-say").innerHTML=(c.bass&&!IN.quiet?"(перекрикивая музыку) ":"")+(noLic?"Права дома забыл, честно. Я ":"Вот, пожалуйста. Я ")+`<span class="fld" data-fld="name.say">${c.name}</span>`+(c.bass&&!IN.quiet?`<button class="hmus" data-a="quiet">♫ Попросить выключить музыку</button>`:"");
   const now=new Date();$("#h-watch").innerHTML=`${dfmt(now).slice(0,5)}<small>${now.getFullYear()} · ${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}</small>`;
-  hDrawCar();setTimeout(hLayout,0);hMid();
+  hDrawCar();setTimeout(hLayout,0);hMid();if(PORT){renderDos();dsRelayout();}
   if(req&&!D.db)hRequest();
 }
 function closeHands(){if(!IN)return;if(PORT){dosShow("chk");return;}$("#hands").hidden=true;$("#h-rail").hidden=true;$("#inspect").hidden=false;IN.desk.sel=[];deskExamined();renderInspect();}
@@ -4497,7 +4507,7 @@ function resize(){
   if(PORT){const h=Math.min(ah,aw*16/9),w=h*9/16;st.style.width=w+"px";st.style.height=h+"px";st.style.fontSize=(w/36)+"px";return;}
   const w=Math.min(aw,ah*16/9),h=w*9/16;st.style.width=w+"px";st.style.height=h+"px";st.style.fontSize=(w/64)+"px";
 }
-addEventListener("resize",()=>{resize();if(IN&&!$("#hands").hidden){hDrawCar();hLayout();}});
+addEventListener("resize",()=>{resize();if(IN&&!$("#hands").hidden){hDrawCar();hLayout();if(PORT)dsRelayout();}});
 {let a=true,c="wheel";try{a=localStorage.getItem("patrol2_auto")!=="0";c=localStorage.getItem("patrol2_ctrl")||"wheel";}catch(_){}setMode(a);setCtrl(c);}
 renderHub();show("hub");
 requestAnimationFrame(frame);
