@@ -1277,7 +1277,13 @@ html.port #ins-body .icol.r .finds li{display:block}html.port #ins-body .icol.r 
 #ins-body .ds-road.in span em.arr,#dos .ds-road span em.arr{background:#2f7fd6;color:#fff}
 /* вертикаль: только АКПП, всё крупнее */
 html.port #gbox,html.port .rcol>.gsel{display:none!important}
+#hub .mrow:has(#h-dpost){display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}#hub #h-reset{grid-column:1/-1}
+#hub .mrow:has(#h-dpost) .sm{min-width:0;padding:8px 6px;font-size:13px}
 .xside{display:none}
+.vmod{position:fixed;inset:0;z-index:9999;background:#05080ccc;display:grid;place-items:center;padding:16px}
+.vmod .vbox{width:min(100%,420px);max-height:90vh;overflow:auto;background:#121b28;border:1px solid #ffb12b66;border-radius:18px;padding:18px;color:#e9eef5;display:flex;flex-direction:column;gap:10px;box-shadow:0 20px 50px #000c}
+.vmod .vt{font:20px var(--display);color:#ffb12b}.vmod ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px;font-size:15px;line-height:1.35}
+.vmod .big{margin-top:6px}
 .postpan{display:none}
 html.port .postpan{display:block;position:absolute;left:.8em;right:.8em;bottom:6.4em;z-index:3;padding:.6em .8em;border-radius:1em;background:#0c1420e6;border:1px solid #ffffff1a;box-shadow:0 .6em 1.4em #0008;color:#e9eef5}
 html.port .postpan[hidden]{display:none}
@@ -1336,6 +1342,35 @@ html.port .mirror{width:11.6em;margin-left:-4.6em}
 html.port .toast{top:23em!important;left:.6em!important;right:9.6em!important}
 html.port .c-wheel{width:15.4em!important;height:15.4em!important}
 html.port #g-mode{display:none!important}
+/* v2.39: компоновка езды */
+html.port .rcol .hud-r .karma,html.port .rcol .hud-r .kl{display:none!important}
+html.port .rcol .hud-r{display:none!important}
+html.port .xside .xchips{flex:none}html.port .xside .xchips .chips{display:flex;flex-wrap:wrap;gap:.25em;margin:0;font-size:.62em;justify-content:flex-end}
+html.port .xside{top:3.4em!important;bottom:20em!important}
+html.port .radar{top:6.6em!important;left:.5em!important;font-size:.9em!important}
+html.port .csel{top:9.6em!important}
+html.port .c-wheel{width:13em!important;height:13em!important;bottom:.8em!important}
+html.port .dash{top:auto!important;left:50%!important;bottom:14.6em!important;width:8.4em!important;transform:translateX(-50%)!important;padding:.35em .5em .45em!important;border-radius:1.2em!important;text-align:center;z-index:3}
+html.port .dash .gdig,html.port .dash .leds,html.port .dash .gmode{display:none!important}
+html.port .dash .dsp{width:100%}html.port .dash .spd{justify-content:center}
+html.port .rcol #act-pat{left:.8em!important;right:.8em!important;bottom:14.6em!important;display:grid!important;grid-template-columns:1fr 9.4em 1fr!important;align-items:end;gap:0!important;pointer-events:none}
+html.port .rcol #act-pat>*{pointer-events:auto}html.port .rcol #act-pat[hidden]{display:none!important}
+html.port .rcol #act-pat .btn.plate{grid-column:1!important;grid-row:1;height:3.4em!important;font-size:1.05em!important}
+html.port .rcol #act-pat .btn.stop{grid-column:3!important;grid-row:1;justify-self:center;width:6.2em;height:4.6em!important;padding:0;border:0;background:none!important;box-shadow:none!important;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;font-size:1em!important}
+#b-stop .dome{display:block;width:4.6em;height:2.9em;border-radius:2.4em 2.4em .4em .4em;background:radial-gradient(circle at 38% 30%,#ffd0d0 0 8%,#ff4a4a 30%,#b3141d 70%,#6a070c);box-shadow:0 0 1em #ff3b3b66,inset 0 -.3em .4em #0005;position:relative}
+#b-stop .dome::after{content:"";position:absolute;left:18%;top:14%;width:26%;height:30%;border-radius:50%;background:#ffffff70;filter:blur(1px)}
+#b-stop b{display:block;width:5.6em;margin-top:-.1em;padding:.25em 0;border-radius:.5em;background:linear-gradient(#3a414b,#1c2128);color:#fff;font:.82em var(--display);letter-spacing:.06em;box-shadow:0 .25em 0 #0007}
+#b-stop.on .dome{animation:beacon .5s steps(1) infinite}
+#b-stop.dis{filter:grayscale(.6) brightness(.8)}
+@keyframes beacon{0%{background:radial-gradient(circle at 38% 30%,#ffd0d0 0 8%,#ff4a4a 30%,#b3141d 70%,#6a070c);box-shadow:0 0 2em #ff3b3bcc}50%{background:radial-gradient(circle at 38% 30%,#d0e4ff 0 8%,#4a8bff 30%,#1440b3 70%,#071a6a);box-shadow:0 0 2em #3b82ffcc}}
+html.port .rcol #act-ch{left:.8em!important;right:.8em!important;bottom:14.6em!important;width:auto!important;display:grid!important;grid-template-columns:1fr 9.4em 1fr!important;grid-template-rows:auto auto;gap:.35em 0!important;pointer-events:none}
+html.port .rcol #act-ch:not([hidden]){display:grid!important}html.port .rcol #act-ch[hidden]{display:none!important}
+html.port .rcol #act-ch>*{pointer-events:auto;height:2.6em!important;font-size:1em!important}
+html.port .rcol #act-ch #b-horn{grid-column:1!important;grid-row:1/3!important;height:auto!important}
+html.port .rcol #act-ch #b-fire{grid-column:3!important;grid-row:1}html.port .rcol #act-ch #b-det{grid-column:3!important;grid-row:2}
+html.port #stage.postidle .mirror,html.port #stage.postidle .dash,html.port #stage.postidle .rcol #act-pat,html.port #stage.postidle .radar{display:none!important}
+html.port #stage.postidle .xside{bottom:9.6em!important}
+html.port #stage.postidle .postpan{bottom:.8em}
 html.port .xside .pcheck{position:static!important;flex:none;width:auto!important;margin:0;font-size:.72em!important}
 /* пробить номер */
 .pcheck{position:absolute;left:.8em;right:.8em;top:19em;z-index:6;padding:.7em .9em;border-radius:1em;background:linear-gradient(160deg,#16243a,#0c1420);border:1px solid #4da3ff66;box-shadow:0 .6em 1.6em #000a;color:#e9eef5;font-size:1.05em;opacity:0;transform:translateY(-.6em);transition:opacity .25s,transform .25s;pointer-events:none}
@@ -1356,12 +1391,12 @@ html.port .chase .lab span{color:#ffb3b3}
 html.port .chase .segs i{height:.7em;border-radius:.35em;background:#ffffff1a}html.port .chase .segs i.y{background:linear-gradient(90deg,#3fcf8e,#8ff0c0);box-shadow:0 0 .6em #3fcf8e88}html.port .chase .segs i.r{background:#ff5e5e;box-shadow:0 0 .6em #ff5e5e88}
 html.port .chase>.lab:last-child{display:none}
 /* паспорт ТС и полис по образцам */
-html.port #hands .paper.pas{background:linear-gradient(135deg,#f6effa,#e9def5 60%,#f3e6ee);color:#2b1f3a;border:0;border-left:0}
-html.port #hands .paper.pas .p-h{background:linear-gradient(90deg,#5b3a8c,#8a5fb8);color:#fff;border:0}
-html.port #hands .paper.ins{background:linear-gradient(135deg,#fdf1f4,#f6e1ea);color:#3a1f2a}
-html.port #hands .paper.ins .p-h{background:linear-gradient(90deg,#a3304a,#cf5a74);color:#fff;border:0}
+html.port #hands .paper.pas.newx{background:linear-gradient(135deg,#f6effa,#e9def5 60%,#f3e6ee);color:#2b1f3a;border:0;border-left:0}
+html.port #hands .paper.pas.newx .p-h{background:linear-gradient(90deg,#5b3a8c,#8a5fb8);color:#fff;border:0}
+
 html.port #hands .paper.pas .p-h em,html.port #hands .paper.ins .p-h em{color:#fff;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60%}
-html.port #hands .paper.pas,html.port #hands .paper.ins{padding:0!important;height:auto!important;border:0!important}
+html.port #hands .paper.pas,html.port #hands .paper.ins{height:auto!important}
+html.port #hands .paper.pas .pr,html.port #hands .paper.ins .pr{flex-wrap:wrap;row-gap:0}html.port #hands .paper.pas .pr .mono{font-size:.82em;letter-spacing:-.02em}
 html.port #hands .kg{display:grid;grid-template-columns:1fr 1fr;gap:.25em .7em;padding:.4em .7em .5em}
 html.port #hands .paper.pas .p-h,html.port #hands .paper.ins .p-h{padding:.35em .7em}
 html.port #hands .kg.one{grid-template-columns:1fr}
@@ -1453,6 +1488,8 @@ html.port .pcheck .pc-r.bad{color:#ffb3b3;background:#b81d2533!important}html.po
   <button class="big" id="h-go">Выйти на дежурство</button>
   <div class="mrow">
   <button class="sm" id="h-dev" style="border:1px dashed #ffb12b;color:#ffb12b;background:transparent">DEV · сразу к остановленной машине</button>
+  <button class="sm" id="h-dpost" style="border:1px dashed #ffb12b;color:#ffb12b;background:transparent">DEV · смена: пост</button>
+  <button class="sm" id="h-dpat" style="border:1px dashed #ffb12b;color:#ffb12b;background:transparent">DEV · смена: патруль</button>
   <button class="sm" id="h-reset">Сбросить прогресс</button>
   </div>
 </div>
@@ -1574,7 +1611,7 @@ html.port .pcheck .pc-r.bad{color:#ffb3b3;background:#b81d2533!important}html.po
     <div class="rcol">
       <div class="hud-r"><div class="karma"><i id="x-km"></i></div><div class="kl"><span class="bad">Мусор</span><span class="good">Закон</span></div><div class="chips" id="x-chips"></div></div>
       <div class="gsel" role="group" aria-label="Коробка передач"><button id="m-at">АКПП</button><button id="m-mt">МКПП</button></div>
-      <div class="c-act" id="act-pat"><button class="btn stop" id="b-stop">СИРЕНА<small>остановить</small></button><button class="btn plate" id="b-plate">ПРОБИТЬ<small>номер по базе</small></button></div>
+      <div class="c-act" id="act-pat"><button class="btn stop" id="b-stop"><i class="dome"></i><b>СИРЕНА</b></button><button class="btn plate" id="b-plate">ПРОБИТЬ<small>номер по базе</small></button></div>
       <div class="pcheck" id="x-pchk" hidden></div>
       <div class="c-act" id="act-ch" hidden><button class="btn horn" id="b-horn" style="grid-column:1/3">РУПОР<small>1-е обращение</small></button><button class="btn fire" id="b-fire">ОГОНЬ<small>патрон</small></button><button class="btn det" id="b-det">ЗАДЕРЖАТЬ</button></div>
       <button class="ghostb" id="b-ghost" hidden>НЕОСЯЗАЕМОСТЬ<small>2 с сквозь машины</small></button>
@@ -1806,21 +1843,37 @@ function devStop(want){
   openInspect(c);
 }
 $("#h-dev").onclick=()=>devStop();
+/* DEV: выйти на смену нужного режима в обход графика (всё снаряжение с собой) */
+let DEV_MODE=null;
+const devShift=m=>{save.seenTut=true;DEV_MODE=m;startShift({flash:true,breath:true,cam:true},false);DEV_MODE=null;};
+$("#h-dpost").onclick=()=>devShift("post");$("#h-dpat").onclick=()=>devShift("patrol");
 
 /* ---------- shift state ---------- */
 let S=null, IN=null;
 const K={gas:false,brake:false};
 const cv=$("#cv"), ctx=cv.getContext("2d");if(PORT){cv.width=360;cv.height=640;}
 cv.addEventListener("pointerdown",e=>{if(!S||!S.post||S.mode!=="patrol")return;const r=cv.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*cv.width,y=(e.clientY-r.top)/r.height*cv.height-(PORT?(EXT||0):0);
-  let best=null,bd=60;for(const c of S.cars){if(!isDriving(c)||c.done)continue;const d=Math.hypot(c.x-x,c.y-y);if(d<bd){bd=d;best=c;}}if(best){S.postPick=best.id;S.locked=best.id;}});
-if(PORT){const xs=$("#x-side"),pc=$("#x-pchk");if(xs&&pc)xs.prepend(pc);} /* результат пробития встаёт в колонку справа, а не поверх всего */
+  let best=null,bd=60;for(const c of S.cars){if(!isDriving(c)||c.done)continue;const d=Math.hypot(c.x-x,c.y-y);if(d<bd){bd=d;best=c;}}
+  if(!best)return;if(best.escort){toast("Машина сопровождения кортежа: останавливать нельзя");return;}
+  if(S.stopT>0||S.stopCar){toast("Жезл уже поднят — ждём водителя");return;}S.postPick=best.id;S.locked=best.id;doStop();});
+/* обновления для веб-версии: сверяемся с version.json рядом с index.html */
+const APP_VER="2.39";
+const PATCH={"2.39": ["Пост: просто тапните по машине — инспектор поднимет жезл. Кнопки «Жезл» и «Пробить» на посту убраны", "Остановленная машина плавно перестраивается, пропускает попутных и съезжает на обочину", "Вернулись старые карточки паспорта машины и страховки", "Лицо водителя в окне теперь по размеру человека, а не окна", "Спидометр внизу по центру, кнопка сирены в виде маячка", "Карма на экране езды убрана — она в штабе и в итоге смены", "Окно «Есть обновление» с патчноутом", "DEV в главном меню: сразу выйти на смену «Пост» или «Патруль»"]};
+function cmpVer(a,b){const x=String(a).split(".").map(Number),y=String(b).split(".").map(Number);for(let i=0;i<Math.max(x.length,y.length);i++){const d=(x[i]||0)-(y[i]||0);if(d)return d;}return 0;}
+function verModal(title,notes,btn,fn){const m=document.createElement("div");m.className="vmod";m.innerHTML=`<div class="vbox"><b class="vt">${title}</b><ul>${notes.map(n=>`<li>${n}</li>`).join("")}</ul><button class="big">${btn}</button></div>`;document.body.appendChild(m);m.querySelector("button").onclick=()=>fn(m);}
+if(/^https?:/.test(location.protocol)){
+  fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{if(!j||cmpVer(j.v,APP_VER)<=0)return;
+    verModal("Есть обновление · версия "+j.v,(j.notes&&j.notes.length?j.notes:["Исправления и улучшения"]),"Обновить",()=>{location.replace(location.pathname+"?v="+j.v+"&t="+Date.now());});}).catch(()=>{});
+  try{const sv=localStorage.getItem("patrol_ver");if(sv&&sv!==APP_VER&&PATCH[APP_VER])verModal("Что нового в "+APP_VER,PATCH[APP_VER],"Понятно",m=>m.remove());localStorage.setItem("patrol_ver",APP_VER);}catch(e){}
+}
+if(PORT){const xs=$("#x-side"),pc=$("#x-pchk"),ch=$("#x-chips");if(xs&&ch){const w=document.createElement("div");w.className="xchips";w.appendChild(ch);xs.prepend(w);}if(xs&&pc)xs.prepend(pc);} /* результат пробития встаёт в колонку справа, а не поверх всего */
 const off=document.createElement("canvas"); off.width=W; off.height=H; const octx=off.getContext("2d");
 
 function startShift(gear,night){
   S={t:SHIFT_LEN,night,limit:120,limTimer:1e9,cars:[],uid:0,scroll:0,
      car:save.car||"std",ghostOn:false,ghostT:0,ghostCd:0,p:{x:LANES[1],lane:1,y:PY,speed:120},gear,radarCd:0,locked:null,
      mode:"patrol",stopT:0,stopCar:null,siren:0,chase:null,pull:null,
-     post:shiftMode()==="post",
+     post:(DEV_MODE||shiftMode())==="post",
      st:{fines:0,fineSum:0,arrests:0,bribes:0,extort:0,rec:0,unrec:0,detain:0,killed:0,escaped:0,wrong:0,stops:0,ideal:0,crash:0,insured:0},
      hp:clamp(save.hp==null?100:save.hp,0,100),hpCd:0,earned:0,karma0:save.karma,pts:0,spawn:1,ammo:save.ammo,fx:[],log:[],toastT:0,time:0};
   for(let i=0;i<5;i++)spawn(true);
@@ -1989,11 +2042,26 @@ function doStop(){
   if(!c){toast(S.post?"Дождитесь машину: она должна подъехать к посту":"Встаньте за машиной, чтобы выбрать цель");return;}
   if(c.escort){toast("Машина сопровождения кортежа: останавливать нельзя");return;}
   if(c.onCall){toast("Спецтранспорт на вызове с мигалками: останавливать нельзя");return;}
-  S.stopCar=c;S.stopT=S.post?2:SIREN_DELAY;S.siren=S.post?0:3;c.state="signaled";if(S.post){S.wand=2.2;toast("Жезл: "+c.plate+", к обочине!");}else toast("Сирена: "+c.plate+", прижмитесь к обочине");
+  S.stopCar=c;S.stopT=S.post?1:SIREN_DELAY;S.siren=S.post?0:3;c.state="signaled";if(S.post){S.wand=2.2;toast("Жезл: "+c.plate+", к обочине!");}else toast("Сирена: "+c.plate+", прижмитесь к обочине");
 }
 const PMIN=ROAD_L+18,PMAX=SHOULDER+12;
 function steer(d){if(S&&(S.mode==="patrol"||S.mode==="chase"))S.p.x=clamp(S.p.x+d*72,PMIN,PMAX);}
-function startPullover(c){S.mode="pullover";S.pull={c,t:0,sx:S.post?SHOULDER:c.lane===0?SHOULDER_L:SHOULDER,chased:!!c.fled};/* левая полоса: съезд на ближний грунт слева, иначе на правую обочину */c.state="pulled";S.locked=null;S.siren=999;
+/* пост: водитель плавно тормозит, пропускает попутных и съезжает на обочину у поста */
+function postPullTick(c,dt){
+  const q=S.pull,p=S.p;if(!q)return;
+  if(q.ty==null){q.ty=c.y>p.y+150?p.y+130:p.y-140;}
+  const dist=c.y-q.ty; /* сколько ещё проехать вверх */
+  let v=c.speed*PX;const want=Math.sqrt(2*150*Math.max(0,dist));v=Math.max(Math.min(v,want),dist>2?14:0);v=Math.max(0,v-(dist<1?400*dt:0));
+  c.speed=v/PX;c.base=c.speed;c.y-=v*dt;if(dist<=0){c.y=Math.min(c.y+0,c.y);}
+  /* перестроение: в правый ряд, только если там свободно (иначе пропускаем трафик), потом на обочину */
+  const freeR=l=>!S.cars.some(o=>o!==c&&isDriving(o)&&Math.abs(o.x-LANES[l])<30&&o.y>c.y-90&&o.y<c.y+150);
+  if(c.lane<2&&Math.abs(c.x-LANES[c.lane])<6){q.wait=!freeR(c.lane+1);if(!q.wait){c.lane++;}} /* по одной полосе, пропуская попутных */
+  let tx=LANES[c.lane];if(c.lane===2&&dist<170&&Math.abs(c.y-p.y)>70)tx=SHOULDER;if(c.lane===2&&q.onSh)tx=SHOULDER;
+  if(tx===SHOULDER)q.onSh=true;
+  c.x+=(tx-c.x)*Math.min(1,(tx===SHOULDER?2.2:3)*dt);
+  if(dist<1.5&&Math.abs(c.x-SHOULDER)<2){c.x=SHOULDER;c.speed=0;c.base=0;c.state="pulled";S.pull=null;openInspect(c);}
+}
+function startPullover(c){S.mode="pullover";S.pull={c,t:0,sx:S.post?SHOULDER:c.lane===0?SHOULDER_L:SHOULDER,chased:!!c.fled,post:!!(S.post&&!c.fled)};if(S.pull.post){c.state="pulling";S.locked=null;S.siren=0;return;}/* левая полоса: съезд на ближний грунт слева, иначе на правую обочину */c.state="pulled";S.locked=null;S.siren=999;
   if(c.convoy){S.cars.forEach(e=>{if(e.convoy!==c.convoy||e===c)return;e.state="pulled";e.ex=S.pull.sx;e.ey=e.cpos<0?330+e.cpos*72:PY+60+(e.cpos-1)*72;});toast("Кортеж прижимается к обочине");}}
 function startChase(c){
   S.mode="chase";c.state="fleeing";c.fled=true;c.v0=c.speed;c.vT=Math.max(CHASE_MAX,c.speed);c.chaseT=0;c.base=c.speed;
@@ -3490,7 +3558,7 @@ function closeInspect(removeCar,tag){
   if(tag)S.fx.push({k:"tag",id:c.id,x:c.x,y:c.y,t:2.8,max:2.8,txt:tag[0],col:tag[1]});
   if(S.st.stops>=SHIFT_STOPS)S.endDelay=3;
   if(removeCar){c.state="arrested";c.takenT=2.6;c.speed=0;c.base=0;c.done=true;(S.tows=S.tows||[]).push({c,t:0,x:c.x,y:c.y-420,rel:78,v:0}); /* за арестованной едет эвакуатор */S.merge=S.p.x<150?LANES[0]:LANES[2];} /* арестованная остаётся на обочине, патрульная возвращается на дорогу */
-  else if(S.post){c.state="leaving";c.done=true;c.lane=2;c.speed=S.limit*.6;c.base=S.limit;c.x=LANES[2];c.y=Math.max(c.y,S.p.y+120);}
+  else if(S.post){c.state="leaving";c.done=true;c.lane=2;c.speed=20;c.base=20;} /* плавно выезжает с обочины */
   else{c.state="leaving";c.done=true;c.lane=2;c.speed=S.limit;c.base=S.limit;c.y=Math.min(c.y,300);}
   if(c.convoy)S.cars.forEach(e=>{if(e.convoy===c.convoy&&e!==c){e.state="leaving";e.done=true;e.lane=2;e.speed=S.limit;e.base=S.limit;e.ey=null;}});
 }
@@ -3599,11 +3667,11 @@ function update(dt){
   }
   // pullover
   if(S.mode==="pullover"){
-    const q=S.pull,c=q.c;q.t+=dt;
+    const q=S.pull,c=q.c;q.t+=dt;if(q.post){p.speed=0;}else{
     p.speed=Math.max(0,p.speed-Math.max(60,p.speed*.9)*dt); /* после погони тормозим сами, газ не мешает */
     const k=Math.min(1,3*dt),ty=S.post&&!q.chased?p.y+150:330;p.x+=(q.sx-p.x)*k;c.x+=(q.sx-c.x)*k;c.y+=(ty-c.y)*k;
     if(c.convoy)S.cars.forEach(e=>{if(e.convoy===c.convoy&&e!==c&&e.ey!=null){e.x+=(e.ex-e.x)*k;e.y+=(e.ey-e.y)*k;}});
-    if(q.t>2.4&&(p.speed<5||q.t>4.5)){p.speed=0;S.harp=null;S.ghostOn=false;openInspect(c);S.pull=null;}
+    if(q.t>2.4&&(p.speed<5||q.t>4.5)){p.speed=0;S.harp=null;S.ghostOn=false;openInspect(c);S.pull=null;}}
   }
   S.scroll+=p.speed*PX*dt;
 
@@ -3623,13 +3691,14 @@ function update(dt){
     if(c.state==="arrested"&&c.onTow)continue;
     if(c.state==="arrested"){c.takenT=Math.max(0,(c.takenT||0)-dt);c.y+=p.speed*PX*dt;continue;} /* стоит на обочине: уезжает назад вместе с дорогой */
     if(c.state==="pulled")continue;
+    if(c.state==="pulling"){postPullTick(c,dt);continue;}
     if(c.state==="fleeing"){
       c.chaseT+=dt;c.base=c.v0+(c.vT-c.v0)*Math.min(1,c.chaseT/CHASE_RAMP);c.speed=c.base;c.laneT-=dt;
       if(c.laneT<=0){c.laneT=rnd(1.2,2.5);const nl=clamp(c.lane+pick([-1,1]),0,2);if(laneOK(nl,c.y)&&freeAt(LANES[nl],c.y,90,hl(c)))c.lane=nl;}
     }
     if(c.state==="dead"){c.speed=Math.max(0,c.speed-80*dt);c.base=0;}
     if(isDriving(c)||c.state==="fleeing"){
-      if(c.state==="leaving"){c.base=Math.min(S.limit+70,c.base+25*dt);if(c.musicOff&&c.speed>25)c.musicOff=false;}
+      if(c.state==="leaving"){c.base=Math.min(S.limit+70,c.base+(S.post?40:25)*dt);if(c.musicOff&&c.speed>25)c.musicOff=false;}
       if(c.state!=="fleeing")c.speed=c.base;
       // leader
       let lead=null,gap=1e9;
@@ -4505,11 +4574,11 @@ function drawMirror(){
 /* ---------- HUD ---------- */
 function hud(){
   {const xs=$("#x-side");if(xs)xs.classList.toggle("off",S.mode!=="patrol");}
-  {const idle=!!(S.post&&S.mode==="patrol"&&S.p.speed<8),st=$("#stage");st.classList.toggle("postidle",idle);const pp=$("#post-pan");pp.hidden=!idle;
-   $("#b-stop").firstChild.textContent=S.post?"ЖЕЗЛ":"СИРЕНА";
+  {const idle=!!(S.post&&(S.mode==="patrol"||S.pull&&S.pull.post)&&S.p.speed<8),st=$("#stage");st.classList.toggle("postidle",idle);const pp=$("#post-pan");pp.hidden=!idle;
+   $("#b-stop").classList.toggle("on",S.siren>0||S.stopT>0);
    if(idle){$("#pp-lim").textContent="лимит "+S.limit;const c=S.locked!=null&&S.cars.find(x=>x.id===S.locked);
      const key=c?c.id+"|"+Math.round(c.radarV||c.speed)+"|"+c.state:"none";if(pp.dataset.k!==key){pp.dataset.k=key;
-     $("#pp-b").innerHTML=c?`<div class="pp-m">${c.model}<br><span class="pp-p">${c.plate}</span></div><div class="pp-s ${speeding(c)?"over":"ok"}">${Math.round(c.radarV||c.speed)}<small>км/ч · ${speeding(c)?"превышение +"+Math.round(c.speed-S.limit):"в норме"}</small></div><div class="pp-w">${c.state==="signaled"?"Жезл поднят — водитель решает":c.y>S.p.y?"Подъезжает к посту · тапните другую машину, чтобы сменить цель":"Проезжает пост"}</div>`:`<div class="pp-w">Поток пуст. Ждём машину… Можно тапнуть по любой машине на дороге</div>`;}}}
+     $("#pp-b").innerHTML=c?`<div class="pp-m">${c.model}<br><span class="pp-p">${c.plate}</span></div><div class="pp-s ${speeding(c)?"over":"ok"}">${Math.round(c.radarV||c.speed)}<small>км/ч · ${speeding(c)?"+"+Math.round(c.speed-S.limit):"норма"}</small></div><div class="pp-w">${c.state==="signaled"?"Жезл поднят — водитель решает…":"Тапните по машине, чтобы остановить"}</div>`:S.pull&&S.pull.post?`<div class="pp-m">${S.pull.c.model}<br><span class="pp-p">${S.pull.c.plate}</span></div><div class="pp-w">Водитель ${S.pull.wait?"пропускает попутных":"съезжает на обочину"}…</div>`:`<div class="pp-w">Ждём машину. Тапните по машине на дороге, чтобы остановить</div>`;}}}
   const m=Math.ceil(S.t),mm=Math.floor(m/60),ss=m%60;
   $("#x-time").textContent=`${mm}:${String(ss).padStart(2,"0")}`;
   $("#h-spd").textContent=Math.round(S.p.speed);$("#rpm").style.width=clamp(GB.rpm/7300*100,4,100)+"%";$("#rpmb").classList.toggle("lim",GB.rpm>6900);
@@ -4614,10 +4683,10 @@ function hDocPort(id){
 }
 function hDocHtml(id){
   const c=IN.c,d=docData(c),cap="";
-  if(PORT&&id==="pas")return `<div class="p-h"><span>ПАСПОРТ ТС</span><em>${c.model}</em></div><div class="kg three">
+  if(false&&id==="pas")return `<div class="p-h"><span>ПАСПОРТ ТС</span><em>${c.model}</em></div><div class="kg three">
     <div class="kf"><small>Гос. номер</small>${hF("pas.plate",d.pasPlate)}</div><div class="kf"><small>Цвет</small>${hF("pas.color",d.pasColor)}</div><div class="kf"><small>Действует до</small>${hF("pas.to",d.pasTo)}</div>
     <div class="kf w2"><small>VIN</small>${hF("pas.vin",d.vin,"mono")}</div><div class="kf"><small>Двигатель №</small>${hF("pas.eng",d.eng,"mono")}</div></div>`;
-  if(PORT&&id==="ins")return `<div class="p-h"><span>СТРАХОВКА</span><em>№ ${d.pol.split(" ")[1]}</em></div><div class="kg">
+  if(false&&id==="ins")return `<div class="p-h"><span>СТРАХОВКА</span><em>№ ${d.pol.split(" ")[1]}</em></div><div class="kg">
     <div class="kf w"><small>Допущен к управлению</small>${hF("ins.name",d.insName)}</div><div class="kf"><small>Гос. номер</small>${hF("ins.plate",d.insPlate)}</div>
     <div class="kf"><small>Действует до</small>${hF("ins.to",d.insShow)}</div></div>`;
   if(id==="vip")return `<div class="p-h vip-h"><span>СЛУЖЕБНОЕ УДОСТОВЕРЕНИЕ</span>${cap}</div><div class="pb">${hF("vip.photo",faceSVG(d.vipP,"#e6dcc6"),"hph lic-ph")}
@@ -4625,8 +4694,8 @@ function hDocHtml(id){
   if(id==="lic")return `<div class="p-h"><span>ВОДИТЕЛЬСКОЕ УДОСТОВЕРЕНИЕ</span>${cap}</div><div class="pb">${hF("lic.photo",faceSVG(d.licP,"#b9cbe0"),"hph lic-ph")}
     <div class="pf"><small>Фамилия, имя</small>${hF("lic.name",d.licName)}<small>Номер</small>${hF("lic.num",d.lic)}<small>Действует до</small>${hF("lic.to",d.licShow)}</div></div>`;
   if(id==="pas")return `<div class="p-h"><span>ПАСПОРТ МАШИНЫ</span>${cap}</div><div class="pr"><span>Марка</span>${hF("pas.model",c.model)}</div><div class="pr"><span>Цвет</span>${hF("pas.color",d.pasColor)}</div>
-    <div class="pr"><span>Гос. номер</span>${hF("pas.plate",d.pasPlate)}</div><div class="pr"><span>VIN</span>${hF("pas.vin",d.vin,"mono")}</div><div class="pr"><span>Двигатель</span>${hF("pas.eng",d.eng,"mono")}</div>`;
-  if(id==="ins")return `<div class="p-h"><span>СТРАХОВОЙ ПОЛИС</span>${cap}</div><div class="pr"><span>Полис №</span><b>${d.pol}</b></div><div class="pr"><span>Допущен</span>${hF("ins.name",d.insName)}</div>
+    <div class="pr"><span>Гос. номер</span>${hF("pas.plate",d.pasPlate)}</div><div class="pr"><span>VIN</span>${hF("pas.vin",d.vin,"mono")}</div><div class="pr"><span>Двигатель</span>${hF("pas.eng",d.eng,"mono")}</div><div class="pr"><span>Действует до</span>${hF("pas.to",d.pasTo)}</div>`;
+  if(id==="ins")return `<div class="p-h"><span>СТРАХОВКА</span>${cap}</div><div class="pr"><span>Полис №</span><b>${d.pol}</b></div><div class="pr"><span>Допущен</span>${hF("ins.name",d.insName)}</div>
     <div class="pr"><span>Транспорт</span>${hF("ins.plate",d.insPlate)}</div><div class="pr"><span>Действует до</span>${hF("ins.to",d.insShow)}</div>`;
   if(id==="way"){const cg=c.cargo;return `<div class="p-h"><span>ТОВАРНАЯ НАКЛАДНАЯ</span>${cap}</div><div class="pr"><span>Груз</span><b>${cg.decl}</b></div><div class="pr"><span>Масса</span><b>${cg.kg?(cg.kg/1000)+" т":"—"}</b></div>
     <div class="pr"><span>Разрешение</span><b>${IN.rev.cargo?(cg.kg?(c.nopermit?"НЕТ":"№ "+cg.perm):"не нужно"):"— — —"}</b></div><div class="pr"><span>В кузове</span><b>${IN.rev.cargo?(c.cargoBad?cg.real:cg.kg?"совпадает":"пусто"):"не вскрыт"}</b></div>`;}
@@ -4643,7 +4712,7 @@ function hCardsPort(){const el=$("#h-cards"),c=IN.c,d=docData(c),dark=S.night&&!
     <div class="dtoday"><small>СЕГОДНЯ</small><span class="fld" data-fld="today">${TODAY()}</span></div>
     ${D.db?`<div class="dtb ok">Ответ реестра на планшете</div>`:`<button class="dtb" data-h="db" ${D.dbWait?"disabled":""}>${D.dbWait?"Печатает…":"Запрос в базу"}</button>`}${c.cargo&&!IN.rev.cargo?`<button class="dtb g" data-h="cargo">Вскрыть кузов</button>`:""}`;
   const vin=`<div class="p-h"><span>VIN ПОД СТЕКЛОМ · ДВИГАТЕЛЬ</span></div>${dark?`<div class="dvin-d">Темно — без фонарика не прочитать</div>`:`<small>VIN на кузове</small><span class="fld mono dmet" data-fld="vin.car">${d.vinCar}</span><small>Номер двигателя</small><span class="fld mono dmet" data-fld="eng.car">${d.engCar}</span>`}`;
-  D.big=D.big||{pas:true}; /* в паспорте ТС больше всего данных — он во всю ширину */
+  D.big=D.big||{};
   const L=[["tab",tab]].concat(handsDocs().map(id=>[id,hDocHtml(id)]));L.splice(3,0,["vin",vin]);
   el.style.fontSize="";el.innerHTML=L.map(([id,h],i)=>`<div class="paper ${id}" data-doc="${id}" style="--r:${[-2,1.5,-1.2,1.8,-1.6,1,-.8,1.4][i%8]}deg">${h}</div>`).join("");
   const cv=el.querySelector(".dcar");if(cv){const g=cv.getContext("2d"),sp=CAR_SPEC[c.model]||CAR_SPEC["Седан «Вега»"],Sd=SIDE[sp.k]||SIDE.sedan,sc=Math.min(270/Sd.Lb,100/(Sd.Hm||95));
@@ -4687,8 +4756,8 @@ function hDrawCar(){
   g.save();g.translate(ox,oy);g.scale(sc,sc);paintSide(g,c.color,c.model,{tint:/тонир/.test(w),sport:c.racer,trailer:c.trailer,helmet:c.helmet,nohelmet:c.nohelmet,rims:c.bass,low:c.bass});g.restore();
   if(Dd.bike)return;
   const glass=Dd.glass[Dd.glass.length-1],P=new Path2D(glass),img=new Image();
-  img.onload=()=>{if(!IN||!IN.hcar)return;g.save();g.translate(ox,oy);g.scale(sc,sc);g.clip(P);const bb=glassBox(glass),fh=(bb.y1-bb.y0)*2.1,fw=fh*100/120;
-    g.drawImage(img,bb.x0+(bb.x1-bb.x0)*.42-fw/2,bb.y0-fh*.18,fw,fh);g.fillStyle="#bcd4ea30";g.fill(P);g.restore();};
+  img.onload=()=>{if(!IN||!IN.hcar)return;g.save();g.translate(ox,oy);g.scale(sc,sc);g.clip(P);const bb=glassBox(glass),gh=bb.y1-bb.y0,gw=bb.x1-bb.x0,fh=Math.min(gh*2.1,36,gw*2.2),fw=fh*100/120; /* голова одного размера с человеком, а не с окном */
+    g.drawImage(img,bb.x0+gw*.45-fw/2,bb.y0-fh*.18+Math.max(0,(gh-fh*.8)*.35),fw,fh);g.fillStyle="#bcd4ea30";g.fill(P);g.restore();};
   img.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(faceSVG(d.person,"#1a2533").replace('<svg ','<svg xmlns="http://www.w3.org/2000/svg" width="200" height="240" '));
 }
 function glassBox(p){const n=p.match(/-?\d+(\.\d+)?/g).map(Number);let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;for(let i=0;i<n.length-1;i+=2){x0=Math.min(x0,n[i]);x1=Math.max(x1,n[i]);y0=Math.min(y0,n[i+1]);y1=Math.max(y1,n[i+1]);}return {x0,x1,y0,y1};}
