@@ -1332,7 +1332,11 @@ html.port .dash{transform:scale(1.12);transform-origin:0 0;top:6.6em}
 html.port .radar{top:12.9em;font-size:.9em}
 html.port .csel{top:15em;font-size:1em;width:14em}
 html.port .rcol .hud-r{transform:scale(1.12);transform-origin:100% 0}
-html.port .mirror{width:15.5em;margin-left:-7.75em}
+html.port .mirror{width:11.6em;margin-left:-4.6em}
+html.port .toast{top:23em!important;left:.6em!important;right:9.6em!important}
+html.port .c-wheel{width:15.4em!important;height:15.4em!important}
+html.port #g-mode{display:none!important}
+html.port .xside .pcheck{position:static!important;flex:none;width:auto!important;margin:0;font-size:.72em!important}
 /* пробить номер */
 .pcheck{position:absolute;left:.8em;right:.8em;top:19em;z-index:6;padding:.7em .9em;border-radius:1em;background:linear-gradient(160deg,#16243a,#0c1420);border:1px solid #4da3ff66;box-shadow:0 .6em 1.6em #000a;color:#e9eef5;font-size:1.05em;opacity:0;transform:translateY(-.6em);transition:opacity .25s,transform .25s;pointer-events:none}
 .pcheck.show{opacity:1;transform:none}
@@ -1809,6 +1813,7 @@ const K={gas:false,brake:false};
 const cv=$("#cv"), ctx=cv.getContext("2d");if(PORT){cv.width=360;cv.height=640;}
 cv.addEventListener("pointerdown",e=>{if(!S||!S.post||S.mode!=="patrol")return;const r=cv.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*cv.width,y=(e.clientY-r.top)/r.height*cv.height-(PORT?(EXT||0):0);
   let best=null,bd=60;for(const c of S.cars){if(!isDriving(c)||c.done)continue;const d=Math.hypot(c.x-x,c.y-y);if(d<bd){bd=d;best=c;}}if(best){S.postPick=best.id;S.locked=best.id;}});
+if(PORT){const xs=$("#x-side"),pc=$("#x-pchk");if(xs&&pc)xs.prepend(pc);} /* результат пробития встаёт в колонку справа, а не поверх всего */
 const off=document.createElement("canvas"); off.width=W; off.height=H; const octx=off.getContext("2d");
 
 function startShift(gear,night){
@@ -4368,7 +4373,8 @@ function draw(){
     if(c.state==="signaled"||c.state==="fleeing"){ctx.strokeStyle=c.state==="fleeing"?"#ff5e5e":"#ffb12b";ctx.lineWidth=c.fled2?4:2;rr(c.x-18,c.y-32,36,64,8);ctx.stroke();}
     if(S.locked===c.id){
       const col=c.onCall?"#6fb6ff":speeding(c)?"#ff5e5e":"#3fcf8e";brackets(c.x,c.y,col);
-      ctx.fillStyle=col;ctx.font="bold 14px sans-serif";ctx.textAlign="center";ctx.fillText((c.escort?"КОРТЕЖ · ":c.vip&&c.convoy?"ЧИНОВНИК · ":c.onCall?"НА ВЫЗОВЕ · ":"")+Math.round(c.speed)+" км/ч",c.x,c.y-Math.max(44,hl(c)+16));
+      ctx.fillStyle=col;ctx.font="bold 14px sans-serif";ctx.textAlign="center";const lyUp=c.y-Math.max(44,hl(c)+16),lyy=PORT&&lyUp<125&&c.x<200?c.y+Math.max(44,hl(c)+26):lyUp;
+      ctx.fillText((c.escort?"КОРТЕЖ · ":c.vip&&c.convoy?"ЧИНОВНИК · ":c.onCall?"НА ВЫЗОВЕ · ":"")+Math.round(c.speed)+" км/ч",c.x,lyy);
       if(c.again&&c.againRec){ctx.fillStyle="#ff5e5e";ctx.font="bold 11px sans-serif";ctx.fillText("уже скрывался · есть запись",c.x,c.y-Math.max(44,hl(c)+16)-15);}
     }
     else if(aim===c)brackets(c.x,c.y,"#ffffff88");
@@ -4522,7 +4528,7 @@ function hud(){
   $("#x-km").style.left=(save.karma+100)/2+"%";
   let r=``;
   const c=S.locked!=null?S.cars.find(x=>x.id===S.locked):null;
-  if(c){const vm=Math.max(c.speed,c.radarV||0),sp=vm>S.limit+10;r+=`Цель: <b>${Math.round(c.speed)}</b> км/ч${vm>c.speed+1?` · макс <b>${Math.round(vm)}</b>`:""} · ${sp?`<b class="bad">нарушение +${Math.round(vm-S.limit)}</b>`:`<b class="good">в норме</b>`}`;}
+  if(c){const vm=Math.max(c.speed,c.radarV||0),sp=vm>S.limit+10;r+=PORT?`Цель <b>${Math.round(vm)}</b> км/ч · ${sp?`<b class="bad">+${Math.round(vm-S.limit)}</b>`:`<b class="good">норма</b>`}`:`Цель: <b>${Math.round(c.speed)}</b> км/ч${vm>c.speed+1?` · макс <b>${Math.round(vm)}</b>`:""} · ${sp?`<b class="bad">нарушение +${Math.round(vm-S.limit)}</b>`:`<b class="good">в норме</b>`}`;}
   else r+=`<span class="muted">Радар: встаньте за машиной</span>`;
   $("#x-radar").innerHTML=r;
   const chase=S.mode==="chase"&&S.chase;
