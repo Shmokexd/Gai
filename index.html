@@ -1857,8 +1857,8 @@ cv.addEventListener("pointerdown",e=>{if(!S||!S.post||S.mode!=="patrol")return;c
   if(!best)return;if(best.escort){toast("Машина сопровождения кортежа: останавливать нельзя");return;}
   if(S.stopT>0||S.stopCar){toast("Жезл уже поднят — ждём водителя");return;}S.postPick=best.id;S.locked=best.id;doStop();});
 /* обновления для веб-версии: сверяемся с version.json рядом с index.html */
-const APP_VER="2.40";
-const PATCH={"2.40": ["Машины перестраиваются плавно, как патрульная: боковой ход набирается и гасится, кузов слегка поворачивается", "Съезд на обочину на посту и выезд с неё тоже плавные", "Из игры убраны реальные аббревиатуры и символика: надписи на машинах патруля, флаги на лимузине, отсылки к статьям"], "2.39": ["Пост: просто тапните по машине — инспектор поднимет жезл. Кнопки «Жезл» и «Пробить» на посту убраны", "Остановленная машина плавно перестраивается, пропускает попутных и съезжает на обочину", "Вернулись старые карточки паспорта машины и страховки", "Лицо водителя в окне теперь по размеру человека, а не окна", "Спидометр внизу по центру, кнопка сирены в виде маячка", "Карма на экране езды убрана — она в штабе и в итоге смены", "Окно «Есть обновление» с патчноутом", "DEV в главном меню: сразу выйти на смену «Пост» или «Патруль»"]};
+const APP_VER="2.41";
+const PATCH={"2.41": ["Пост: гонщики (красные) и басовые чёрные купе больше не пролетают за секунду — едут с превышением, но их можно успеть остановить", "Пост: превышение у всех машин не больше +55 км/ч"], "2.40": ["Машины перестраиваются плавно, как патрульная: боковой ход набирается и гасится, кузов слегка поворачивается", "Съезд на обочину на посту и выезд с неё тоже плавные", "Из игры убраны реальные аббревиатуры и символика: надписи на машинах патруля, флаги на лимузине, отсылки к статьям"], "2.39": ["Пост: просто тапните по машине — инспектор поднимет жезл. Кнопки «Жезл» и «Пробить» на посту убраны", "Остановленная машина плавно перестраивается, пропускает попутных и съезжает на обочину", "Вернулись старые карточки паспорта машины и страховки", "Лицо водителя в окне теперь по размеру человека, а не окна", "Спидометр внизу по центру, кнопка сирены в виде маячка", "Карма на экране езды убрана — она в штабе и в итоге смены", "Окно «Есть обновление» с патчноутом", "DEV в главном меню: сразу выйти на смену «Пост» или «Патруль»"]};
 function cmpVer(a,b){const x=String(a).split(".").map(Number),y=String(b).split(".").map(Number);for(let i=0;i<Math.max(x.length,y.length);i++){const d=(x[i]||0)-(y[i]||0);if(d)return d;}return 0;}
 function verModal(title,notes,btn,fn){const m=document.createElement("div");m.className="vmod";m.innerHTML=`<div class="vbox"><b class="vt">${title}</b><ul>${notes.map(n=>`<li>${n}</li>`).join("")}</ul><button class="big">${btn}</button></div>`;document.body.appendChild(m);m.querySelector("button").onclick=()=>fn(m);}
 if(/^https?:/.test(location.protocol)){
@@ -1917,6 +1917,7 @@ function spawn(initial){
   const L=S.limit; let sp;
   if(racer)sp=L+rnd(8,25); else if(kind==="speeder")sp=L+(Math.random()<.7?rnd(14,45):rnd(40,MAX_SPEED-L)); else if(kind==="drunk")sp=L+rnd(-8,6); else if(kind==="ok")sp=L+rnd(-30,9); else sp=L+rnd(-15,8);
   sp=clamp(sp,45,MAX_SPEED);if(bass)sp=Math.min(MAX_SPEED-10,L+rnd(55,85));
+  if(S.post){if(racer)sp=L+rnd(25,40);else if(bass)sp=L+rnd(30,45);sp=Math.min(sp,L+55);} /* на посту стоим: быстрые проносились бы за секунду — скорость ниже, но превышение есть */
   /* у особого транспорта своя манера езды */
   if(cls==="bus"||cls==="truck")sp=clamp(kind==="speeder"?L+rnd(12,28):L+rnd(-25,5),40,spec.vmax);
   else if(cls==="slow")sp=rnd(25,40);
@@ -3726,7 +3727,7 @@ function update(dt){
         for(const dl of [-1,1]){const nl=c.lane+dl;if(!laneOK(nl,c.y)||!freeAt(LANES[nl],c.y,70,hl(c)))continue;if(Math.abs(LANES[nl]-p.x)<36&&Math.abs(c.y-p.y)<110)continue;const g=ahead(nl);if(g>bg){bg=g;best=nl;}}
         if(best!=null){c.lane=best;c.weaveT=rnd(.5,.8);}else{c.weaveT=.15;if(cur<hl(c)*2+30)c.speed=Math.min(c.speed,(S.cars.find(d=>d!==c&&Math.abs(d.x-c.x)<34&&d.y<c.y&&c.y-d.y<=cur+1)||{speed:c.speed}).speed);}}
     }
-    if(c.racer&&c.state==="drive"){if(c.y>0&&c.y<620)c.rGo=true;if(c.rGo)c.base=Math.min(RACER_MAX,c.base+RACER_ACC*dt);} /* гонщик разгоняется на глазах у игрока */
+    if(c.racer&&c.state==="drive"&&!S.post){if(c.y>0&&c.y<620)c.rGo=true;if(c.rGo)c.base=Math.min(RACER_MAX,c.base+RACER_ACC*dt);} /* гонщик разгоняется на глазах у игрока */
     if(c.lane===0&&(isDriving(c)||c.state==="fleeing")&&narrowAt(c.y-160)>0&&(narrowAt(c.y)>.3||freeAt(LANES[1],c.y,90,hl(c))))c.lane=1; /* сужение: уходим из левой полосы */
     c.y+=(p.speed-c.speed)*PX*dt;
     const wob=(c.drunk&&c.state!=="leaving"&&c.state!=="fleeing"?Math.sin(c.t*2.2)*16:0);
