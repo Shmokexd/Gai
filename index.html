@@ -1176,6 +1176,11 @@ html.port #ds-doc #hands .mid .acts:empty{display:none}
 #hands .dface{width:2.6em;height:2.6em;border-radius:50%;overflow:hidden;flex:none;background:#c9d6e3}#hands .dface svg{width:100%;height:100%}
 #hands .dplate{border:.15em solid #10151b;border-radius:.3em;background:#fff;color:#10151b;font:800 1.1em var(--body);padding:.05em .4em;letter-spacing:.04em}
 #hands .dsay{padding:.3em .6em .5em;font-size:.95em}
+#hands .paper.pax{background:#27303a!important;color:#e9eef2!important;border-color:#141a20!important}#hands .paper.pax .p-h{background:#151b21!important;color:#cfd8e0!important}
+#hands .pax-b{display:flex;gap:.55em;align-items:center;padding:.45em .6em .55em}#hands .pface{width:3.2em;height:3.2em;border-radius:.45em;overflow:hidden;flex:none;background:#1d2329;box-shadow:inset 0 0 0 .15em #0b0f13}#hands .pface svg{width:100%;height:100%}
+#hands .pax-b .dsay{padding:0;font-size:.82em;color:#e9eef2}#hands .pax-b .dsay .fld{color:#fff}
+html.port #ds-doc #hands .cards .paper.fromwin{animation:fromwin .9s .35s cubic-bezier(.2,.8,.3,1) backwards} /* бумажку протягивают из заднего окна */
+@keyframes fromwin{from{opacity:0;transform:translate(3em,-4em) rotate(calc(var(--r) + 16deg)) scale(.55)}60%{opacity:1}to{opacity:1;transform:rotate(var(--r))}}
 #hands .paper.tab{background:#1b2433;color:#e9eef5}#hands .paper.tab .p-h{color:#8cc6ff;font-size:.85em}#hands .paper.tab .p-h em{color:#e9eef5}
 #hands .dtoday{margin:0 .6em;padding:.4em .6em;border-radius:.4em;background:#eef3f8;color:#10233c}#hands .dtoday small{display:block;font:800 .75em var(--body);color:#5b6b80}#hands .dtoday .fld{font:1.2em var(--display);color:#1f3f7a}
 #hands .dtb{display:block;width:calc(100% - 1.2em);margin:.5em .6em .6em;height:2.4em;border:0;border-radius:.6em;background:#4da3ff;color:#06101c;font:800 1em var(--body);cursor:pointer}
@@ -1988,8 +1993,8 @@ cv.addEventListener("pointerdown",e=>{if(!S||S.mode!=="patrol")return;const r=cv
   if(!best)return;if(best.escort){toast("Машина сопровождения кортежа: останавливать нельзя");return;}
   if(S.stopT>0||S.stopCar){toast("Жезл уже поднят — ждём водителя");return;}S.postPick=best.id;S.locked=best.id;doStop();});
 /* обновления для веб-версии: сверяемся с version.json рядом с index.html */
-const APP_VER="2.58";
-const PATCH={"2.58": ["Спидометр перенесён ниже — между кнопкой способности и тормозом, ровно над педалью. Кнопка способности его больше не закрывает", "Кнопка «Пробить» теперь выглядит как номер ХХХ: при запросе по нему проходит зелёный луч сканера", "Стоянка: машины заезжают и выезжают по аккуратной дуге, ждут проезжающих и больше не задевают ни друг друга, ни поток. Изредка (0,2%) водители всё-таки не разъезжаются — авария, обе машины встают с аварийкой", "Убрана плашка «Без поворотника» над машинами — заметить нарушение теперь нужно самому"], "2.57": ["Внешний осмотр: 6 мест на машине (стёкла, фары, бамперы, колёса) и ограниченные попытки — на 3 меньше, чем мест. Проверить всё не получится, выбирайте с умом. Штраф по времени за лишний тап убран", "Стоянка: машины заезжают и выезжают как настоящие — плавно поворачивают, сдают назад, включают поворотники и пропускают попутных", "Убраны выбор управления «Руль / Полосы» (теперь только руль) и строка радара «Встаньте за машиной»", "Кнопка сирены — светодиодная балка (синие и красные секции), стоит над «Пробить»", "Погоня, этап 2: выстрел засчитывается с любой полосы. Если на линии огня невиновная машина — выстрел не засчитан и −1000 ₽"], "2.56": ["Руль на 20% менее чувствительный"], "2.55": ["Патруль: дорога из 4 полос в одну сторону, без встречки. На посту — по-прежнему 2 + 2 со встречным потоком", "Ремонт машины дороже: полный ремонт теперь 12 000 ₽ вместо 3 000 ₽"], "2.54": ["Пост: стоянка теперь прямо под патрульной машиной, остановленные водители встают впереди и больше не врезаются в припаркованных", "Стоянка осталась только на посту"], "2.53": ["Для разработчиков: в штабе кнопка «DEV · клавиатура WASD» — управление с ПК (работает и в русской раскладке)"], "2.52": ["Рация свёрнута в кнопку справа: новое сообщение показывается на 5 секунд и прячется, нажатие открывает последние сообщения. Больше не закрывает стоянку и дорогу"], "2.51": ["Игра теперь называется «Проект Дорога»"], "2.50": ["Новое решение «Предупреждение»: за мелкие нарушения (шлем, тонировка, поворотник, медленная езда, парковка) — без денег, +5 к карме", "На дороге снова есть водители без нарушений", "Патруль: машину можно остановить тапом по ней, как на посту", "Пост: тапнутая машина останавливается, даже если уже проехала пост", "Стоянка: если водитель начал выезжать, когда вы по нему тапнули, он останавливается; если ещё паркуется — инспектор подойдёт, как только он встанет"], "2.49": ["Вдоль дороги появились стоянки на 5 мест: машины заезжают и выезжают, водители уходят или остаются в машине"], "2.48": ["Новая дорога: по 2 полосы в каждую сторону, встречный поток за двойной сплошной. Можно выехать на встречку для обгона, но лобовое столкновение бьёт по машине", "Лимиты как на настоящей загородной дороге: в патруле 70–90 км/ч, на посту 60–80. Допуск +20: при лимите 80 штрафа нет до 100 км/ч", "Грузовые, автобусы, тракторы и мопеды держатся правого ряда"], "2.47": ["Нарушения в окне проверки — только значками в одном блоке, включая превышение, медленную езду, поворотники и побег. Блок «На дороге» убран. Нажмите на значки: откроется список с названиями, описанием и штрафом", "В окне проверки строка «Последняя проверка»: сразу видно, что показала проверка и какое нарушение вылезло", "За неоплаченные штрафы больше не задерживают: на месте выписывается бланк в суд (или можно вымогать)"], "2.46": ["Скорость приближена к реальности: до +20 км/ч — допуск без штрафа, дальше штраф растёт с превышением", "Минимальная скорость: на трассе с лимитом от 90 нельзя ехать медленнее 40 км/ч, на некоторых участках с лимитом 110–120 — медленнее 60. Минимум показан синей табличкой под знаком лимита", "Новое нарушение «скорость ниже минимальной»: 1 000 ₽ если медленнее 40, иначе 500 ₽. Появились тихоходы (5% машин), тракторы и мопеды на трассе тоже нарушают", "Погоня длится дольше: беглец разгоняется 8 с вместо 5, уходит от вас только через 9 с вне досягаемости вместо 5", "Документы: карточка «Планшет инспектора» убрана. Сегодняшняя дата (её можно сверять), «Запрос в базу» и «Вскрыть кузов» — в панели снизу", "Окно проверки: выявленные нарушения теперь карточками с иконками. Нажмите на карточку — откроется описание, штраф и что грозит (арест, премия)", "Купе «Заря» на виде сбоку нарисовано заново: больше не выглядит «задом наперёд»"], "2.45": ["История обновлений: в штабе кнопка «Что нового» со всеми версиями"], "2.44": ["Окно проверки листается пальцем: сначала прокручивается список нарушений, а когда он дошёл до конца — вся страница. Листать можно и начиная с кнопок"], "2.43": ["Поворотники у всех машин: мигают при перестроении, при съезде на обочину и при выезде с неё; стоящие на обочине включают аварийку", "Новое нарушение: перестроение без поворотника (20% водителей). Засчитывается, если вы видели это на экране: над машиной появляется «БЕЗ ПОВОРОТНИКА». Штраф 1 000 ₽"], "2.42": ["Премия за арест угнанной машины 5 000–8 000 ₽: перебитый VIN, номер двигателя не по документам или машина в базе угонов (по отзыву тестера)"], "2.41": ["Пост: гонщики (красные) и басовые чёрные купе больше не пролетают за секунду — едут с превышением, но их можно успеть остановить", "Пост: превышение у всех машин не больше +55 км/ч"], "2.40": ["Машины перестраиваются плавно, как патрульная: боковой ход набирается и гасится, кузов слегка поворачивается", "Съезд на обочину на посту и выезд с неё тоже плавные", "Из игры убраны реальные аббревиатуры и символика: надписи на машинах патруля, флаги на лимузине, отсылки к статьям"], "2.39": ["Пост: просто тапните по машине — инспектор поднимет жезл. Кнопки «Жезл» и «Пробить» на посту убраны", "Остановленная машина плавно перестраивается, пропускает попутных и съезжает на обочину", "Вернулись старые карточки паспорта машины и страховки", "Лицо водителя в окне теперь по размеру человека, а не окна", "Спидометр внизу по центру, кнопка сирены в виде маячка", "Карма на экране езды убрана — она в штабе и в итоге смены", "Окно «Есть обновление» с патчноутом", "DEV в главном меню: сразу выйти на смену «Пост» или «Патруль»"], "2.38": ["На экране езды ничего не перекрывается: зеркало, подсказки, результат пробития номера, руль и педали разнесены", "Строка цели короче, подпись скорости над машиной не прячется под панелями"], "2.37": ["Режим поста и график смен: 2 дня пост, 2 дня патруль", "Рация с ориентировками и блок «Задания смены» (оформление)", "Полицейские машины в потоке, лимузин «Сенатор» у главы государства", "Новые педали, полупрозрачная карточка пробития номера"], "2.36": ["Кортежи (0,5%): 2 машины сопровождения, чиновник, 2 машины сзади", "Служебное удостоверение: подделку можно доказать сверкой или через базу", "Арест министра или главы государства — только полковнику"], "2.35": ["Только автомат, накат на холостом ходу", "Кнопка «Пробить» номер по базе: угон, розыск, неоплаченные штрафы", "Новая сводка смены, иконка наручников у арестных нарушений, исправлены машины «задом наперёд»"]};
+const APP_VER="2.59";
+const PATCH={"2.59": ["Документы на папке каждый раз лежат по-разному: другой порядок, места и наклон, без нахлёста. Если документов много — карточки чуть меньше, чтобы все легли", "Кортеж: остановил одну машину — встаёт весь. Каждая машина сама перестраивается по рядам и съезжает на обочину, колонна встаёт в том же порядке", "Кортеж: за рулём водитель, а служебное удостоверение подаёт пассажир с заднего сиденья — бумажка появляется из заднего окна, рядом карточка пассажира. Сверять удостоверение нужно с ним", "Патруль: остановленная машина съезжает сама — поворотник, перестроения по рядам, обочина, без скольжения сквозь поток", "Эвакуатор едет в потоке снизу, объезжает патрульную и встаёт перед арестованной: на обочине, а если там занято — в ряду, и стаскивает её лебёдкой. Уезжает, когда сзади пусто. Ни в кого не въезжает", "Стоянка на посту привязана к дороге: после погони и остановок она больше не появляется под патрульной, и машины не едут к ней по обочине", "Кнопка способности: на посту её нет, на патруле — только во время погони"], "2.58": ["Спидометр перенесён ниже — между кнопкой способности и тормозом, ровно над педалью. Кнопка способности его больше не закрывает", "Кнопка «Пробить» теперь выглядит как номер ХХХ: при запросе по нему проходит зелёный луч сканера", "Стоянка: машины заезжают и выезжают по аккуратной дуге, ждут проезжающих и больше не задевают ни друг друга, ни поток. Изредка (0,2%) водители всё-таки не разъезжаются — авария, обе машины встают с аварийкой", "Убрана плашка «Без поворотника» над машинами — заметить нарушение теперь нужно самому"], "2.57": ["Внешний осмотр: 6 мест на машине (стёкла, фары, бамперы, колёса) и ограниченные попытки — на 3 меньше, чем мест. Проверить всё не получится, выбирайте с умом. Штраф по времени за лишний тап убран", "Стоянка: машины заезжают и выезжают как настоящие — плавно поворачивают, сдают назад, включают поворотники и пропускают попутных", "Убраны выбор управления «Руль / Полосы» (теперь только руль) и строка радара «Встаньте за машиной»", "Кнопка сирены — светодиодная балка (синие и красные секции), стоит над «Пробить»", "Погоня, этап 2: выстрел засчитывается с любой полосы. Если на линии огня невиновная машина — выстрел не засчитан и −1000 ₽"], "2.56": ["Руль на 20% менее чувствительный"], "2.55": ["Патруль: дорога из 4 полос в одну сторону, без встречки. На посту — по-прежнему 2 + 2 со встречным потоком", "Ремонт машины дороже: полный ремонт теперь 12 000 ₽ вместо 3 000 ₽"], "2.54": ["Пост: стоянка теперь прямо под патрульной машиной, остановленные водители встают впереди и больше не врезаются в припаркованных", "Стоянка осталась только на посту"], "2.53": ["Для разработчиков: в штабе кнопка «DEV · клавиатура WASD» — управление с ПК (работает и в русской раскладке)"], "2.52": ["Рация свёрнута в кнопку справа: новое сообщение показывается на 5 секунд и прячется, нажатие открывает последние сообщения. Больше не закрывает стоянку и дорогу"], "2.51": ["Игра теперь называется «Проект Дорога»"], "2.50": ["Новое решение «Предупреждение»: за мелкие нарушения (шлем, тонировка, поворотник, медленная езда, парковка) — без денег, +5 к карме", "На дороге снова есть водители без нарушений", "Патруль: машину можно остановить тапом по ней, как на посту", "Пост: тапнутая машина останавливается, даже если уже проехала пост", "Стоянка: если водитель начал выезжать, когда вы по нему тапнули, он останавливается; если ещё паркуется — инспектор подойдёт, как только он встанет"], "2.49": ["Вдоль дороги появились стоянки на 5 мест: машины заезжают и выезжают, водители уходят или остаются в машине"], "2.48": ["Новая дорога: по 2 полосы в каждую сторону, встречный поток за двойной сплошной. Можно выехать на встречку для обгона, но лобовое столкновение бьёт по машине", "Лимиты как на настоящей загородной дороге: в патруле 70–90 км/ч, на посту 60–80. Допуск +20: при лимите 80 штрафа нет до 100 км/ч", "Грузовые, автобусы, тракторы и мопеды держатся правого ряда"], "2.47": ["Нарушения в окне проверки — только значками в одном блоке, включая превышение, медленную езду, поворотники и побег. Блок «На дороге» убран. Нажмите на значки: откроется список с названиями, описанием и штрафом", "В окне проверки строка «Последняя проверка»: сразу видно, что показала проверка и какое нарушение вылезло", "За неоплаченные штрафы больше не задерживают: на месте выписывается бланк в суд (или можно вымогать)"], "2.46": ["Скорость приближена к реальности: до +20 км/ч — допуск без штрафа, дальше штраф растёт с превышением", "Минимальная скорость: на трассе с лимитом от 90 нельзя ехать медленнее 40 км/ч, на некоторых участках с лимитом 110–120 — медленнее 60. Минимум показан синей табличкой под знаком лимита", "Новое нарушение «скорость ниже минимальной»: 1 000 ₽ если медленнее 40, иначе 500 ₽. Появились тихоходы (5% машин), тракторы и мопеды на трассе тоже нарушают", "Погоня длится дольше: беглец разгоняется 8 с вместо 5, уходит от вас только через 9 с вне досягаемости вместо 5", "Документы: карточка «Планшет инспектора» убрана. Сегодняшняя дата (её можно сверять), «Запрос в базу» и «Вскрыть кузов» — в панели снизу", "Окно проверки: выявленные нарушения теперь карточками с иконками. Нажмите на карточку — откроется описание, штраф и что грозит (арест, премия)", "Купе «Заря» на виде сбоку нарисовано заново: больше не выглядит «задом наперёд»"], "2.45": ["История обновлений: в штабе кнопка «Что нового» со всеми версиями"], "2.44": ["Окно проверки листается пальцем: сначала прокручивается список нарушений, а когда он дошёл до конца — вся страница. Листать можно и начиная с кнопок"], "2.43": ["Поворотники у всех машин: мигают при перестроении, при съезде на обочину и при выезде с неё; стоящие на обочине включают аварийку", "Новое нарушение: перестроение без поворотника (20% водителей). Засчитывается, если вы видели это на экране: над машиной появляется «БЕЗ ПОВОРОТНИКА». Штраф 1 000 ₽"], "2.42": ["Премия за арест угнанной машины 5 000–8 000 ₽: перебитый VIN, номер двигателя не по документам или машина в базе угонов (по отзыву тестера)"], "2.41": ["Пост: гонщики (красные) и басовые чёрные купе больше не пролетают за секунду — едут с превышением, но их можно успеть остановить", "Пост: превышение у всех машин не больше +55 км/ч"], "2.40": ["Машины перестраиваются плавно, как патрульная: боковой ход набирается и гасится, кузов слегка поворачивается", "Съезд на обочину на посту и выезд с неё тоже плавные", "Из игры убраны реальные аббревиатуры и символика: надписи на машинах патруля, флаги на лимузине, отсылки к статьям"], "2.39": ["Пост: просто тапните по машине — инспектор поднимет жезл. Кнопки «Жезл» и «Пробить» на посту убраны", "Остановленная машина плавно перестраивается, пропускает попутных и съезжает на обочину", "Вернулись старые карточки паспорта машины и страховки", "Лицо водителя в окне теперь по размеру человека, а не окна", "Спидометр внизу по центру, кнопка сирены в виде маячка", "Карма на экране езды убрана — она в штабе и в итоге смены", "Окно «Есть обновление» с патчноутом", "DEV в главном меню: сразу выйти на смену «Пост» или «Патруль»"], "2.38": ["На экране езды ничего не перекрывается: зеркало, подсказки, результат пробития номера, руль и педали разнесены", "Строка цели короче, подпись скорости над машиной не прячется под панелями"], "2.37": ["Режим поста и график смен: 2 дня пост, 2 дня патруль", "Рация с ориентировками и блок «Задания смены» (оформление)", "Полицейские машины в потоке, лимузин «Сенатор» у главы государства", "Новые педали, полупрозрачная карточка пробития номера"], "2.36": ["Кортежи (0,5%): 2 машины сопровождения, чиновник, 2 машины сзади", "Служебное удостоверение: подделку можно доказать сверкой или через базу", "Арест министра или главы государства — только полковнику"], "2.35": ["Только автомат, накат на холостом ходу", "Кнопка «Пробить» номер по базе: угон, розыск, неоплаченные штрафы", "Новая сводка смены, иконка наручников у арестных нарушений, исправлены машины «задом наперёд»"]};
 function cmpVer(a,b){const x=String(a).split(".").map(Number),y=String(b).split(".").map(Number);for(let i=0;i<Math.max(x.length,y.length);i++){const d=(x[i]||0)-(y[i]||0);if(d)return d;}return 0;}
 function verModal(title,notes,btn,fn){const m=document.createElement("div");m.className="vmod";m.innerHTML=`<div class="vbox"><b class="vt">${title}</b><ul>${notes.map(n=>`<li>${n}</li>`).join("")}</ul><button class="big">${btn}</button></div>`;document.body.appendChild(m);m.querySelector("button").onclick=()=>fn(m);}
 if(/^https?:/.test(location.protocol)){
@@ -2013,7 +2018,7 @@ function startShift(gear,night){
      hp:clamp(save.hp==null?100:save.hp,0,100),hpCd:0,earned:0,karma0:save.karma,pts:0,spawn:1,ammo:save.ammo,fx:[],log:[],toastT:0,time:0};
   for(let i=0;i<5;i++)spawn(true);
   S.limit=S.post?pick([60,80]):pick([80,90]);S.onc=[];S.oncT=0;
-  if(S.post){S.p.x=SHOULDER;S.p.speed=0;S.p.lane=RL;S.p.y=POST_Y;}
+  if(S.post){S.p.x=SHOULDER;S.p.speed=0;S.p.lane=RL;S.p.y=POST_Y;S.lot0=POST_Y+86-(S.scroll||0);}else S.lot0=null;
   S.minSpeed=minSpeedFor(S.limit);
   show("game"); $("#inspect").hidden=true;$("#brwin").hidden=true;$("#chkwin").hidden=true;$("#desk").hidden=true;$("#hands").hidden=true;$("#x-wreck").hidden=true;$("#x-fin").hidden=true;
   gearForSpeed(false);if(CTRL==="lanes")setLane(1);setWheel(0);
@@ -2033,6 +2038,7 @@ const slowFine=c=>c.speed<40?1000:500;
 function guilty(c){return (c.wrongPark&&c.parkSeen)||c.slowV||c.noSig||c.vipfake||c.pasexp||(c.unpaid>0)||c.nohelmet||c.nopermit||c.cargoBad||c.noins||c.drunk||c.stolen||c.nolic||c.fled||c.drugs||c.weapon||c.contra||c.mod||c.engine||c.stolenReg||c.wanted;}
 function freeAt(x,y,gap=120,h=28){
   if(Math.abs(S.p.x-x)<40&&Math.abs(S.p.y-y)<gap+h-28)return false;
+  if(S.tows&&S.tows.some(w=>w.ph!=="wait"&&Math.abs(w.x-x)<44&&Math.abs(w.y-y)<gap+21+(h-28)))return false; /* эвакуатор тоже занимает место */
   return !S.cars.some(c=>Math.abs(c.x-x)<40&&Math.abs(c.y-y)<gap+(hl(c)-28)+(h-28));
 }
 function spawnConvoy(){
@@ -2143,8 +2149,8 @@ function misconduct(){if(S.gear.cam){S.st.rec++;return true;}S.st.unrec++;return
 const RNG=PORT?{radar:400,lock:320,stop:330,horn:380,lost:600}:{radar:255,lock:250,stop:265,horn:255,lost:330}; /* дальности зависят от того, сколько дороги видно */
 /* ===== стоянки на 5 мест вдоль дороги ===== */
 const LOT_GAP=2400,LOT0=140,LOT_N=5,LOT_H=40,LOT_X=322,POST_Y=270; /* стоянка — карта поста: прямо под патрульной машиной */
-const lotY=k=>S.post?S.p.y+86:S.scroll-k*LOT_GAP+LOT0,slotY=(k,i)=>lotY(k)+LOT_H/2+i*LOT_H;
-function lotsVis(){if(!S.post||S.mode==="chase")return [];const r=[],a=Math.floor((S.scroll+LOT0-(H+EXT+40))/LOT_GAP),b=Math.ceil((S.scroll+LOT0+EXT+300)/LOT_GAP);if(S.post)return [0];for(let k=Math.max(0,a);k<=b;k++){const y=lotY(k);if(y>-EXT-280&&y<H+EXT+40)r.push(k);}return r;}
+const lotY=k=>S.scroll-k*LOT_GAP+(S.lot0==null?LOT0:S.lot0), /* стоянка привязана к дороге, а не к патрульной машине: уехал — осталась позади */slotY=(k,i)=>lotY(k)+LOT_H/2+i*LOT_H;
+function lotsVis(){if(!S.post)return [];const L0=S.lot0==null?LOT0:S.lot0,r=[],a=Math.floor((S.scroll+L0-(H+EXT+40))/LOT_GAP),b=Math.ceil((S.scroll+L0+EXT+300)/LOT_GAP);for(let k=Math.max(0,a);k<=b;k++){const y=lotY(k);if(y>-EXT-280&&y<H+EXT+40)r.push(k);}return r;}
 function lotOverlap(y0,y1){for(const k of lotsVis()){const t=lotY(k);if(y1>t-30&&y0<t+LOT_N*LOT_H+30)return true;}return false;}
 const PED_SHIRT=["#b5453a","#2f6fb5","#3d8c6a","#d9b44a","#8a5ea8","#e9eef2","#26303c"];
 function lotState(k){S.lots=S.lots||{};if(!S.lots[k]){S.lots[k]={slots:new Array(LOT_N).fill(null)};for(let i=0;i<LOT_N;i++)if(!S.lots[k].slots[i]&&Math.random()<.55)parkNew(k,i);}return S.lots[k];}
@@ -2179,12 +2185,17 @@ function steerTo(c,tx,ty,v,dt,rev){
   const df=((want-c.hd)%(2*Math.PI)+3*Math.PI)%(2*Math.PI)-Math.PI;c.hd+=clamp(df,-2.6*dt,2.6*dt)*Math.min(1,v/25);
   const sg=rev?-1:1;c.x+=Math.sin(c.hd)*v*dt*sg;c.y-=Math.cos(c.hd)*v*dt*sg;return d;}
 /* габариты машин как повёрнутые прямоугольники: на стоянке никто ни до кого не дотрагивается */
-function carRot(c){if(c===S.p)return 0;return (c.state==="parked"||c.state==="parking"||c.state==="unparking")&&c.rotNow!=null?c.rotNow:(isDriving(c)||c.state==="fleeing"||c.state==="pulling")?clamp((c.vx||0)/(c.bass?520:360),-.22,.22):0;}
+function carRot(c){if(c===S.p)return 0;if(c.isTow)return c.rot||0;return (c.state==="parked"||c.state==="parking"||c.state==="unparking")&&c.rotNow!=null?c.rotNow:(isDriving(c)||c.state==="fleeing"||c.state==="pulling")?clamp((c.vx||0)/(c.bass?520:360),-.22,.22):0;}
 function obbHit(a,b,m){const A=[a.x,a.y,carRot(a),hl(a)+m,hw(a)+m],B=[b.x,b.y,carRot(b),hl(b),hw(b)],R=A[3]+A[4]+B[3]+B[4];
   if(Math.abs(A[0]-B[0])>R||Math.abs(A[1]-B[1])>R)return false;
   const ax=[];for(const O of [A,B]){const sn=Math.sin(O[2]),cs=Math.cos(O[2]);ax.push([sn,-cs],[cs,sn]);}
   for(const [ux,uy] of ax){const pr=O=>{const sn=Math.sin(O[2]),cs=Math.cos(O[2]),m0=O[0]*ux+O[1]*uy,r=O[3]*Math.abs(sn*ux-cs*uy)+O[4]*Math.abs(cs*ux+sn*uy);return [m0-r,m0+r];};
     const P=pr(A),Q=pr(B);if(P[1]<=Q[0]||Q[1]<=P[0])return false;}return true;}
+/* насколько габариты налезли друг на друга (≤0 — не касаются): разрешаем только шаги, после которых налезание не растёт */
+function obbPen(a,b,m){const A=[a.x,a.y,carRot(a),hl(a)+m,hw(a)+m],B=[b.x,b.y,carRot(b),hl(b),hw(b)];let best=1e9;
+  const ax=[];for(const O of [A,B]){const sn=Math.sin(O[2]),cs=Math.cos(O[2]);ax.push([sn,-cs],[cs,sn]);}
+  for(const [ux,uy] of ax){const pr=O=>{const sn=Math.sin(O[2]),cs=Math.cos(O[2]),m0=O[0]*ux+O[1]*uy,r=O[3]*Math.abs(sn*ux-cs*uy)+O[4]*Math.abs(cs*ux+sn*uy);return [m0-r,m0+r];};
+    const P=pr(A),Q=pr(B),ov=Math.min(P[1]-Q[0],Q[1]-P[0]);if(ov<best)best=ov;}return best;}
 function lotHit(c,m){for(const o of S.cars){if(o===c||o.onTow||o.id===c.ignore||Math.abs(o.y-c.y)>120||Math.abs(o.x-c.x)>120)continue;if(obbHit(c,o,m))return o;}
   if(!S.ghostOn&&Math.abs(S.p.y-c.y)<120&&Math.abs(S.p.x-c.x)<120&&obbHit(c,S.p,m))return S.p;return null;}
 const LOT_CRASH=.002,ARC_R=22; /* 0,2% манёвров на стоянке кончаются ДТП */
@@ -2235,13 +2246,60 @@ function parkTick(c,dt){
   const h=lotHit(c,1);
   if(h){
     if(c.crashRoll&&h!==S.p&&!h.crashed)lotCrash(c,h);
-    else if(!hit0||Math.hypot(h.x-c.x,h.y-c.y)<Math.hypot(h.x-o0.x,h.y-o0.y)){Object.assign(c,o0);c.rotNow=c.hd;c.blkBy=h;
+    else if(!hit0||obbPen(c,h,1)>obbPen({x:o0.x,y:o0.y,rotNow:o0.hd,state:c.state,model:c.model},h,1)){Object.assign(c,o0);c.rotNow=c.hd;c.blkBy=h;
       if(c.state==="unparking"&&c.pp===5&&h!==S.p&&h.y>c.y){c.y-=Math.max(20,c.pv)*dt;c.hd*=.9;c.vx2*=.5;c.rotNow=c.hd;if(lotHit(c,1)){Object.assign(c,o0);c.rotNow=c.hd;c.pv=0;}} /* сзади подпёрли — сперва прямо вперёд */
       else c.pv=0;}}
   const fw=c.state==="parking"?(c.pp<=2):(c.pp===5||(c.pp===3&&!c.rev));
   c.speed=fw?Math.max(0,Math.cos(c.hd)*(c.pv||0)/PX):0;
   c.blink=c.state==="parking"?1:-1;c.blinkT=.4;
 }
+/* эвакуатор: едет в потоке снизу, обходит патрульную, встаёт перед арестованной (на обочине, если там свободно, иначе в правом ряду) и грузит её.
+   Габариты чувствует как все: шаг, после которого он задел бы кого-то, не делается — ждёт */
+function towHits(w,m){const r=[];for(const o of S.cars){if(o===w.c||o.onTow||Math.abs(o.y-w.y)>140||Math.abs(o.x-w.x)>90)continue;if(obbHit(w,o,m))r.push(o);}
+  for(const o of S.tows||[])if(o!==w&&o.ph!=="wait"&&Math.abs(o.y-w.y)<140&&obbHit(w,o,m))r.push(o);
+  if(!S.ghostOn&&Math.abs(S.p.y-w.y)<140&&obbHit(w,S.p,m))r.push(S.p);return r;}
+const towHit=(w,m)=>towHits(w,m)[0]||null;
+/* эвакуатор встал в ряду: место за ним держим под арестованную, попутные туда не заезжают */
+function towRes(){return (S.tows||[]).filter(w=>(w.ph==="lane"&&Math.abs(w.y-(w.c.y-78))<40||w.ph==="slide")&&!w.c.onTow).map(w=>({isRes:true,x:LANES[RL],y:w.c.y,model:w.c.model,state:"res",speed:0}));}
+function towMove(w,dx,dy,rot){const o={x:w.x,y:w.y,rot:w.rot},h0=towHits(w,1),p0=h0.map(h=>obbPen(w,h,1));w.x+=dx;w.y+=dy;if(rot!=null)w.rot=rot;
+  const bad=towHits(w,1).some(h=>{const i=h0.indexOf(h);return i<0||obbPen(w,h,1)>p0[i];}); /* новый контакт — нельзя; уже впритык — можно только отъезжать */
+  if(bad){w.x=o.x;w.y=o.y;w.rot=o.rot;return false;}return true;}
+function towLead(w){let g=1e9,ld=null;for(const d of S.cars){if(d===w.c||d.onTow||d.state==="pulled"||d.state==="arrested")continue;if(Math.abs(d.x-w.x)<36&&d.y<w.y&&w.y-d.y<g){g=w.y-d.y;ld=d;}}
+  if(Math.abs(S.p.x-w.x)<36&&S.p.y<w.y&&w.y-S.p.y<g){g=w.y-S.p.y;ld=S.p;}return ld?{g:g-hl(ld)-49,s:(ld.speed||0)*PX}:null;}
+function towTick(dt){const p=S.p,road=p.speed*PX*dt,TL=.8;
+  for(const w of S.tows){const c=w.c;w.t+=dt;
+    if(w.ph==="wait"){ /* выезжает снизу, когда в ряду есть место */
+      if(c.y>H+EXT+60&&!c.onTow){c.gone=true;w.done=true;continue;}
+      const la=RL>0?RL-1:RL;w.x=LANES[la];w.y=H+EXT+140;w.rot=0;
+      if(!towHit(w,24)){w.ph="come";w.v=Math.max(60,S.limit)*PX*.85;}else continue;}
+    if(c.y>H+EXT+90&&!c.onTow&&(w.ph==="come"||w.ph==="merge")){c.gone=true;w.done=true;continue;} /* патрульная уехала — эвакуатор заберёт без нас */
+    const top=Math.min(c.y-hl(c),p.y-28),sx=c.x,lx=LANES[RL];
+    let vT=0,tx=w.x;
+    if(w.ph==="come"){tx=LANES[RL>0?RL-1:RL];vT=Math.max(60,S.limit)*PX*.85;if(w.y+49<top-25){w.ph="merge";}}
+    if(w.ph==="merge"){tx=lx;vT=70;
+      if(Math.abs(w.x-lx)<2){const probe={isTow:true,x:sx,y:c.y-113,rot:0};const free=!S.cars.some(o=>o!==c&&!o.onTow&&Math.abs(o.y-probe.y)<160&&obbHit(probe,o,12));
+        w.ph=free?"shoulder":"lane";}}
+    if(w.ph==="shoulder"){tx=sx;const yt=c.y-78-45;vT=w.y>yt?45:0;if(Math.abs(w.x-sx)<1.5&&w.y<=yt+2){w.ph="back";}}
+    if(w.ph==="back"){tx=sx;vT=w.y<c.y-78-1?-30:0;if(w.y>=c.y-79){w.y=c.y-78;w.ph="winch";w.wt=0;}}
+    if(w.ph==="lane"){tx=lx;const yt=c.y-78;vT=w.y<yt-1?-30:w.y>yt+1?40:0;if(Math.abs(w.y-yt)<=1.2&&Math.abs(w.x-lx)<1.5){w.y=yt;w.ph="slide";}}
+    if(w.ph==="slide"){vT=0;w.y=c.y-78; /* машину лебёдкой стаскивают с обочины в ряд, за платформу */
+      const busy=S.cars.some(o=>o!==c&&isDriving(o)&&Math.abs(o.x-lx)<40&&o.y>c.y-20&&o.y<c.y+140);
+      if(!c.towSlide&&busy){}else{c.towSlide=true;const o0=c.x,st=Math.sign(w.x-c.x)*Math.min(Math.abs(w.x-c.x),55*dt);const near=S.cars.filter(o=>o!==c&&!o.onTow&&Math.abs(o.y-c.y)<130&&Math.abs(o.x-c.x)<130),pb=near.map(o=>obbPen(c,o,1));c.x+=st;if(near.some((o,i)=>{const pn=obbPen(c,o,1);return pn>0&&pn>Math.max(0,pb[i])+.01;})||(!S.ghostOn&&obbHit(c,S.p,1))){c.x=o0;}if(Math.abs(c.x-w.x)<.6){c.x=w.x;w.ph="winch";w.wt=0;}}}
+    if(w.ph==="winch"){vT=0;if(!c.onTow){c.onTow=true;w.rel=c.y-w.y;w.rel0=w.rel;}w.wt+=dt;const k=Math.min(1,w.wt/TL),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;w.rel=w.rel0-(w.rel0-14)*e;if(k>=1){w.rel=14;w.ph="leave";w.v=0;}}
+    if(w.ph==="leave"){ /* с обочины — только когда сзади в ряду пусто */
+      const onSh=Math.abs(w.x-lx)>3;const busy=onSh&&S.cars.some(o=>isDriving(o)&&Math.abs(o.x-lx)<40&&o.y>w.y-60&&o.y<w.y+260);
+      tx=busy&&w.x>lx+20?w.x:lx;vT=busy&&onSh?0:Math.max(60,S.limit)*PX;}
+    /* в ряду — держит дистанцию до впереди идущего */
+    if(vT>0){const ld=towLead(w);if(ld){if(ld.g<20)vT=Math.min(vT,ld.s*.8);else if(ld.g<90)vT=Math.min(vT,ld.s+ld.g);}}
+    const acc=vT>w.v?(w.ph==="leave"?90:140):220;w.v+=clamp(vT-w.v,-acc*dt,acc*dt);
+    const want=clamp((tx-w.x)*2,-60,60);w.vx+=(want-w.vx)*Math.min(1,4*dt);
+    const rot=clamp(Math.atan2(w.vx,Math.max(40,Math.abs(w.v))),-.35,.35)*(w.v<0?-1:1);
+    w.y+=road; /* стоящий эвакуатор едет вниз вместе с дорогой */
+    if(!towMove(w,w.vx*dt,-w.v*dt,rot)){w.v=0;w.vx*=.5;}
+    w.speed=w.v/PX;
+    if(c.onTow){const r=w.rot||0;c.x=w.x-Math.sin(r)*w.rel;c.y=w.y+Math.cos(r)*w.rel;c.rotNow=r;}
+    if(w.ph==="leave"&&w.y<VY-160){c.gone=true;w.done=true;}}
+  S.tows=S.tows.filter(w=>!w.done&&!w.c.gone);}
 /* инспектор идёт к стоящей машине; если водитель ушёл — он возвращается, и проверка начинается с нарушением */
 function startWalk(c){S.mode="walk";S.walk={c,ph:"stop",ix:S.p.x-30,iy:S.p.y,dx:null,dy:null};S.locked=null;S.stopCar=null;}
 function walkTick(dt){
@@ -2312,27 +2370,61 @@ function doStop(){
 const PMIN=ROAD_L+18,PMAX=SHOULDER+12;
 function steer(d){if(S&&(S.mode==="patrol"||S.mode==="chase"))S.p.x=clamp(S.p.x+d*72,PMIN,PMAX);}
 /* пост: водитель плавно тормозит, пропускает попутных и съезжает на обочину у поста */
+/* кортеж: остановили одну машину — встаёт весь. Каждая сама перестраивается вправо и съезжает на обочину впереди остановленной, по порядку колонны */
+function convoyPull(c){ /* колонна встаёт в том же порядке, без обгонов, вся — перед патрульной */
+  const all=S.cars.filter(e=>e.convoy===c.convoy&&e.state!=="dead").sort((a,b)=>b.y-a.y),gap=(a,b)=>hl(a)+hl(b)+16;
+  all.forEach((e,i)=>{e._ahead=all[i+1]||null;});const tys=new Map();
+  if(S.pull.post){let prev=null,pc=null;const lim=S.p.y-62; /* пост: мир стоит — каждая встаёт не позади себя, отставшие — с запасом на перестроение */
+    for(const e of all){let ty=Math.min(e.y-40-55*Math.max(0,RL-e.lane),prev==null?lim:prev-gap(pc,e));if(prev==null&&e.y<S.p.y-58)ty=Math.min(ty,e.y-120);tys.set(e,ty);prev=ty;pc=e;}}
+  else{ /* патруль: остановленная — у патрульной, задние — между ней и патрульной, передние — цепочкой впереди */
+    const k=all.indexOf(c),beh=all.slice(0,k);let T=330,room=PY-90;for(let i=beh.length-1;i>=0;i--)room-=gap(beh[i],i===beh.length-1?c:beh[i+1]);T=Math.min(T,room);
+    tys.set(c,T);let prev=T,pc=c;for(let i=k-1;i>=0;i--){const e=all[i];prev=prev+gap(pc,e);tys.set(e,prev);pc=e;}
+    prev=T;pc=c;for(let i=k+1;i<all.length;i++){const e=all[i];prev=prev-gap(pc,e);tys.set(e,prev);pc=e;}}
+  for(const e of all){const ty=tys.get(e);if(e===c){if(S.pull.post)S.pull.ty=ty;else if(c.cq)c.cq.ty=ty;continue;}
+    e.state="cpull";e.done=true;e.cq={ty,onSh:false,ahead:e._ahead};e.vx=e.vx||0;}
+  toast("Кортеж прижимается к обочине");}
+const convoySettled=c=>!S.cars.some(e=>e.convoy===c.convoy&&e!==c&&e.state==="cpull");
+function cpullTick(c,dt){const p=S.p,q=c.cq;
+  const onSh=Math.abs(c.x-SHOULDER)<3,shOK=!(S.post&&c.y>p.y-40);
+  const dist=c.y-q.ty,ps=p.speed*PX;let v=c.speed*PX;
+  const want=dist>=0?ps+Math.sqrt(2*130*dist):Math.max(0,ps+dist*1.6); /* место отсчитано от патрульной: пока она тормозит, подстраивается под неё */
+  v=v+clamp(want-v,-420*dt,90*dt);if(dist>1)v=Math.max(v,onSh?12:Math.min(34,want));if(dist<=1&&ps<1)v=Math.max(0,v-300*dt);
+  const back=(q.wt||0)>3?40:100,freeR=l=>!S.cars.some(o=>o!==c&&(isDriving(o)||o.state==="cpull")&&Math.abs(o.x-LANES[l])<30&&o.y>c.y-70&&o.y<c.y+back); /* долго ждёт — втискивается, задние притормозят */
+  if(c.lane<RL&&Math.abs(c.x-LANES[c.lane])<6){if(freeR(c.lane+1)){c.lane++;q.wt=0;}else q.wt=(q.wt||0)+dt;}
+  let tx=LANES[c.lane];if(c.lane===RL&&(q.onSh||dist<230&&shOK))tx=SHOULDER;if(tx===SHOULDER)q.onSh=true;
+  const lat=40+v/PX*.3,wv=clamp((tx-c.x)*1.9,-lat,lat);c.vx=(c.vx||0)+(wv-(c.vx||0))*Math.min(1,3.2*dt);
+  const x0=c.x,y0=c.y,near=S.cars.filter(o=>o!==c&&Math.abs(o.y-c.y)<130&&Math.abs(o.x-c.x)<110),pb=near.map(o=>obbPen(c,o,1)),pp=obbPen(c,p,1);
+  c.y+=(p.speed*PX-v)*dt;c.x+=c.vx*dt;
+  const bad=()=>near.some((o,i)=>{const n=obbPen(c,o,1);return n>0&&n>Math.max(0,pb[i])+.01;})||(!S.ghostOn&&obbPen(c,p,1)>Math.max(0,pp));
+  if(bad()){c.x=x0;c.vx=0;if(dist<12&&!onSh){const a=q.ahead;q.ty=Math.min(q.ty,Math.max(c.y-30,a&&S.cars.includes(a)?a.y+hl(a)+hl(c)+12:-1e9));}if(bad()){c.y=y0+p.speed*PX*dt;if(dist<12&&!onSh){const a=q.ahead;q.ty=Math.min(q.ty,Math.max(c.y-30,a&&S.cars.includes(a)?a.y+hl(a)+hl(c)+12:-1e9));}if(!onSh&&!q.onSh&&c.lane>0&&c.x-LANES[c.lane-1]>4&&LANES[c.lane]-c.x>4){c.lane--;q.wt=0;}v=0;if(onSh)q.blk=(q.blk||0)+dt;}else q.blk=0;}else q.blk=0; /* сбоку тесно — едет прямо; впереди занято — ждёт, не налезая */
+  c.speed=v/PX;c.base=c.speed;c.blink=1;c.blinkT=.4;
+  if((dist<3||q.blk>1.2)&&onSh&&ps<2){c.x=SHOULDER;c.vx=0;c.speed=0;c.base=0;c.state="pulled";c.cq=null;}
+}
 function postPullTick(c,dt){
   const q=S.pull,p=S.p;if(!q)return;
   if(q.ty==null){q.ty=c.y<p.y-58?Math.max(VY+60,c.y-120):p.y-62;} /* всегда встаёт перед патрульной: позади стоянка */ /* уже проехал пост — встаёт впереди, где успеет */ /* впереди — вплотную к патрульной, чтобы не заехать на стоянку */
   const onShoulder=Math.abs(c.x-SHOULDER)<3;
-  if(!onShoulder&&c.y-q.ty<50){const lim=q.ty>p.y?p.y+85:60;q.ty=Math.max(lim,Math.min(q.ty,c.y-50));} /* не встаёт посреди дороги: точка остановки отъезжает, пока машина не на обочине */
+  if(!onShoulder&&c.y-q.ty<50&&!c.convoy){const lim=q.ty>p.y?p.y+85:60;q.ty=Math.max(lim,Math.min(q.ty,c.y-50));} /* не встаёт посреди дороги: точка остановки отъезжает, пока машина не на обочине */
   const dist=c.y-q.ty; /* сколько ещё проехать вверх */
   let v=c.speed*PX;const want=Math.sqrt(2*150*Math.max(0,dist));v=Math.min(v,want);
   const shOK=!(S.post&&c.y>p.y-40); /* на посту съезжать можно только проехав патрульную */
   if(!onShoulder)v=dist>2?(shOK?Math.max(Math.min(v,c.speed*PX-130*dt),38):Math.max(v,70)):0; /* не ползёт, пока не дошла до места съезда */
   else v=Math.max(v,dist>1?14:0);v=Math.max(0,v-(dist<1?400*dt:0));
-  c.speed=v/PX;c.base=c.speed;c.y-=v*dt;if(dist<=0){c.y=Math.min(c.y+0,c.y);}
+  const x0=c.x,y0=c.y,near=S.cars.filter(o=>o!==c&&Math.abs(o.y-c.y)<140&&Math.abs(o.x-c.x)<110),pb=near.map(o=>obbPen(c,o,1));
+  c.speed=v/PX;c.base=c.speed;c.y-=v*dt;
   /* перестроение: в правый ряд, только если там свободно (иначе пропускаем трафик), потом на обочину */
   const freeR=l=>!S.cars.some(o=>o!==c&&isDriving(o)&&Math.abs(o.x-LANES[l])<30&&o.y>c.y-70&&o.y<c.y+100);
   if(c.lane<RL&&Math.abs(c.x-LANES[c.lane])<6){q.wait=!freeR(c.lane+1);if(!q.wait){c.lane++;}} /* по одной полосе, пропуская попутных */
   let tx=LANES[c.lane];if(c.lane===RL&&dist<230&&Math.abs(c.y-p.y)>70&&shOK)tx=SHOULDER; /* на посту на обочину — только проехав патрульную (сзади стоянка) */if(c.lane===RL&&q.onSh)tx=SHOULDER;
   if(tx===SHOULDER)q.onSh=true;
   {const lat=40+c.speed*.3,want=clamp((tx-c.x)*1.9,-lat,lat);c.vx=(c.vx||0)+(want-(c.vx||0))*Math.min(1,3.2*dt);c.x+=c.vx*dt;}
-  if(dist<3&&Math.abs(c.x-SHOULDER)<2.5){c.x=SHOULDER;c.vx=0;c.speed=0;c.base=0;c.state="pulled";S.pull=null;openInspect(c);}
+  {const bad=()=>near.some((o,i)=>{const n=obbPen(c,o,1);return n>0&&n>Math.max(0,pb[i])+.01;});if(bad()){c.x=x0;c.vx=0;if(bad()){c.y=y0;c.speed=0;}}} /* не задевает ни стоящих, ни едущих */
+  if(dist<3&&Math.abs(c.x-SHOULDER)<2.5){c.x=SHOULDER;c.vx=0;c.speed=0;c.base=0;c.state="pulled";S.pull=null;if(c.convoy&&!convoySettled(c)){S.pullWait={c,t:0};return;}openInspect(c);}
 }
-function startPullover(c){S.mode="pullover";S.pull={c,t:0,sx:SHOULDER,chased:!!c.fled,post:!!(S.post&&!c.fled)};if(S.pull.post){c.state="pulling";S.locked=null;S.siren=0;return;}/* левая полоса: съезд на ближний грунт слева, иначе на правую обочину */c.state="pulled";S.locked=null;S.siren=999;
-  if(c.convoy){S.cars.forEach(e=>{if(e.convoy!==c.convoy||e===c)return;e.state="pulled";e.ex=S.pull.sx;e.ey=e.cpos<0?330+e.cpos*72:PY+60+(e.cpos-1)*72;});toast("Кортеж прижимается к обочине");}}
+function startPullover(c){S.mode="pullover";S.pull={c,t:0,sx:SHOULDER,chased:!!c.fled,post:!!(S.post&&!c.fled)};if(S.pull.post){c.state="pulling";S.locked=null;S.siren=0;if(c.convoy)convoyPull(c);return;}
+  if(!S.pull.chased){c.state="cpull";c.cq={ty:330,onSh:false};S.pull.drive=true;} /* съезжает сам: поворотник, перестроение по рядам, обочина */
+  if(c.convoy)convoyPull(c);if(!S.pull.drive)c.state="pulled";S.locked=null;S.siren=999;
+}
 function startChase(c){
   S.mode="chase";c.state="fleeing";c.fled=true;c.v0=c.speed;c.vT=Math.max(CHASE_MAX,c.speed);c.chaseT=0;c.base=c.speed;
   S.chase={c,hits:0,need:3,max:6,lost:0,fireCd:0,stage:1,horn:0,hornT:0,hornGap:0};S.siren=999;S.locked=null;S.stopCar=null;
@@ -2637,8 +2729,9 @@ function docData(c){
   d.licShow=c.nolic&&c.docs==="просрочены"?d.licOld:d.licTo;
   d.insShow=c.noins&&c.insWhat==="просрочена"?d.polOld:d.polTo;
   d.dbTo=d.licShow;if(c.nolic&&c.docs==="поддельные"&&Math.random()<.6){let x;do{x=dAdd(ri(-300,1500));}while(x===d.licShow);d.dbTo=x;}
-  if(c.vip){const mode=c.vipfake?(Math.random()<.5?"photo":"name"):"";d.vipP=mode==="photo"?genPerson(person):samePerson(person);d.vipId=mode==="photo"?2:1;
-    d.vipName=mode==="name"?similarName(c.name):c.name;d.vipNo=String(ri(1000,9999))+"-"+"АВЕКМНОРСТУХ"[ri(0,11)]+"Г";d.vipTo=dAdd(ri(120,1500));}
+  if(c.vip&&c.convoy&&c.vip.kind!=="aide"&&!c.pax)c.pax={name:otherName(c.name),person:genPerson(person)}; /* в кортеже за рулём водитель, а удостоверение подаёт пассажир сзади */
+  if(c.vip){const vp=c.pax?c.pax.person:person,vn=c.pax?c.pax.name:c.name,mode=c.vipfake?(Math.random()<.5?"photo":"name"):"";d.vipP=mode==="photo"?genPerson(vp):samePerson(vp);d.vipId=mode==="photo"?2:1;
+    d.vipName=mode==="name"?similarName(vn):vn;d.vipNo=String(ri(1000,9999))+"-"+"АВЕКМНОРСТУХ"[ri(0,11)]+"Г";d.vipTo=dAdd(ri(120,1500));}
   c.dd=d;return d;
 }
 
@@ -2774,12 +2867,12 @@ const RETURN_CHANCE=.2;
    игра отвечает «совпадает» или «не совпадает». Каждая сверка стоит 2 секунды смены, поэтому перебирать всё подряд невыгодно.
    (Стол оставлен на будущий режим «будка на КПП».) */
 const CMP_SEC=2;
-const LBL={face:"лицо водителя","name.say":"как назвался",today:"сегодняшняя дата","plate.car":"номер машины",
+const LBL={face:"лицо водителя","pax.face":"лицо пассажира","pax.say":"как назвался пассажир","name.say":"как назвался",today:"сегодняшняя дата","plate.car":"номер машины",
   "lic.photo":"фото в правах","lic.name":"ФИО в правах","lic.num":"номер прав","lic.to":"срок прав",
   "pas.plate":"номер в паспорте","pas.color":"цвет в паспорте","car.look":"цвет машины","pas.vin":"VIN в паспорте","pas.to":"срок паспорта ТС","pas.eng":"двигатель в паспорте","pas.model":"марка в паспорте",
   "ins.name":"вписан в полис","ins.plate":"номер в полисе","ins.to":"срок полиса","vin.car":"VIN на кузове","eng.car":"номер на двигателе",
   "db.photo":"фото в реестре","db.name":"ФИО в реестре","db.num":"номер прав в реестре","db.to":"срок прав в реестре","vip.photo":"фото в удостоверении","vip.name":"ФИО в удостоверении","vip.to":"срок удостоверения"};
-const CAT={face:"person","lic.photo":"person","db.photo":"person","name.say":"name","lic.name":"name","ins.name":"name","db.name":"name",
+const CAT={face:"person","pax.face":"person","pax.say":"name","lic.photo":"person","db.photo":"person","name.say":"name","lic.name":"name","ins.name":"name","db.name":"name",
   today:"date","pas.to":"date","lic.to":"date","ins.to":"date","db.to":"date","plate.car":"plate","pas.plate":"plate","ins.plate":"plate",
   "pas.vin":"vin","vin.car":"vin","pas.color":"color","car.look":"color","pas.eng":"eng","eng.car":"eng","lic.num":"num","db.num":"num","pas.model":"model","vip.photo":"person","vip.name":"name","vip.to":"date"};
 const pd=s=>{const [d,m,y]=s.split(".").map(Number);return y*10000+m*100+d;};
@@ -2787,7 +2880,7 @@ const pd=s=>{const [d,m,y]=s.split(".").map(Number);return y*10000+m*100+d;};
 function fval(f){
   const c=IN.c,d=docData(c);
   switch(f){
-    case "face":return 1; case "lic.photo":return d.licId; case "db.photo":return d.dbId;
+    case "face":case "pax.face":return 1; case "pax.say":return c.pax?c.pax.name:c.name; case "lic.photo":return d.licId; case "db.photo":return d.dbId;
     case "name.say":return c.name; case "lic.name":return d.licName; case "ins.name":return d.insName; case "db.name":return d.dbName;
     case "today":return pd(TODAY()); case "pas.to":return pd(d.pasTo); case "lic.to":return pd(d.licShow); case "ins.to":return pd(d.insShow); case "db.to":return pd(d.dbTo);
     case "plate.car":return c.plate; case "pas.plate":return d.pasPlate; case "ins.plate":return d.insPlate;
@@ -2802,8 +2895,10 @@ const FVIOL={"pas.to":"pasexp","lic.photo":"nolic","db.photo":"nolic","lic.name"
 const VIOL_TXT={nolic:["права недействительны",()=>prc(FINE.nolic),"fine"],noins:["полис недействителен",()=>prc(FINE.noins),"fine"],
   stolen:["машина не соответствует документам: угон",()=>"","court"],pasexp:["паспорт ТС просрочен",()=>prc(FINE.pasexp),"fine"],vipfake:["служебное удостоверение поддельное",()=>"","court"],engine:["двигатель не по документам",()=>"","court"]};
 /* проверка заявленной пары */
+const PAXF=new Set(["pax.face","pax.say","vip.photo","vip.name"]);
 function claimEval(a,b){
   const ca=CAT[a],cb=CAT[b];
+  if(IN.c.pax&&(ca==="person"||ca==="name")&&ca===cb&&PAXF.has(a)!==PAXF.has(b))return {na:"Удостоверение подал пассажир с заднего сиденья — сверяйте его с пассажиром, а не с водителем"};
   if(ca!==cb||ca==="model")return {na:"Эти данные между собой не сравниваются"};
   if(ca==="date"){
     if(a!=="today"&&b!=="today"){
@@ -2815,7 +2910,7 @@ function claimEval(a,b){
   }
   if(fval(a)===fval(b))return {ok:false};
   if(ca==="vin"||ca==="color")return {ok:true,viol:"stolen"};if(ca==="eng")return {ok:true,viol:"engine"};
-  const w=[a,b].find(x=>FVIOL[x]&&(ca==="person"?fval(x)!==1:ca==="plate"?fval(x)!==IN.c.plate:fval(x)!==IN.c.name));
+  const w=[a,b].find(x=>FVIOL[x]&&(ca==="person"?fval(x)!==1:ca==="plate"?fval(x)!==IN.c.plate:fval(x)!==(IN.c.pax&&PAXF.has(x)?IN.c.pax.name:IN.c.name)));
   return w?{ok:true,viol:FVIOL[w]}:{ok:false};
 }
 function proveViol(v){
@@ -3595,10 +3690,20 @@ function dsLayout(){
   if(!$("#ds-pull")){const b=document.createElement("button");b.id="ds-pull";b.type="button";H.appendChild(b);b.addEventListener("click",e=>{e.stopPropagation();dsDrop();});}
   dsDrop(!!D.low);
   D.big=D.big||{};const ps=[...document.querySelectorAll("#h-cards .paper")];
-  const full=id=>!!D.big[id],wOf=id=>full(id)?W*.95:W*.47;
+  const full=id=>!!D.big[id],el=$("#h-cards"),sc=D.sc||1,wOf=id=>full(id)?W*.95:W*.47*sc;el.style.fontSize=sc<1?sc+"em":"";
   ps.forEach(p=>{p.style.setProperty("width",wOf(p.dataset.doc)+"px","important");p.classList.toggle("big",!!D.big[p.dataset.doc]);});
-  /* стартовая раскладка: ряды по две карточки, широкие — на весь ряд; если не влезает — карточки чуть перекрываются */
-  if(ps.some(p=>!D.pos[p.dataset.doc])){const rows=[];let cur=[];ps.forEach(p=>{if(full(p.dataset.doc)){if(cur.length)rows.push(cur);rows.push([p]);cur=[];}else{cur.push(p);if(cur.length===2){rows.push(cur);cur=[];}}});if(cur.length)rows.push(cur);
+  /* стартовая раскладка: водители подают документы по-разному — каждый раз они лежат на папке в случайном порядке и местах, не налезая друг на друга */
+  if(ps.some(p=>!D.pos[p.dataset.doc])){const top=pen+4,bot=Hh-46,placed=[],gap=7,box=(x,y,p)=>[x-gap,y-gap,x+p.offsetWidth+gap,y+p.offsetHeight+gap];
+    const ov=(a,b)=>Math.max(0,Math.min(a[2],b[2])-Math.max(a[0],b[0]))*Math.max(0,Math.min(a[3],b[3])-Math.max(a[1],b[1]));
+    const fixed=ps.filter(p=>D.pos[p.dataset.doc]);fixed.forEach(p=>placed.push(box(D.pos[p.dataset.doc][0],D.pos[p.dataset.doc][1],p)));
+    const todo=ps.filter(p=>!D.pos[p.dataset.doc]).sort(()=>Math.random()-.5).sort((a,b)=>b.offsetHeight*b.offsetWidth-a.offsetHeight*a.offsetWidth);
+    let okAll=true;const tryPlace=()=>{const res=[];const pl=placed.slice();for(const p of todo){const w=p.offsetWidth,h=p.offsetHeight;let best=null,bs=1e18;
+        for(let t=0;t<260;t++){const x=W*.02+Math.random()*Math.max(0,W*.96-w),y=top+Math.random()*Math.max(0,bot-top-h),b=box(x,y,p);const o=pl.reduce((s,q)=>s+ov(b,q),0);if(o<bs){bs=o;best=[x,y,b];if(!o)break;}}
+        if(bs>0)okAll=false;pl.push(best[2]);res.push([p,best[0],best[1]]);}return res;};
+    let res=tryPlace();for(let k=0;k<6&&!okAll;k++){okAll=true;res=tryPlace();}
+    if(!okAll&&sc>.72&&!fixed.length){D.sc=Math.round((sc-.07)*100)/100;dsLayout();return;} /* много документов — карточки чуть меньше, чтобы легли без нахлёста */
+    res.forEach(([p,x,y])=>{D.pos[p.dataset.doc]=[x,y];});}
+  if(false){const rows=[];let cur=[];ps.forEach(p=>{if(full(p.dataset.doc)){if(cur.length)rows.push(cur);rows.push([p]);cur=[];}else{cur.push(p);if(cur.length===2){rows.push(cur);cur=[];}}});if(cur.length)rows.push(cur);
     const hs=rows.map(r=>Math.max(...r.map(p=>p.offsetHeight))),tot=hs.reduce((a,b)=>a+b,0)+8*(rows.length-1),av=Hh-pen-46,k=tot>av?Math.max(.45,(av-hs[hs.length-1])/(tot-hs[hs.length-1])):1;
     let y=pen;rows.forEach((r,ri)=>{r.forEach((p,j)=>{const id=p.dataset.doc;if(!D.pos[id])D.pos[id]=[full(id)?W*.025:(j?W*.505:W*.025),y+(j?5:0)];});y+=(hs[ri]+8)*k;});}
   ps.forEach((p,i)=>{const id=p.dataset.doc,q=D.pos[id],st=p.style;q[0]=clamp(q[0],-p.offsetWidth*.35,W-p.offsetWidth*.65);st.setProperty("left",q[0]+"px","important");st.setProperty("top",q[1]+"px","important");st.zIndex=q[2]||i+1;});
@@ -3869,7 +3974,7 @@ function closeInspect(removeCar,tag){
   S.mode="patrol";S.siren=0;S.p.speed=removeCar||S.post?0:60;S.p.lane=RL;S.coastOn=false;S.p.vx=0;if(CTRL==="lanes")setLane(RL);gearForSpeed(false); /* при аресте стоим и смотрим, как забирает эвакуатор */
   if(tag)S.fx.push({k:"tag",id:c.id,x:c.x,y:c.y,t:2.8,max:2.8,txt:tag[0],col:tag[1]});
   if(S.st.stops>=SHIFT_STOPS)S.endDelay=3;
-  if(removeCar){c.state="arrested";c.takenT=2.6;c.speed=0;c.base=0;c.done=true;(S.tows=S.tows||[]).push({c,t:0,x:c.x,y:c.y-420,rel:78,v:0}); /* за арестованной едет эвакуатор */S.merge=LANES[RL];} /* арестованная остаётся на обочине, патрульная возвращается на дорогу */
+  if(removeCar){c.state="arrested";c.takenT=2.6;c.speed=0;c.base=0;c.done=true;(S.tows=S.tows||[]).push({c,isTow:true,ph:"wait",t:0,x:c.x,y:H+EXT+140,rel:78,v:0,vx:0,rot:0,speed:0}); /* за арестованной едет эвакуатор */S.merge=LANES[RL];} /* арестованная остаётся на обочине, патрульная возвращается на дорогу */
   else if(S.post){c.state="leaving";c.done=true;c.lane=RL;c.speed=20;c.base=20;} /* плавно выезжает с обочины */
   else{c.state="leaving";c.done=true;c.lane=RL;c.speed=S.limit;c.base=S.limit;c.y=Math.min(c.y,300);}
   if(c.lotK!=null&&!removeCar){c.state="unparking";c.pt=0;c.pp=0;c.hd=c.prot;c.pv=0;c.done=true;c.parkSeen=false;}
@@ -3947,7 +4052,7 @@ function update(dt){
       if(ab&&ab.kind==="fly")p.speed=mv; /* в полёте скорость постоянная */
       else if(p.speed>mv)p.speed=Math.max(mv,p.speed-110*dt); /* после полёта плавно возвращаемся к потолку колёс */
       else if(!GB.auto&&GB.gear>0&&p.speed>gearTop(mv)+1)p.speed=Math.max(gearTop(mv),p.speed-55*dt); /* МКПП на низкой передаче тормозит двигателем; АКПП сама переключает */
-      const towing=S.tows&&S.tows.some(w=>w.t<1.9);p.speed=towing&&!K.gas?0:Math.max(40,p.speed); } /* пока эвакуатор грузит — стоим, газ трогает с места */
+      const towing=S.tows&&S.tows.some(w=>w.ph!=="leave"||w.y>p.y-190);p.speed=towing&&!K.gas?0:Math.max(40,p.speed); } /* пока эвакуатор грузит — стоим, газ трогает с места */
     const sIn=CTRL==="lanes"?0:steerIn();
     if(CTRL==="lanes"){ /* перестроение как у живого водителя: плавно набирает боковой ход и плавно выходит в ряд */
       const tx=LANES[LANE_T===0&&!laneOK(0,p.y)?1:LANE_T],lat=55+p.speed*.32,want=clamp((tx-p.x)*1.9,-lat,lat);
@@ -3981,12 +4086,12 @@ function update(dt){
     }
   }
   // pullover
-  if(S.mode==="pullover"){
+  if(S.pullWait){const w=S.pullWait;w.t+=dt;if(convoySettled(w.c)||w.t>14){S.pullWait=null;openInspect(w.c);return;}} /* остановленная встала — ждём, пока встанет весь кортеж */
+  if(S.mode==="pullover"&&S.pull){
     const q=S.pull,c=q.c;q.t+=dt;if(q.post){p.speed=0;}else{
     p.speed=Math.max(0,p.speed-Math.max(60,p.speed*.9)*dt); /* после погони тормозим сами, газ не мешает */
-    const k=Math.min(1,3*dt),ty=S.post&&!q.chased?p.y+150:330;p.x+=(q.sx-p.x)*k;c.x+=(q.sx-c.x)*k;c.y+=(ty-c.y)*k;
-    if(c.convoy)S.cars.forEach(e=>{if(e.convoy===c.convoy&&e!==c&&e.ey!=null){e.x+=(e.ex-e.x)*k;e.y+=(e.ey-e.y)*k;}});
-    if(q.t>2.4&&(p.speed<5||q.t>4.5)){p.speed=0;S.harp=null;S.ghostOn=false;openInspect(c);S.pull=null;}}
+    const k=Math.min(1,3*dt),ty=S.post&&!q.chased?p.y+150:330;p.x+=(q.sx-p.x)*k;if(!q.drive){c.x+=(q.sx-c.x)*k;c.y+=(ty-c.y)*k;}
+    if(q.t>2.4&&(p.speed<5||q.t>4.5)&&(!q.drive||c.state==="pulled"||q.t>18)&&(!c.convoy||convoySettled(c)||q.t>18)){if(c.state==="cpull"){c.state="pulled";c.speed=0;c.base=0;}p.speed=0;S.harp=null;S.ghostOn=false;openInspect(c);S.pull=null;}}
   }
   S.scroll+=p.speed*PX*dt;
 
@@ -4000,9 +4105,9 @@ function update(dt){
   }
 
   // cars
-  const lotMov=S.post?S.cars.filter(o=>o.state==="parking"||o.state==="unparking"||o.crashed):[];
+  const lotMov=(S.post?S.cars.filter(o=>o.state==="parking"||o.state==="unparking"||o.crashed):[]).concat(S.tows?S.tows.filter(w=>w.ph!=="wait"):[],S.cars.filter(o=>o.towSlide||o.onTow||o.state==="cpull"||o.state==="pulling"),towRes());
   for(const c of S.cars){
-    c.t+=dt;
+    c.t+=dt;const py0=c.y,px0=c.x; /* позиция до шага: все сдвиги за кадр (и подтяжка за лидером) проверяются от неё */
     if((S.locked===c.id||(S.chase&&S.chase.c===c))&&isDriving(c)||c.state==="fleeing"&&S.chase&&S.chase.c===c)c.radarV=Math.max(c.radarV||0,c.speed); /* радар помнит максимум */
     if(c.state==="arrested"&&c.onTow)continue;
     if(c.state==="arrested"){c.takenT=Math.max(0,(c.takenT||0)-dt);c.y+=p.speed*PX*dt;continue;} /* стоит на обочине: уезжает назад вместе с дорогой */
@@ -4010,6 +4115,7 @@ function update(dt){
     if(c.state==="parked"){if(c.crashed){c.blink=2;c.blinkT=.5;if((c.crashT-=dt)<=0)c.crashed=false;}if(c.lotK!=null){c.y=slotY(c.lotK,c.slot)+(c.pyo||0);c.x=LOT_X+(c.pxo||0);c.rotNow=c.prot;}continue;}
     if(c.state==="parking"||c.state==="unparking"){parkTick(c,dt);continue;}
     if(c.state==="pulling"){postPullTick(c,dt);continue;}
+    if(c.state==="cpull"){cpullTick(c,dt);continue;}
     if(c.state==="fleeing"){
       c.chaseT+=dt;c.base=c.v0+(c.vT-c.v0)*Math.min(1,c.chaseT/CHASE_RAMP);c.speed=c.base;c.laneT-=dt;
       if(c.laneT<=0){c.laneT=rnd(1.2,2.5);const nl=clamp(c.lane+pick([-1,1]),0,RL);if(laneOK(nl,c.y)&&freeAt(LANES[nl],c.y,90,hl(c)))c.lane=nl;}
@@ -4023,6 +4129,7 @@ function update(dt){
       for(const d of S.cars){if(d===c||d.state==="pulled"||d.state==="arrested")continue;
         if(Math.abs(d.x-c.x)<36&&d.y<c.y&&c.y-d.y<gap){gap=c.y-d.y;lead=d;}}
       if(Math.abs(p.x-c.x)<36&&p.y<c.y&&c.y-p.y<gap&&S.mode!=="pullover"&&!S.ghostOn){gap=c.y-p.y;lead=p;}
+      if(S.tows)for(const w of S.tows.concat(towRes())){if(w.ph==="wait")continue;if(Math.abs(w.x-c.x)<36&&w.y<c.y&&c.y-w.y<gap){gap=c.y-w.y;lead=w;}}
       const need=lead?hl(c)+hl(lead):56;
       if(lead&&gap<need+40&&lead.speed<c.speed){
         let ch=false;
@@ -4043,20 +4150,19 @@ function update(dt){
     if(c.racer&&c.state==="drive"&&!S.post){if(c.y>0&&c.y<620)c.rGo=true;if(c.rGo)c.base=Math.min(RACER_MAX,c.base+RACER_ACC*dt);} /* гонщик разгоняется на глазах у игрока */
     if(c.lane===0&&(isDriving(c)||c.state==="fleeing")&&narrowAt(c.y-160)>0&&(narrowAt(c.y)>.3||freeAt(LANES[1],c.y,90,hl(c))))c.lane=1; /* сужение: уходим из левой полосы */
     if(c.crashed){c.speed=0;c.blink=2;c.blinkT=.5;if((c.crashT-=dt)<=0)c.crashed=false;}
-    const py0=c.y,px0=c.x;
     c.y+=(p.speed-c.speed)*PX*dt;
     const wob=(c.drunk&&c.state!=="leaving"&&c.state!=="fleeing"?Math.sin(c.t*2.2)*16:0);
     if(c.bass&&(c.state==="drive"||c.state==="leaving")){ /* профи: плавно разгоняет боковой ход и так же плавно гасит, без рывков */
       const dx=LANES[c.lane]-c.x,want=clamp(dx*3.4,-175,175);c.vx=(c.vx||0)+clamp(want-(c.vx||0),-520*dt,520*dt);c.x+=c.vx*dt;}
     else{const tx=LANES[c.lane]+wob,lat=45+Math.max(0,c.speed)*.3,want=clamp((tx-c.x)*1.9,-lat,lat); /* перестроение как у игрока: боковой ход набирается и гасится плавно */
       c.vx=(c.vx||0)+(want-(c.vx||0))*Math.min(1,3.2*dt);c.x+=c.vx*dt;}
-    if(lotMov.length&&(isDriving(c)||c.state==="fleeing"))for(const o of lotMov){if(o===c||o.id===c.ignore||Math.abs(o.y-c.y)>120||!o.crashed&&!inLane(o))continue;
-      const m=o.crashRoll||Math.abs(o.x-c.x)>26?1:o.state==="unparking"&&o.rev&&o.pp<=3&&c.y>o.y?40:12;if(!obbHit(c,o,m))continue;
+    if(lotMov.length&&(isDriving(c)||c.state==="fleeing"))for(const o of lotMov){if(o===c||(c.ignore!=null&&o.id===c.ignore)||Math.abs(o.y-c.y)>140||!o.crashed&&!o.isTow&&!o.isRes&&!o.towSlide&&!o.onTow&&o.state!=="cpull"&&o.state!=="pulling"&&!inLane(o))continue;
+      const m=(o.state==="cpull"||o.state==="pulling")&&c.y>o.y?14:o.crashRoll||Math.abs(o.x-c.x)>26?1:o.state==="unparking"&&o.rev&&o.pp<=3&&c.y>o.y?40:12;if(!obbHit(c,o,m))continue;
       if(o.crashRoll&&!o.crashed&&!c.crashed){lotCrash(o,c);break;}
-      const nx=c.x,ny=c.y,d1=Math.hypot(o.x-nx,o.y-ny);c.x=px0;c.y=py0;const was=obbHit(c,o,m),d0=Math.hypot(o.x-px0,o.y-py0);
-      if(was&&d1>d0){c.x=nx;c.y=ny;break;} /* уже впритык — отъезжать можно */
+      const nx=c.x,ny=c.y,pn=obbPen(c,o,m);c.x=px0;c.y=py0;const po=obbPen(c,o,m);
+      if(po>0&&pn<po){c.x=nx;c.y=ny;break;} /* уже впритык — отъезжать можно */
       c.speed=Math.min(c.speed,o.speed||0);if(c.lane===RL&&nx<LANES[RL]-6&&RL>0)c.lane=RL-1; /* перестраивался к нему — передумал */
-      c.x=nx;if(obbHit(c,o,m))c.x=px0;else break; /* вбок отойти можно */
+      c.x=nx;const px=obbPen(c,o,m);if(px>0&&!(po>0&&px<po))c.x=px0;else break; /* вбок отойти можно */
       c.vx=0;break;}
   }
   /* поворотники: включаются при перестроении и при съезде на обочину; кто без них — нарушение, если игрок видел */
@@ -4086,14 +4192,7 @@ function update(dt){
     for(const o of S.cars){if(o===e||o.onCall||o.convoy||!isDriving(o))continue;const d=e.y-o.y;
       if(d>0&&d<220&&Math.abs(o.x-e.x)<36){o.yeT=(o.yeT||0)-dt;if(o.yeT<=0){o.yeT=.4;for(const l of [o.lane+1,o.lane-1]){if(laneOK(l,o.y)&&freeAt(LANES[l],o.y,90,hl(o))){o.lane=l;break;}}}}}}
   /* эвакуатор: подъезжает сзади, затягивает машину на платформу и увозит вперёд */
-  if(S.tows&&S.tows.length){const road=p.speed*PX*dt,TA=1.1,TL=.8;
-    for(const w of S.tows){const c=w.c;w.t+=dt;
-      if(w.t<TA){const e=1-Math.pow(1-w.t/TA,3);w.x=c.x;w.y=c.y-78-(420-78)*(1-e);} /* сдаёт задом сверху к машине */
-      else if(w.t<TA+TL){if(!c.onTow){c.onTow=true;w.y=c.y-78;}w.y+=road;const k=(w.t-TA)/TL,e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;w.rel=78-(78-14)*e;} /* лебёдка затягивает на платформу */
-      else{w.v=Math.min(520,w.v+260*dt);w.y+=road-w.v*dt;w.rel=14;}
-      if(c.onTow){c.x=w.x;c.y=w.y+w.rel;}
-      if(w.t>TA+TL&&w.y<VY-160){c.gone=true;w.done=true;}}
-    S.tows=S.tows.filter(w=>!w.done&&!w.c.gone);}
+  if(S.tows&&S.tows.length)towTick(dt);
   S.cars=S.cars.filter(c=>{
     if(c.gone)return false;
     if(c.state==="pulled")return true;
@@ -4259,8 +4358,8 @@ const CARGO_HIDDEN=["Ящики без маркировки","Незадекла
 const ROUTES=["Райцентр → Сосновка","Склад → Заречье","Станция → Ключи","Ферма → Молзавод","Лесопилка → Райцентр"];
 const EMERG_ON_CALL=.6, PERMIT_MISS=.2, CARGO_BAD_LOADED=.12, CARGO_BAD_EMPTY=.08;
 const specOf=c=>CAR_SPEC[c.model]||CAR_SPEC["Седан «Вега»"];
-const hl=c=>c===S.p?28:(specOf(c).L||56)/2;
-const hw=c=>c===S.p?15:(specOf(c).W||30)/2;
+const hl=c=>c===S.p?28:c.isTow?49:(specOf(c).L||56)/2;
+const hw=c=>c===S.p?15:c.isTow?17:(specOf(c).W||30)/2;
 /* где-то дорога сужается до двух полос: левая полоса закрыта, превращается в обочину с травой */
 const NP=9000,N0=4500,N1=6700,NT=200;
 function narrowAt(y){return 0; /* сужений на двухполосной дороге нет */if(!S)return 0;const w=S.scroll-y,m=((w%NP)+NP)%NP;if(m<N0||m>N1)return 0;return clamp(Math.min(m-N0,N1-m)/NT,0,1);}
@@ -4764,8 +4863,8 @@ function drawCar(x,y,color,o={}){
   ctx.restore();
 }
 /* эвакуатор сверху: кабина спереди, платформа сзади, на крыше мигалка */
-function drawTow(w){const x=w.x,y=w.y,fl=Math.floor((S.time||0)*6)%2;
-  ctx.save();ctx.translate(x,y);
+function drawTow(w){if(w.ph==="wait")return;const x=w.x,y=w.y,fl=Math.floor((S.time||0)*6)%2;
+  ctx.save();ctx.translate(x,y);ctx.rotate(w.rot||0);
   ctx.fillStyle="#0006";rr(-16,-44,36,98,6);ctx.fill();
   ctx.fillStyle="#3b4148";rr(-17,-20,34,70,3);ctx.fill();ctx.strokeStyle="#5d656e";ctx.lineWidth=1.2;rr(-17,-20,34,70,3);ctx.stroke();
   ctx.strokeStyle="#2a2f35";ctx.beginPath();for(let yy=-12;yy<46;yy+=8){ctx.moveTo(-14,yy);ctx.lineTo(14,yy);}ctx.stroke();
@@ -4775,7 +4874,7 @@ function drawTow(w){const x=w.x,y=w.y,fl=Math.floor((S.time||0)*6)%2;
   ctx.fillStyle=fl?"#ffb12b":"#7a4a00";ctx.fillRect(-11,-33,9,4);ctx.fillStyle=fl?"#7a4a00":"#ffb12b";ctx.fillRect(2,-33,9,4);
   ctx.fillStyle="#fff3b0";ctx.fillRect(-14,-49,6,3);ctx.fillRect(8,-49,6,3);
   ctx.restore();
-  if(w.c.onTow){ctx.save();ctx.translate(x,y+w.rel);ctx.scale(.86,.86);drawCar(0,0,w.c.color,{model:w.c.model});ctx.restore();}
+  if(w.c.onTow){ctx.save();ctx.translate(x,y);ctx.rotate(w.rot||0);ctx.translate(0,w.rel);ctx.scale(.86,.86);drawCar(0,0,w.c.color,{model:w.c.model});ctx.restore();}
 }
 function brackets(x,y,col){
   ctx.strokeStyle=col;ctx.lineWidth=2;const w=24,h=38,l=8;
@@ -4971,7 +5070,7 @@ function hud(){
   if(S.mode!=="patrol"&&!$("#x-pchk").hidden){$("#x-pchk").hidden=true;$("#x-pchk").classList.remove("show");}
   $("#act-pat").hidden=!!chase;$("#act-ch").hidden=!chase;$("#x-chase").hidden=!chase;
   $("#b-stop").classList.toggle("dis",S.mode!=="patrol"||S.stopT>0);$("#b-plate").classList.toggle("scan",S.plateCd>0);
-  { const gb=$("#b-ghost"),ab=AB();gb.hidden=!ab;
+  { const gb=$("#b-ghost"),ab=AB();gb.hidden=!ab||S.post||S.mode!=="chase"; /* способность — только в погоне на патруле */
     if(ab&&ab.kind==="harpoon"){
       const chs=S.mode==="chase"&&S.chase,on=!!S.harp,cd=S.ghostCd>0&&!on,ready=chs&&S.chase.stage>=2;
       const txt=on?ab.busy+"<small>подтягиваем</small>":cd?"ПЕРЕЗАРЯДКА<small>"+Math.ceil(S.ghostCd)+" с</small>":ab.label+"<small>"+(ready?ab.sub:chs?"этап 2":"только в погоне")+"</small>";
@@ -5080,8 +5179,10 @@ function hCardsPort(){const el=$("#h-cards"),c=IN.c,d=docData(c),dark=S.night&&!
     ${D.db?`<div class="dtb ok">Ответ реестра на планшете</div>`:`<button class="dtb" data-h="db" ${D.dbWait?"disabled":""}>${D.dbWait?"Печатает…":"Запрос в базу"}</button>`}${c.cargo&&!IN.rev.cargo?`<button class="dtb g" data-h="cargo">Вскрыть кузов</button>`:""}`;
   const vin=`<div class="p-h"><span>VIN ПОД СТЕКЛОМ · ДВИГАТЕЛЬ</span></div>${dark?`<div class="dvin-d">Темно — без фонарика не прочитать</div>`:`<small>VIN на кузове</small><span class="fld mono dmet" data-fld="vin.car">${d.vinCar}</span><small>Номер двигателя</small><span class="fld mono dmet" data-fld="eng.car">${d.engCar}</span>`}`;
   D.big=D.big||{};
-  const L=handsDocs().map(id=>[id,hDocHtml(id)]);L.splice(Math.min(2,L.length),0,["vin",vin]); /* планшет инспектора убран: дата и база — в панели снизу */
-  el.style.fontSize="";el.innerHTML=L.map(([id,h],i)=>`<div class="paper ${id}" data-doc="${id}" style="--r:${[-2,1.5,-1.2,1.8,-1.6,1,-.8,1.4][i%8]}deg">${h}</div>`).join("");
+  const L=handsDocs().map(id=>[id,hDocHtml(id)]);L.splice(Math.min(2,L.length),0,["vin",vin]);
+  if(c.pax)L.push(["pax",`<div class="p-h pax-h"><span>ЗАДНЕЕ ОКНО · ПАССАЖИР</span></div><div class="pax-b"><span class="fld hph pface" data-fld="pax.face">${faceSVG(c.pax.person)}</span><div class="dsay">«<span class="fld" data-fld="pax.say">${c.pax.name}</span>, ${c.vip.title.toLowerCase()}. Документ у вас в руках.»</div></div>`]); /* планшет инспектора убран: дата и база — в панели снизу */
+  el.style.fontSize="";D.rot=D.rot||{};L.forEach(([id])=>{if(D.rot[id]==null)D.rot[id]=(Math.random()<.5?-1:1)*rnd(.6,3.2);});
+  el.innerHTML=L.map(([id,h])=>`<div class="paper ${id}${id==="vip"&&c.pax&&!D.seenVip?" fromwin":""}" data-doc="${id}" style="--r:${D.rot[id].toFixed(2)}deg">${h}</div>`).join("");if(c.pax)D.seenVip=true;
   const cv=el.querySelector(".dcar");if(cv){const g=cv.getContext("2d"),sp=CAR_SPEC[c.model]||CAR_SPEC["Седан «Вега»"],Sd=SIDE[sp.k]||SIDE.sedan,sc=Math.min(270/Sd.Lb,100/(Sd.Hm||95));
     const sk=g.createLinearGradient(0,0,0,118);sk.addColorStop(0,"#a9c3da");sk.addColorStop(.62,"#d4dde2");sk.addColorStop(.62,"#6f8a58");sk.addColorStop(.75,"#6f8a58");sk.addColorStop(.75,"#555b62");g.fillStyle=sk;g.fillRect(0,0,300,118);
     g.save();g.translate(150-Sd.Lb*sc/2,110);g.scale(sc,sc);paintSide(g,c.color,c.model,{sport:c.racer,trailer:c.trailer,helmet:c.helmet,nohelmet:c.nohelmet,tint:c.mod&&/тонир/.test(c.modWhat||"")});g.restore();}
@@ -5390,7 +5491,7 @@ addEventListener("resize",()=>{resize();if(IN&&!$("#hands").hidden){hDrawCar();h
 {let a=true,c="wheel";try{a=PORT||localStorage.getItem("patrol2_auto")!=="0";c="wheel";}catch(_){}setMode(a);setCtrl(c);}
 renderHub();show("hub");
 requestAnimationFrame(frame);
-window.__g={get S(){return S;},hl,hw,lotHit,obbHit,save,startShift,prep,steer,doRadar,doStop,doFire,doHorn,doDetain,doGhost,update,draw,hud,openInspect,startChase,doCheck,doAct,get IN(){return IN;},endShift,spawn,get SIR(){return SIR;},paintVeh,paintCar,paintSide,CAR_SPEC,SIDE,VTOP,narrowAt,devStop,GB,spawnConvoy,startPullover,proven,vipArrestOK,radio,docData,extTap:id=>extTap(id),extZoneAt:e=>extZoneAt(e)};
+window.__g={get S(){return S;},hl,hw,lotHit,obbHit,obbPen,towHit,save,startShift,prep,steer,doRadar,doStop,doFire,doHorn,doDetain,doGhost,update,draw,hud,openInspect,startChase,doCheck,doAct,get IN(){return IN;},endShift,spawn,get SIR(){return SIR;},paintVeh,paintCar,paintSide,CAR_SPEC,SIDE,VTOP,narrowAt,devStop,GB,spawnConvoy,startPullover,proven,vipArrestOK,radio,docData,extTap:id=>extTap(id),extZoneAt:e=>extZoneAt(e)};
 })();
 </script>
 </body></html>
