@@ -34,8 +34,25 @@ public class MainActivity extends Activity {
         web.setWebChromeClient(new WebChromeClient());
         setContentView(web);
         hideBars();
+        maxRefresh();
         if (state != null) web.restoreState(state);
         else web.loadUrl("file:///android_asset/index.html");
+    }
+
+    /* просим у экрана максимальную частоту (90/120/144 Гц), иначе Android держит приложение на 60 */
+    private void maxRefresh() {
+        try {
+            if (Build.VERSION.SDK_INT >= 23) {
+                android.view.Display d = getWindowManager().getDefaultDisplay();
+                android.view.Display.Mode cur = d.getMode(), best = cur;
+                for (android.view.Display.Mode m : d.getSupportedModes())
+                    if (m.getPhysicalWidth() == cur.getPhysicalWidth() && m.getPhysicalHeight() == cur.getPhysicalHeight() && m.getRefreshRate() > best.getRefreshRate()) best = m;
+                WindowManager.LayoutParams lp = getWindow().getAttributes();
+                lp.preferredDisplayModeId = best.getModeId();
+                lp.preferredRefreshRate = best.getRefreshRate();
+                getWindow().setAttributes(lp);
+            }
+        } catch (Throwable t) { }
     }
 
     private void hideBars() {
