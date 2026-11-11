@@ -13,3 +13,7 @@ android-studio/build/
 android-studio/app/build/
 android-studio/local.properties
 android-studio/.idea/
+
+# APK для кнопки «Скачать» на сайте (без ключей — только собранное приложение)
+!download/
+!download/proekt-doroga.apk
